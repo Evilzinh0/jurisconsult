@@ -55,6 +55,15 @@
             margin-top: 0.25rem;
         }
 
+        /* ESTILO PARA A ASSINATURA DO DESENVOLVEDOR */
+        .header-author {
+            color: var(--accent);
+            font-size: 0.95rem;
+            font-weight: 600;
+            margin-top: 0.4rem;
+            letter-spacing: 0.5px;
+        }
+
         main {
             max-width: 900px;
             margin: 2rem auto;
@@ -610,6 +619,8 @@
     <header>
         <h1>JurisConsult v10</h1>
         <p>Homologado com IA Tradutora, DJE Oficial, Calculadora CPC e Governança LGPD Completa</p>
+        <!-- ADICIONADO ABAIXO: -->
+        <div class="header-author">Desenvolvido Intelectualmente por Gabriel Pisaneschi</div>
     </header>
 
     <main>
@@ -650,7 +661,7 @@
             <div style="margin-top: 1.5rem; background: #f8fafc; border: 1px solid var(--border); padding: 1rem; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; gap: 15px;">
                 <div>
                     <h4 style="font-size: 0.9rem; color: var(--primary-light); margin-bottom: 0.25rem;">🔒 Seus Direitos (Revogação de Consentimento LGPD)</h4>
-                    <p style="font-size: 0.78rem; color: var(--text-muted); line-height: 1.3;">Deseja interromper o monitoramento e apagar de forma definitiva todos os seus dados e processos do JurisConsult? [9]</p>
+                    <p style="font-size: 0.78rem; color: var(--text-muted); line-height: 1.3;">Deseja interromper o monitoramento e apagar de forma definitiva todos os seus dados e processos do JurisConsult?</p>
                 </div>
                 <button class="btn-outline" onclick="abrirModalRevogacao()" style="font-size: 0.8rem; border-color: var(--error); color: var(--error); padding: 0.4rem 0.8rem; white-space: nowrap;">Revogar e Apagar Dados</button>
             </div>
@@ -658,7 +669,7 @@
             <!-- STANDALONE WIDGET: CALCULADORA CPC DIAS ÚTEIS -->
             <div style="margin-top: 1.5rem; background: #f0fdf4; border: 1px solid #bbf7d0; padding: 1.25rem; border-radius: 8px;">
                 <h3 style="font-size: 1rem; color: #16a34a; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 8px;">🧮 Calculadora de Prazos Cíveis (Art. 219 CPC/2015)</h3>
-                <p style="font-size: 0.8rem; color: #15803d; margin-bottom: 1rem;">Calcule datas de publicação e vencimento em dias úteis a partir da data de disponibilização no Diário oficial (DJE) [2].</p>
+                <p style="font-size: 0.8rem; color: #15803d; margin-bottom: 1rem;">Calcule datas de publicação e vencimento em dias úteis a partir da data de disponibilização no Diário oficial (DJE).</p>
                 <div style="display: grid; grid-template-columns: 1fr 1fr 100px; gap: 10px; align-items: flex-end;">
                     <div class="form-group" style="margin-bottom:0;">
                         <label style="font-size:0.75rem; color: #15803d;">Data de Disponibilização (DJE)</label>
@@ -689,7 +700,7 @@
             <div class="disclaimer-banner" style="margin-top: 1.5rem;">
                 <span>⚠️</span>
                 <p class="disclaimer-text">
-                    <strong>Aviso de Prazos Processuais:</strong> As atualizações exibidas neste portal têm caráter exclusivamente informativo. Elas não substituem as intimações oficiais publicadas nos Diários de Justiça Eletrônicos (DJE) [1]. Consulte sempre seu advogado para o controle de prazos processuais.
+                    <strong>Aviso de Prazos Processuais:</strong> As updates exibidas neste portal têm caráter exclusivamente informativo. Elas não substituem as intimações oficiais publicadas nos Diários de Justiça Eletrônicos (DJE). Consulte sempre seu advogado para o controle de prazos processuais.
                 </p>
             </div>
 
@@ -728,7 +739,7 @@
                     <!-- MÓDULO VISÍVEL: PUBLICAÇÕES OFICIAIS DO DJE COM CALCULADORA EMBUTIDA -->
                     <div class="result-field" id="res-dje-box" style="display: none; border-top: 1px dashed var(--border); margin-top: 1.5rem; padding-top: 1rem;">
                         <div class="result-label" style="color: var(--accent); font-weight: bold;">📜 Publicações Oficiais - Diário da Justiça Eletrônico (DJE)</div>
-                        <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.5rem;">O bloco abaixo exibe a publicação oficial e formal no Diário Oficial. Esta é a fonte juridicamente aceita para a contagem de prazos em dias úteis [1].</p>
+                        <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.5rem;">O bloco abaixo exibe a publicação oficial e formal no Diário Oficial. Esta é a fonte juridicamente aceita para a contagem de prazos em dias úteis.</p>
                         <div id="dje-list-box" style="background: #fafafa; border: 1px solid var(--border); padding: 1rem; border-radius: 6px;"></div>
                     </div>
 
@@ -844,9 +855,9 @@
                         <!-- CHECKS DE SEGURANÇA E CONFORMIDADE LGPD NATIVA -->
                         <div class="checkbox-group" style="background: #f8fafc; padding: 0.75rem; border-radius: 6px; border: 1px solid var(--border); margin-bottom: 1rem;">
                             <input type="checkbox" id="reg-lgpd" required>
-                            <label for="reg-lgpd" style="display:inline; font-weight:normal; font-size: 0.8rem; line-height: 1.4;">
-                                Li e aceito ativamente os <a href="#" onclick="abrirModalLGPD(event)" style="color: var(--accent); text-decoration: none; font-weight: bold;">Termos de Consentimento e Privacidade</a> em conformidade rígida com a <strong>LGPD (Lei 13.709/18)</strong> [9].
-                            </label>
+                            <label_aut for="reg-lgpd" style="display:inline; font-weight:normal; font-size: 0.8rem; line-height: 1.4;">
+                                Li e aceito ativamente os <a href="#" onclick="abrirModalLGPD(event)" style="color: var(--accent); text-decoration: none; font-weight: bold;">Termos de Consentimento e Privacidade</a> em conformidade com a <strong>LGPD (Lei 13.709/18)</strong>.
+                            </label_aut>
                         </div>
 
                         <div class="checkbox-group">
@@ -895,7 +906,7 @@
 
             <div id="pjeoffice-ephemeral-banner" style="display: none; background: #f0f9ff; border: 1px solid #bae6fd; padding: 1rem; border-radius: 6px; margin-bottom: 1.5rem;">
                 <h4 style="color: #0369a1; margin-bottom: 0.25rem;">🔒 Modo de Consulta Efêmera PJeOffice Ativo</h4>
-                <p style="font-size: 0.85rem; color: #0284c7;">Como você optou por não salvar senhas no banco, utilizaremos o PJeOffice para assinar criptograficamente cada busca de forma descartável [10].</p>
+                <p style="font-size: 0.85rem; color: #0284c7;">Como você optou por não salvar senhas no banco, utilizaremos o PJeOffice para assinar criptograficamente cada busca de forma descartável.</p>
             </div>
 
             <div class="dash-subtabs">
@@ -944,7 +955,7 @@
                         <div class="form-group full-width checkbox-group" style="background: #f8fafc; padding: 0.75rem; border-radius: 6px; border: 1px solid var(--border);">
                             <input type="checkbox" id="link-lgpd" required checked>
                             <label for="link-lgpd" style="display:inline; font-weight:normal; font-size: 0.8rem; line-height: 1.4;">
-                                Declaro que o titular dos dados (cliente) autorizou ativamente o processamento e monitoramento de suas informações processuais para o recebimento das atualizações de forma inequívoca de acordo com a LGPD [9].
+                                Declaro que o titular dos dados (cliente) autorizou ativamente o processamento e monitoramento de suas informações processuais para o recebimento das atualizações de forma inequívoca de acordo com a LGPD.
                             </label>
                         </div>
                     </div>
@@ -959,14 +970,14 @@
             <div id="sub-precedents-section" class="sub-section" style="display: none;">
                 <h2>Biblioteca de Consulta de Precedentes - STJ</h2>
                 <p style="color: var(--text-muted); font-size: 0.88rem; margin-bottom: 1rem;">
-                    Construa buscas perfeitamente estruturadas para o sistema de Jurisprudência <strong>SCON do Superior Tribunal de Justiça (STJ)</strong> [11].
+                    Construa buscas perfeitamente estruturadas para o sistema de Jurisprudência <strong>SCON do Superior Tribunal de Justiça (STJ)</strong>.
                 </p>
 
                 <!-- ALERTA DE RISCO DE AMBIGUIDADE DE FONTES -->
                 <div style="background-color: #fffbeb; border: 1px solid #fef3c7; padding: 0.85rem; border-radius: 6px; display: flex; gap: 10px; align-items: flex-start; margin-bottom: 1.5rem;">
                     <span style="font-size: 1.2rem;">⚠️</span>
                     <p style="font-size:0.78rem; color: #b45309; line-height: 1.4;">
-                        <strong>Aviso Crítico de Ambiguidade de Fontes (STJ):</strong> A sigla "STJ" neste sistema refere-se estritamente ao <strong>Superior Tribunal de Justiça do Brasil (guarda do direito federal)</strong> [7]. Não confunda com o <i>Supremo Tribunal de Justiça de Portugal</i> [3] ou o <i>Supremo Tribunal de Justicia do Estado de Jalisco (México)</i> [3], que operam sob códigos processuais estrangeiros inteiramente distintos!
+                        <strong>Aviso Crítico de Ambiguidade de Fontes (STJ):</strong> A sigla "STJ" neste sistema refere-se estritamente ao <strong>Superior Tribunal de Justiça do Brasil (guarda do direito federal)</strong>. Não confunda com o <i>Supremo Tribunal de Justiça de Portugal</i> ou o <i>Supremo Tribunal de Justicia do Estado de Jalisco (México)</i>, que operam sob códigos processuais estrangeiros inteiramente distintos!
                     </p>
                 </div>
 
@@ -981,12 +992,12 @@
                             <div class="form-group">
                                 <label for="stj-operador">Operador de Ligação (Lógica do STJ)</label>
                                 <select id="stj-operador">
-                                    <option value="E" selected>E (AND) - Ambos os termos na mesma decisão [12]</option>
+                                    <option value="E" selected>E (AND) - Ambos os termos na mesma decisão</option>
                                     <option value="OU">OU (OR) - Um ou outro termo na decisão</option>
-                                    <option value="NAO">NÃO (NOT) - Excluir termo seguinte da busca [12]</option>
-                                    <option value="PROX">PROX (NEAR) - Termos próximos (até 6 palavras) [12]</option>
-                                    <option value="MESMO">MESMO (INSAME) - Termos no mesmo campo do acórdão [12]</option>
-                                    <option value="COM">COM (INPATH) - Termos no mesmo parágrafo [12]</option>
+                                    <option value="NAO">NÃO (NOT) - Excluir termo seguinte da busca</option>
+                                    <option value="PROX">PROX (NEAR) - Termos próximos (até 6 palavras)</option>
+                                    <option value="MESMO">MESMO (INSAME) - Termos no mesmo campo do acórdão</option>
+                                    <option value="COM">COM (INPATH) - Termos no mesmo parágrafo</option>
                                 </select>
                             </div>
                             <div class="form-group">
@@ -997,7 +1008,7 @@
                                 <label for="stj-truncar">Variação Morfológica</label>
                                 <div class="checkbox-group" style="margin-top: 1rem;">
                                     <input type="checkbox" id="stj-truncar-check">
-                                    <label for="stj-truncar-check" style="display:inline; font-weight:normal; font-size: 0.85rem;">Aplicar truncamento ($) para variações de radical (ex: mercad$ acha mercado, mercadoria) [12].</label>
+                                    <label for="stj-truncar-check" style="display:inline; font-weight:normal; font-size: 0.85rem;">Aplicar truncamento ($) para variações de radical (ex: mercad$ acha mercado, mercadoria).</label>
                                 </div>
                             </div>
                         </div>
@@ -1005,7 +1016,7 @@
                     </form>
 
                     <div id="stj-query-result-box" style="display:none; margin-top: 1.5rem; background: #f0fdf4; border: 1px solid #bbf7d0; padding: 1rem; border-radius: 6px;">
-                        <span style="font-size:0.75rem; text-transform:uppercase; color: var(--success); font-weight:bold;">Sintaxe Lógica/SCON Gerada:</span>
+                        <span style="font-size:0.75rem; text-transform:uppercase; color: var(--success); font-weight:bold;">Sintaxe Lextológica/SCON Gerada:</span>
                         <div id="stj-query-string" style="font-family: monospace; font-size: 1.1rem; color: var(--primary); font-weight: bold; margin: 0.5rem 0; word-break: break-all;">-</div>
                         <div id="stj-alerta-ambiguidade-dinamico" style="font-size:0.75rem; color:#b45309; font-weight:500; margin-bottom:1rem; border-top: 1px dashed #cbd5e1; padding-top:0.5rem;"></div>
                         <button class="btn-accent" id="btn-abrir-scon" style="font-size:0.85rem; padding: 0.4rem 1rem; margin-top:0.25rem;">🔍 Pesquisar no SCON STJ</button>
@@ -1015,13 +1026,13 @@
                 <h3 style="font-size: 0.95rem; color: var(--primary-light); text-transform: uppercase; margin-bottom: 0.5rem;">📂 Portais e Compilados Oficiais do STJ</h3>
                 <div class="stj-quick-links">
                     <a href="https://scon.stj.jus.br/SCON/pesquisa_pronta/" target="_blank" class="stj-link-card">
-                        <span>📚</span> Pesquisa Pronta [13]
+                        <span>📚</span> Pesquisa Pronta
                     </a>
                     <a href="https://scon.stj.jus.br/SCON/sumstj/toc.jsp?tipo=sumula+ou+su" target="_blank" class="stj-link-card">
                         <span>⚖️</span> Súmulas Anotadas
                     </a>
                     <a href="https://scon.stj.jus.br/SCON/jt/" target="_blank" class="stj-link-card">
-                        <span>📖</span> Jurisprudência em Teses [13]
+                        <span>📖</span> Jurisprudência em Teses
                     </a>
                     <a href="https://ww2.stj.jus.br/jurisprudencia/externo/informativo/" target="_blank" class="stj-link-card">
                         <span>📰</span> Informativo Semanal
@@ -1036,7 +1047,7 @@
             <div id="sub-coverage-section" class="sub-section" style="display: none;">
                 <h2>Status de Monitoramento de Sistemas e Tribunais</h2>
                 <p style="color: var(--text-muted); font-size: 0.88rem; margin-bottom: 1.5rem;">
-                    Consulte em tempo real a cobertura e estabilidade de conexão dos sistemas eletrônicos dos tribunais integrados à nossa API [14].
+                    Consulte em tempo real a cobertura e estabilidade de conexão dos sistemas eletrônicos dos tribunais integrados à nossa API.
                 </p>
                 <div id="coverage-loader" style="text-align: center; padding: 2rem;">Carregando status dos servidores...</div>
                 
@@ -1055,7 +1066,7 @@
                 <div style="border-top: 1px solid var(--border); padding-top: 2rem;">
                     <h2>Logs de Registro de Indisponibilidade dos Tribunais</h2>
                     <p style="color: var(--text-muted); font-size: 0.88rem; margin-bottom: 1rem;">
-                        Certidões de instabilidade emitidas diretamente pelas cortes [15, 16]. Em dias de indisponibilidade oficial, os prazos processuais são suspensos.
+                        Certidões de instabilidade emitidas diretamente pelas cores. Em dias de indisponibilidade oficial, os prazos processuais são suspensos.
                     </p>
                     <table class="table-coverage" id="table-ind-id" style="display:none;">
                         <thead>
@@ -1076,7 +1087,7 @@
             <div class="disclaimer-banner" style="margin-top: 2rem; background-color: #fff1f2; border: 1px solid #fecaca;">
                 <span>⚠️</span>
                 <p class="disclaimer-text">
-                    <strong>Controle Crítico de Prazos (CPC):</strong> Dr(a)., este portal opera como serviço de Push informativo complementar. Lembramos que falhas no envio de notificações automáticas não justificam a perda de prazos cíveis, que contam-se em dias úteis estritamente após publicação no DJE oficial [1].
+                    <strong>Controle Crítico de Prazos (CPC):</strong> Dr(a)., este portal opera como serviço de Push informativo complementar. Lembramos que falhas no envio de notificações automáticas não justificam a perda de prazos cíveis, que contam-se em dias úteis estritamente após publicação no DJE oficial.
                 </p>
             </div>
         </div>
@@ -1122,7 +1133,7 @@
                 <button class="modal-close" onclick="fecharModalRevogacao()">&times;</button>
             </div>
             <div style="font-size: 0.9rem; margin-bottom: 1rem;">
-                <p style="margin-bottom: 1rem;">Para exercer seu direito legal sob o <strong>Art. 18, VI da LGPD</strong>, insira os dados do processo cadastrado para confirmar sua identidade e eliminar todos os registros do nosso banco [9].</p>
+                <p style="margin-bottom: 1rem;">Para exercer seu direito legal sob o <strong>Art. 18, VI da LGPD</strong>, insira os dados do processo cadastrado para confirmar sua identidade e eliminar todos os registros do nosso banco.</p>
                 <div id="revogacao-alert" class="alert"></div>
                 <div class="form-group">
                     <label>Seu Nome Completo</label>
@@ -1149,7 +1160,7 @@
     </footer>
 
     <script>
-        const API_URL = "https://jurisconsult-api.onrender.com";
+        const API_URL = "https://jurisconsult-api.onrender.com/api";
         let advogadoLogado = null;
 
         function aplicarMascaraCNJ(input) {
@@ -1201,7 +1212,6 @@
             if (botaoAtivo) botaoAtivo.classList.add('active');
         }
 
-        // NOVO: CALCULO DE PRAZOS CPC AUTOMÁTICO
         async function calcularPrazoStandAlone() {
             const dateVal = document.getElementById('calc-date-input').value;
             const daysVal = document.getElementById('calc-days-input').value;
@@ -1228,9 +1238,8 @@
                     resBox.style.display = 'block';
                 }
             } catch(e) {
-                // Fallback de cálculo Javascript se estiver offline
                 let parts = dateVal.split('-');
-                let disp = new Date(parts, parts[17]-1, parts[18]);
+                let disp = new Date(parts, parts[1]-1, parts[2]);
                 
                 function somarDiasUteis(start, days) {
                     let d = new Date(start);
@@ -1256,7 +1265,7 @@
 
                 let pub = obterProximoDiaUtil(disp);
                 let ini = obterProximoDiaUtil(pub);
-                let venc = somarDiasUteis(ini, daysVal - 1); // ini já conta como dia 1
+                let venc = somarDiasUteis(ini, daysVal - 1);
 
                 function format(d) {
                     return `${String(d.getDate()).padStart(2, '0')}/${String(d.getMonth()+1).padStart(2, '0')}/${d.getFullYear()}`;
@@ -1266,16 +1275,15 @@
                 document.getElementById('cpc-res-pub').innerText = format(pub);
                 document.getElementById('cpc-res-inicio').innerText = format(ini);
                 document.getElementById('cpc-res-venc').innerText = format(venc);
-                document.getElementById('cpc-res-nota').innerHTML = "<strong>Nota Explicativa:</strong> Cálculo simulado via regras básicas do CPC (Art. 219). Feriados não estão inclusos [2].";
+                document.getElementById('cpc-res-nota').innerHTML = "<strong>Nota Explicativa:</strong> Cálculo simulado via regras básicas do CPC (Art. 219). Feriados não estão inclusos.";
                 resBox.style.display = 'block';
             }
         }
 
-        // AUTO PREENCHE CALCULADORA PELO DIÁRIO DO CLIENTE
         function preencherCalculadoraPeloDJE(dateStr) {
             let parts = dateStr.split('/');
             if(parts.length === 3) {
-                let formatted = `${parts[18]}-${parts[17]}-${parts}`;
+                let formatted = `${parts[2]}-${parts[1]}-${parts}`;
                 document.getElementById('calc-date-input').value = formatted;
                 document.getElementById('calc-days-input').value = "15";
                 calcularPrazoStandAlone();
@@ -1283,7 +1291,6 @@
             }
         }
 
-        // NOVO: MODAL REVOGAÇÃO LGPD
         function abrirModalRevogacao() {
             document.getElementById('revogacao-modal').style.display = 'flex';
             document.getElementById('revogacao-alert').style.display = 'none';
@@ -1330,7 +1337,6 @@
             }
         }
 
-        // MODAL INFORMATIVO LGPD
         async function abrirModalLGPD(event) {
             if (event) event.preventDefault();
             const modal = document.getElementById('lgpd-modal');
@@ -1356,12 +1362,12 @@
                 }
             } catch (e) {
                 body.innerHTML = `
-                    <p style="margin-bottom:1rem;"><strong>JurisConsult Termos e Políticas LGPD (Modo Fallback Offline) [9]:</strong></p>
+                    <p style="margin-bottom:1rem;"><strong>JurisConsult Termos e Políticas LGPD (Modo Fallback Offline):</strong></p>
                     <ul>
                         <li style="margin-bottom: 0.5rem; list-style-type: square; margin-left: 1.5rem;"><strong>Finalidade:</strong> Tratamento de CPF, nome e andamentos processuais estritamente para acompanhamento civil do cidadão.</li>
                         <li style="margin-bottom: 0.5rem; list-style-type: square; margin-left: 1.5rem;"><strong>Segurança dos Dados:</strong> Criptografia Fernet (AES-256 bits) de senhas dos tribunais salvos.</li>
-                        <li style="margin-bottom: 0.5rem; list-style-type: square; margin-left: 1.5rem;"><strong>Modo Efêmero:</strong> Uso local do PJeOffice do CNJ dispensando armazenamento em banco [10].</li>
-                        <li style="margin-bottom: 0.5rem; list-style-type: square; margin-left: 1.5rem;"><strong>Direito de Exclusão Permanente:</strong> Exercício imediato via painel público, eliminando registros de forma definitiva e rastreável [9].</li>
+                        <li style="margin-bottom: 0.5rem; list-style-type: square; margin-left: 1.5rem;"><strong>Modo Efêmero:</strong> Uso local do PJeOffice do CNJ dispensando armazenamento em banco.</li>
+                        <li style="margin-bottom: 0.5rem; list-style-type: square; margin-left: 1.5rem;"><strong>Direito de Exclusão Permanente:</strong> Exercício imediato via painel público, eliminando registros de forma definitiva e rastreável.</li>
                     </ul>
                 `;
             }
@@ -1442,9 +1448,9 @@
                 }
             } catch (e) {
                 const fallbackInd = [
-                    { tribunal: "TJSP (e-SAJ)", periodo: "14/08/2026 23:00 às 15/08/2026 05:00", motivo: "Manutenção preventiva programada na infraestrutura de banco de dados do sistema eletrônico e-SAJ [19].", documento_oficial: "Comunicado Conjunto Presidência Nº 182/2026-TJSP", status: "Restabelecido" },
-                    { tribunal: "STJ (SCON/PJe/Assinador)", periodo: "15/08/2026 14:00 às 15/08/2026 16:30", motivo: "Interrupção parcial de link de comunicação local com o assinador digital PJeOffice do CNJ [20, 21].", documento_oficial: "Certidão de Indisponibilidade de Sistema nº 402/2026-STJ", status: "Restabelecido" },
-                    { tribunal: "TRF4 (e-Proc)", periodo: "15/08/2026 18:00 às 18:15", motivo: "Oscilação física momentânea nos servidores de consulta de peças eletrônicas [16].", documento_oficial: "Portaria Geral TRF4 nº 91/2026", status: "Operacional" }
+                    { tribunal: "TJSP (e-SAJ)", periodo: "14/08/2026 23:00 às 15/08/2026 05:00", motivo: "Manutenção preventiva programada na infraestrutura de banco de dados do sistema eletrônico e-SAJ.", documento_oficial: "Comunicado Conjunto Presidência Nº 182/2026-TJSP", status: "Restabelecido" },
+                    { tribunal: "STJ (SCON/PJe/Assinador)", periodo: "15/08/2026 14:00 às 15/08/2026 16:30", motivo: "Interrupção parcial de link de comunicação local com o assinador digital PJeOffice do CNJ.", documento_oficial: "Certidão de Indisponibilidade de Sistema nº 402/2026-STJ", status: "Restabelecido" },
+                    { tribunal: "TRF4 (e-Proc)", periodo: "15/08/2026 18:00 às 18:15", motivo: "Oscilação física momentânea nos servidores de consulta de peças eletrônicas.", documento_oficial: "Portaria Geral TRF4 nº 91/2026", status: "Operacional" }
                 ];
                 indBody.innerHTML = "";
                 fallbackInd.forEach(log => {
@@ -1516,9 +1522,9 @@
                 }
                 
                 queryString.innerText = query;
-                alertAmbiguidade.innerHTML = "<strong>⚠️ Alerta de Ambiguidade:</strong> Certifique-se de usar SCON apenas para o Superior Tribunal de Justiça do Brasil [7], diferenciando-o de Portugal [3] e Jalisco [3].";
+                alertAmbiguidade.innerHTML = "<strong>⚠️ Alerta de Ambiguidade:</strong> Certifique-se de usar SCON apenas para o Superior Tribunal de Justiça do Brasil, diferenciando-o de Portugal e Jalisco.";
                 const encoded = encodeURIComponent(query);
-                btnAbrir.onclick = () => window.open(`https://scon.stj.jus.br/SCON/pesquisar.jsp?b=ACOR&livre=${encoded}`, '_blank');
+                btnAbrir.onclick = () => window.open(`https://scon.stj.jus.br/SCON/pesquisar.jsp?b=ACOR&livre={encoded}`, '_blank');
                 resultBox.style.display = 'block';
             }
         }
@@ -1742,7 +1748,7 @@
             if (advogadoLogado && !advogadoLogado.salvar_credenciais) {
                 alertBox.className = 'alert info';
                 alertBox.style.display = 'block';
-                alertBox.innerText = "PJeOffice CNJ: Solicitando assinatura de transação efêmera com o seu Certificado ICP-Brasil para consultar o tribunal [10]...";
+                alertBox.innerText = "PJeOffice CNJ: Solicitando assinatura de transação efêmera com o seu Certificado ICP-Brasil para consultar o tribunal...";
                 await new Promise(r => setTimeout(r, 2000));
             }
 
@@ -1817,7 +1823,7 @@
 
             setTimeout(() => {
                 document.getElementById('loader-status').innerText = "Processando Publicações do DJE...";
-                document.getElementById('loader-subtext').innerText = "Mapeando andamento do processo no diário eletrônico oficial do tribunal [1]...";
+                document.getElementById('loader-subtext').innerText = "Mapeando andamento do processo no diário eletrônico oficial do tribunal...";
             }, 2600);
 
             try {
