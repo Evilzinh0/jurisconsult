@@ -1190,8 +1190,110 @@ def revogar_consentimento_lgpd():
         db.session.rollback()
         return jsonify({"error": f"Ocorreu um erro interno de banco de dados ao excluir seus dados: {str(e)}"}), 500
 
+# -----------------------------------------------------------------------------
+# INICIALIZAÇÃO E AUTO-SEEDING DE DEMONSTRAÇÃO (v13)
+# -----------------------------------------------------------------------------
+with app.app_context():
+    db.create_all()
+    
+    try:
+        # Verifica se o Dr. Carlos (OAB 123456/SP) já está cadastrado
+        adv = Advogado.query.filter_by(oab='123456/SP').first()
+        if not adv:
+            print("🌱 [AUTO-SEEDING] Semeando banco de dados com credenciais do Dr. Carlos Eduardo da Silva...")
+            password_bytes = 'senha123'.encode('utf-8')
+            salt = bcrypt.gensalt()
+            password_hash = bcrypt.hashpw(password_bytes, salt).decode('utf-8')
+            
+            adv = Advogado(
+                nome="Dr. Carlos Eduardo da Silva",
+                email="carlos.silva.adv@oabsp.org.br",
+                telefone="11999999999",
+                oab="123456/SP",
+                password_hash=password_hash,
+                status_aprovacao='Aprovado',
+                salvar_credenciais=True,
+                tribunal_principal="TJSP (Tribunal de Justiça de SP)",
+                tribunal_usuario="carlossilva",
+                tribunal_senha_cripto=encrypt_data("senha_tribunal_123"),
+                consentimento_lgpd=True
+            )
+            db.session.add(adv)
+            db.session.commit()
+            print("🌱 [AUTO-SEEDING] Dr. Carlos cadastrado e aprovado automaticamente.")
+
+        # Verifica se a cliente Mariana de Souza (CPF 12345678901) está vinculada a ele
+        cliente = Cliente.query.filter_by(cpf='12345678901', advogado_id=adv.id).first()
+        if not cliente:
+            print("🌱 [AUTO-SEEDING] Cadastrando cliente Mariana de Souza sob a LGPD...")
+            cliente = Cliente(
+                nome="Mariana de Souza",
+                cpf="12345678901",
+                telefone="11999999999",
+                advogado_id=adv.id,
+                consentimento_lgpd=True
+            )
+            db.session.add(cliente)
+            db.session.commit()
+
+        # Verifica se o processo de teste CNJ está cadastrado
+        processo = Processo.query.filter_by(numero='00123456720268260001').first()
+        if not processo:
+            print("🌱 [AUTO-SEEDING] Cadastrando processo 0012345-67.2026.8.26.0001...")
+            processo = Processo(
+                numero='00123456720268260001',
+                situacao="Em Andamento / Ativo",
+                advogado_id=adv.id,
+                cliente_id=cliente.id
+            )
+            db.session.add(processo)
+            db.session.commit()
+            
+            # Adiciona as movimentações didáticas na linha do tempo
+            hoje = datetime.now()
+            ontem = hoje - timedelta(days=2)
+            semana_passada = hoje - timedelta(days=7)
+            
+            m1 = Movimentacao(
+                descricao="Conclusão ao Juiz para decisão sobre os pedidos liminares.",
+                timestamp=hoje.strftime("%d/%m/%Y às %H:%M"),
+                processo_id=processo.id
+            )
+            m2 = Movimentacao(
+                descricao="Petição de Manifestação Juntada aos Autos pelo Advogado de Defesa habilitado.",
+                timestamp=ontem.strftime("%d/%m/%Y às 14:30"),
+                processo_id=processo.id
+            )
+            m3 = Movimentacao(
+                descricao="Despacho Proferido concedendo prazo legal para réplica à contestação.",
+                timestamp=semana_passada.strftime("%d/%m/%Y às 09:15"),
+                processo_id=processo.id
+            )
+            db.session.add_all([m1, m2, m3])
+            
+            # Adiciona a publicação oficial do DJE para testes da calculadora
+            pub_data = (hoje - timedelta(days=1)).strftime("%d/%m/%Y")
+            disp_data = (hoje - timedelta(days=2)).strftime("%d/%m/%Y")
+            pub = PublicacaoDJE(
+                texto_publicacao=(
+                    "Ficam as partes devidamente intimadas do teor da decisão proferida pelo Exmo. Magistrado. "
+                    "Nos termos do artigo 219 do CPC, fica aberto o prazo improrrogável de 15 (quinze) dias úteis "
+                    "para que a parte autora apresente réplica à contestação e manifeste-se sobre os documentos. "
+                    "A contagem do prazo processual iniciar-se-á no primeiro dia útil subsequente a esta publicação oficial no DJE."
+                ),
+                data_publicacao=pub_data,
+                data_disponibilizacao=disp_data,
+                processo_id=processo.id
+            )
+            db.session.add(pub)
+            db.session.commit()
+            print("🌱 [AUTO-SEEDING] Processo, linha do tempo e publicações DJE de teste prontos!")
+            
+        print("✅ [AUTO-SEEDING] Banco de dados totalmente carregado para apresentações comerciais!")
+    except Exception as e:
+        print(f"⚠️ [AUTO-SEEDING] Erro ao carregar dados automáticos: {str(e)}")
+        db.session.rollback()
+
 if __name__ == '__main__':
-    with app.app_context():
-        db.create_all()
-    print("🚀 Servidor JurisConsult v9 ativo com Dicionário de Traduções e Validador CNJ.")
+    print("🚀 Servidor JurisConsult v13 ativo com Auto-Seeding de Demonstração, Dicionário de Traduções e Validador CNJ.")
     app.run(debug=True, port=5000)
