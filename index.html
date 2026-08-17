@@ -3,122 +3,162 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JurisConsult v10 - Plataforma de Segurança e Automação Jurídica</title>
+    <title>JurisConsult - Portal de Inteligência Jurídica</title>
+    <!-- Google Fonts for professional typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #0f172a;
-            --primary-light: #1e293b;
-            --accent: #d97706;
-            --accent-hover: #b45309;
-            --bg: #f1f5f9;
-            --card-bg: #ffffff;
-            --text-main: #0f172a;
-            --text-muted: #64748b;
-            --border: #cbd5e1;
-            --success: #16a34a;
-            --error: #dc2626;
-            --info: #0284c7;
-            --pje-color: #0284c7;
-            --pje-hover: #0369a1;
+            --primary: #1b2a4a;
+            --primary-light: #2c3e66;
+            --accent: #c29b38;
+            --accent-hover: #a37f2d;
+            --text-dark: #2d3748;
+            --text-light: #718096;
+            --bg-body: #f7fafc;
+            --bg-card: #ffffff;
+            --border-color: #e2e8f0;
+            --success: #38a169;
+            --danger: #e53e3e;
+            --warning: #dd6b20;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.1);
+            --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
+            --radius: 8px;
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
         body {
-            background-color: var(--bg);
-            color: var(--text-main);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: var(--bg-body);
+            color: var(--text-dark);
             line-height: 1.6;
+            padding-bottom: 60px;
         }
 
+        /* HEADER & NAVIGATION */
         header {
             background-color: var(--primary);
             color: white;
-            padding: 1.5rem 2rem;
-            text-align: center;
-            border-bottom: 4px solid var(--accent);
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: var(--shadow-md);
         }
 
-        header h1 {
-            font-size: 2rem;
-            font-weight: 700;
-        }
-
-        header p {
-            color: var(--border);
-            font-size: 0.9rem;
-            margin-top: 0.25rem;
-        }
-
-        /* ESTILO PARA A ASSINATURA DO DESENVOLVEDOR */
-        .header-author {
-            color: var(--accent);
-            font-size: 0.95rem;
-            font-weight: 600;
-            margin-top: 0.4rem;
-            letter-spacing: 0.5px;
-        }
-
-        main {
-            max-width: 900px;
-            margin: 2rem auto;
-            padding: 0 1rem;
-        }
-
-        .tabs {
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
             display: flex;
-            background-color: #e2e8f0;
-            padding: 0.4rem;
-            border-radius: 8px;
-            margin-bottom: 2rem;
-            gap: 5px;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-icon {
+            font-size: 1.8rem;
+            color: var(--accent);
+        }
+
+        .logo-text h1 {
+            font-size: 1.4rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            background: linear-gradient(135deg, #ffffff, #f0f0f0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .logo-text span {
+            font-size: 0.75rem;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            display: block;
+            font-weight: 600;
+        }
+
+        /* MOBILE RESPONSIVE TABS & NAVIGATION */
+        nav {
+            display: flex;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            width: 100%;
+            border-bottom: 1px solid var(--primary-light);
+            background-color: var(--primary-light);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 10px;
+            display: flex;
+            width: 100%;
         }
 
         .tab-btn {
-            flex: 1;
-            padding: 0.75rem 1rem;
-            border: none;
             background: none;
-            font-weight: 600;
-            color: var(--text-muted);
-            cursor: pointer;
-            border-radius: 6px;
-            transition: all 0.2s ease;
+            border: none;
+            color: #cbd5e0;
+            padding: 14px 20px;
             font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.2s ease;
+            position: relative;
             display: flex;
             align-items: center;
-            justify-content: center;
             gap: 8px;
         }
 
+        .tab-btn:hover {
+            color: white;
+            background-color: rgba(255,255,255,0.05);
+        }
+
         .tab-btn.active {
-            background-color: var(--card-bg);
-            color: var(--primary);
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            color: var(--accent);
         }
 
-        .tab-btn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
+        .tab-btn.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background-color: var(--accent);
         }
 
-        .content-section {
+        /* MAIN CONTAINER */
+        main {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        /* CONTENT VIEWS */
+        .tab-content {
             display: none;
-            background: var(--card-bg);
-            border-radius: 12px;
-            padding: 2rem;
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
-            border: 1px solid rgba(226, 232, 240, 0.8);
+            animation: fadeIn 0.3s ease-in-out;
         }
 
-        .content-section.active {
+        .tab-content.active {
             display: block;
-            animation: fadeIn 0.3s ease-in-out;
         }
 
         @keyframes fadeIn {
@@ -126,1865 +166,1329 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        h2 {
-            font-size: 1.4rem;
-            margin-bottom: 1.5rem;
-            color: var(--primary-light);
-            border-left: 4px solid var(--accent);
-            padding-left: 0.75rem;
-        }
-
-        .form-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1.25rem;
-        }
-
-        @media (max-width: 600px) {
-            .form-grid { grid-template-columns: 1fr; }
-        }
-
-        .form-group {
-            margin-bottom: 1.25rem;
-        }
-
-        .form-group.full-width {
-            grid-column: span 2;
-        }
-
-        label {
-            display: block;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-            font-size: 0.9rem;
-            color: var(--primary-light);
-        }
-
-        input, textarea, select {
-            width: 100%;
-            padding: 0.75rem 1rem;
-            border: 1px solid var(--border);
-            border-radius: 6px;
-            font-size: 1rem;
-            color: var(--text-main);
-            background-color: #fafafa;
-        }
-
-        input:focus, textarea:focus, select:focus {
-            outline: none;
-            border-color: var(--accent);
-            box-shadow: 0 0 0 3px rgba(217, 119, 6, 0.15);
-            background-color: #fff;
-        }
-
-        .checkbox-group {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 1.25rem;
-        }
-
-        .checkbox-group input {
-            width: auto;
-            cursor: pointer;
-        }
-
-        .section-divider {
-            grid-column: span 2;
-            border-bottom: 1px solid var(--border);
-            margin: 1rem 0;
-            padding-bottom: 0.5rem;
-            font-size: 0.85rem;
-            font-weight: bold;
-            color: var(--accent);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .btn-primary {
-            width: 100%;
+        /* HERO / INTRO SECTION */
+        .hero {
             background-color: var(--primary);
             color: white;
-            padding: 0.9rem 1.5rem;
-            border: none;
-            border-radius: 6px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            box-shadow: 0 4px 6px -1px rgba(15, 23, 42, 0.2);
-            transition: background-color 0.2s;
-        }
-
-        .btn-primary:hover { background-color: var(--primary-light); }
-
-        .btn-pjeoffice {
-            width: 100%;
-            background-color: var(--pje-color);
-            color: white;
-            padding: 0.9rem 1.5rem;
-            border: none;
-            border-radius: 6px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            box-shadow: 0 4px 6px -1px rgba(2, 132, 199, 0.2);
-            transition: background-color 0.2s;
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-        }
-
-        .btn-pjeoffice:hover { background-color: var(--pje-hover); }
-
-        .btn-accent {
-            background-color: var(--accent);
-            color: white;
-            padding: 0.75rem 1.5rem;
-            border: none;
-            border-radius: 6px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background-color 0.2s;
-        }
-
-        .btn-accent:hover { background-color: var(--accent-hover); }
-
-        .btn-outline {
-            background-color: transparent;
-            border: 1px solid var(--border);
-            color: var(--text-main);
-            padding: 0.5rem 1rem;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: 600;
-        }
-
-        .btn-outline:hover { background-color: #e2e8f0; }
-
-        .timeline-container {
-            margin-top: 1.5rem;
-            padding-left: 1.5rem;
-            border-left: 3px solid #cbd5e1;
+            padding: 40px 30px;
+            border-radius: var(--radius);
+            margin-bottom: 30px;
+            box-shadow: var(--shadow-lg);
             position: relative;
+            overflow: hidden;
         }
 
-        .timeline-item {
-            position: relative;
-            margin-bottom: 2rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 1px dashed #f1f5f9;
-        }
-
-        .timeline-item::before {
+        .hero::before {
             content: '';
             position: absolute;
-            left: -29px;
-            top: 5px;
-            background-color: var(--accent);
-            width: 13px;
-            height: 13px;
+            top: -50%;
+            right: -10%;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(194, 155, 56, 0.15) 0%, transparent 70%);
             border-radius: 50%;
-            border: 3px solid white;
-            box-shadow: 0 0 0 3px rgba(217, 119, 6, 0.2);
         }
 
-        .timeline-date {
-            font-size: 0.8rem;
-            color: var(--text-muted);
-            font-weight: bold;
-            text-transform: uppercase;
+        .hero h2 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: white;
         }
 
-        .timeline-desc {
-            font-size: 1rem;
-            color: var(--primary-light);
-            margin-top: 0.25rem;
-            font-weight: 500;
-            background: #f8fafc;
-            padding: 0.75rem;
-            border-radius: 6px;
-            border-left: 3px solid var(--accent);
+        .hero p {
+            color: #e2e8f0;
+            max-width: 700px;
+            font-size: 1.05rem;
         }
 
-        .alert {
-            padding: 1rem;
-            border-radius: 6px;
-            margin-bottom: 1.5rem;
-            font-weight: 500;
-            display: none;
+        /* CARDS & GRIDS */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
         }
 
-        .alert.success { background-color: #f0fdf4; color: var(--success); border: 1px solid #bbf7d0; display: block; }
-        .alert.error { background-color: #fef2f2; color: var(--error); border: 1px solid #fecaca; display: block; }
-        .alert.info { background-color: #f0f9ff; color: var(--info); border: 1px solid #bae6fd; display: block; }
-
-        .disclaimer-banner {
-            background-color: #fff1f2;
-            border: 1px solid #fecaca;
-            border-radius: 8px;
-            padding: 1rem;
-            display: flex;
-            gap: 10px;
-            align-items: flex-start;
+        .card {
+            background-color: var(--bg-card);
+            border-radius: var(--radius);
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-sm);
+            padding: 25px;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
         }
 
-        .disclaimer-banner span {
+        .card:hover {
+            box-shadow: var(--shadow-md);
+        }
+
+        .card-title {
             font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 2px solid var(--bg-body);
+            padding-bottom: 10px;
         }
 
-        .disclaimer-text {
-            font-size: 0.82rem;
-            color: #991b1b;
+        .card-title i {
+            color: var(--accent);
+        }
+
+        /* FORMS & INPUTS */
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.88rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 6px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #cbd5e0;
+            border-radius: 6px;
+            font-size: 0.95rem;
+            transition: all 0.2s ease;
+            font-family: inherit;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(27, 42, 74, 0.15);
+        }
+
+        /* CHECKBOXES */
+        .checkbox-group {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin: 15px 0;
+            background-color: var(--bg-body);
+            padding: 12px;
+            border-radius: 6px;
+            border: 1px dashed var(--border-color);
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            margin-top: 4px;
+            width: 16px;
+            height: 16px;
+            cursor: pointer;
+        }
+
+        .checkbox-group label {
+            font-size: 0.85rem;
+            color: var(--text-dark);
+            cursor: pointer;
             font-weight: 500;
             line-height: 1.4;
         }
 
-        .dash-subtabs {
-            display: flex;
-            background: #e2e8f0;
-            padding: 0.3rem;
-            border-radius: 6px;
-            margin-bottom: 1.5rem;
-            gap: 5px;
-        }
-
-        .subtab-btn {
-            flex: 1;
-            padding: 0.5rem;
-            border: none;
-            background: none;
-            cursor: pointer;
-            font-weight: bold;
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            border-radius: 4px;
-            transition: all 0.2s ease;
-        }
-
-        .subtab-btn.active {
-            background: white;
-            color: var(--primary);
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-        }
-
-        .table-coverage {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 1rem;
-            background: white;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-        }
-
-        .table-coverage th, .table-coverage td {
-            padding: 0.75rem 1rem;
-            text-align: left;
-            border-bottom: 1px solid #e2e8f0;
-        }
-
-        .table-coverage th {
-            background-color: var(--primary-light);
-            color: white;
-            font-size: 0.85rem;
-            text-transform: uppercase;
-        }
-
-        .badge-status {
-            padding: 0.2rem 0.5rem;
-            border-radius: 4px;
-            font-size: 0.75rem;
-            font-weight: bold;
-        }
-
-        .badge-status.active {
-            background-color: #dcfce7;
-            color: #15803d;
-        }
-
-        .stj-quick-links {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
-            gap: 10px;
-            margin-top: 1rem;
-        }
-
-        .stj-link-card {
-            background: #f8fafc;
-            border: 1px solid var(--border);
-            padding: 0.75rem;
-            border-radius: 6px;
-            text-decoration: none;
-            color: var(--primary-light);
-            text-align: center;
-            font-weight: 600;
-            font-size: 0.8rem;
-            transition: transform 0.2s, box-shadow 0.2s;
-            display: flex;
-            flex-direction: column;
+        /* BUTTONS */
+        .btn {
+            display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 5px;
+            gap: 8px;
+            width: 100%;
+            padding: 12px 20px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            font-family: inherit;
         }
 
-        .stj-link-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
-            border-color: var(--accent);
-        }
-
-        .loader-container {
-            display: none;
-            text-align: center;
-            padding: 2rem;
-        }
-
-        .spinner {
-            border: 4px solid rgba(0,0,0,0.1);
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            border-left-color: var(--accent);
-            animation: spin 1s linear infinite;
-            margin: 0 auto 1rem auto;
-        }
-
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-
-        .dashboard-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 2rem;
-            padding-bottom: 1rem;
-            border-bottom: 2px solid var(--bg);
-        }
-
-        .result-card {
-            margin-top: 2rem;
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-            display: none;
-        }
-
-        .result-header {
+        .btn-primary {
             background-color: var(--primary);
             color: white;
-            padding: 1rem;
-            font-weight: 600;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
         }
 
-        .result-header .oab-tag {
+        .btn-primary:hover {
+            background-color: var(--primary-light);
+        }
+
+        .btn-accent {
             background-color: var(--accent);
-            font-size: 0.8rem;
-            padding: 0.25rem 0.6rem;
-            border-radius: 4px;
+            color: white;
         }
 
-        .result-body {
-            padding: 1.5rem;
-            background-color: #f8fafc;
+        .btn-accent:hover {
+            background-color: var(--accent-hover);
         }
 
-        .result-field {
-            margin-bottom: 1rem;
-            border-bottom: 1px dashed #e2e8f0;
-            padding-bottom: 0.75rem;
-        }
-
-        .result-field:last-child { border-bottom: none; }
-
-        .result-label {
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            color: var(--text-muted);
-            font-weight: bold;
-        }
-
-        .result-value {
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: var(--primary-light);
-            margin-top: 0.25rem;
-        }
-
-        .status-badge {
-            display: inline-block;
-            background-color: #dbeafe;
-            color: #1e40af;
-            padding: 0.25rem 0.75rem;
-            border-radius: 9999px;
-            font-size: 0.9rem;
-            font-weight: bold;
-        }
-
-        .simulador-container {
-            margin-top: 4rem;
-            background-color: #fffbeb;
-            border: 2px dashed #f59e0b;
-            border-radius: 8px;
-            padding: 1.5rem;
-        }
-
-        .simulador-title {
-            font-weight: bold;
-            color: #b45309;
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .pendentes-lista {
-            margin-top: 1rem;
-            background: white;
-            border: 1px solid #fcd34d;
-            border-radius: 6px;
-            max-height: 200px;
-            overflow-y: auto;
-        }
-
-        .pendente-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0.75rem 1rem;
-            border-bottom: 1px solid #fef3c7;
-        }
-
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0,0,0,0.5);
-            align-items: center;
-            justify-content: center;
-        }
-
-        .modal-content {
-            background-color: white;
-            border-radius: 8px;
-            max-width: 600px;
-            width: 90%;
-            padding: 2rem;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            animation: modalFade 0.3s ease;
-        }
-
-        @keyframes modalFade {
-            from { opacity: 0; transform: scale(0.95); }
-            to { opacity: 1; transform: scale(1); }
-        }
-
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid var(--border);
-            padding-bottom: 0.75rem;
-            margin-bottom: 1rem;
-        }
-
-        .modal-close {
+        .btn-outline {
             background: none;
-            border: none;
-            font-size: 1.5rem;
-            cursor: pointer;
-            color: var(--text-muted);
+            border: 1px solid var(--border-color);
+            color: var(--text-dark);
         }
 
-        footer {
-            text-align: center;
-            margin-top: 4rem;
-            padding: 2rem 0;
-            color: var(--text-muted);
-            font-size: 0.85rem;
-            border-top: 1px solid var(--border);
+        .btn-outline:hover {
+            background-color: var(--bg-body);
+            border-color: #cbd5e0;
+        }
+
+        .btn-danger {
+            background-color: var(--danger);
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background-color: #c53030;
+        }
+
+        /* ALERTS & STATUS BOXES */
+        .alert {
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            display: none;
+        }
+
+        .alert-success {
+            background-color: #c6f6d5;
+            color: #22543d;
+            border-left: 4px solid var(--success);
+        }
+
+        .alert-danger {
+            background-color: #fed7d7;
+            color: #742a2a;
+            border-left: 4px solid var(--danger);
+        }
+
+        .alert-info {
+            background-color: #ebf8ff;
+            color: #2b6cb0;
+            border-left: 4px solid #3182ce;
+        }
+
+        /* VISUAL TIMELINE */
+        .timeline {
+            position: relative;
+            padding-left: 20px;
+            margin: 20px 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 4px;
+            width: 2px;
+            height: 100%;
+            background-color: var(--border-color);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 25px;
+        }
+
+        .timeline-marker {
+            position: absolute;
+            top: 4px;
+            left: -20px;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: var(--accent);
+            border: 2px solid white;
+        }
+
+        .timeline-item.latest .timeline-marker {
+            background-color: var(--success);
+            box-shadow: 0 0 0 4px rgba(56, 161, 105, 0.2);
+        }
+
+        .timeline-time {
+            font-size: 0.8rem;
+            color: var(--text-light);
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .timeline-text {
+            font-size: 0.95rem;
+            color: var(--text-dark);
+            font-weight: 500;
+        }
+
+        /* DJE PUBLICACAO PANEL */
+        .dje-box {
+            background-color: #faf7f0;
+            border: 1px solid #e9dfcc;
+            border-left: 4px solid var(--accent);
+            padding: 15px;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            margin: 15px 0;
+        }
+
+        .dje-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.78rem;
+            color: var(--text-light);
+            font-weight: 600;
+            border-bottom: 1px solid #ebdcb9;
+            padding-bottom: 6px;
+            margin-bottom: 8px;
+        }
+
+        .dje-content {
+            font-style: italic;
+            color: #555555;
+            line-height: 1.5;
+        }
+
+        /* BADGES */
+        .badge {
+            display: inline-block;
+            padding: 4px 8px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            border-radius: 4px;
+            text-transform: uppercase;
+        }
+
+        .badge-success { background-color: #c6f6d5; color: #22543d; }
+        .badge-pending { background-color: #feebc8; color: #744210; }
+        .badge-danger { background-color: #fed7d7; color: #742a2a; }
+
+        /* USER SESSION HEADER */
+        .session-info {
+            background-color: #edf2f7;
+            padding: 10px 20px;
+            border-radius: var(--radius);
+            margin-bottom: 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            font-size: 0.9rem;
+            border: 1px solid var(--border-color);
+        }
+
+        .session-user {
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        /* SYSTEM COUPERAGE PANELS (MAPPING FROM BACKEND) */
+        .system-status {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 15px;
+        }
+
+        .system-status-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: var(--bg-body);
+            padding: 12px;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+        }
+
+        .system-info-title {
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .system-info-desc {
+            font-size: 0.75rem;
+            color: var(--text-light);
+        }
+
+        /* STJ BUSCA FORM PANEL */
+        .stj-form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        /* RESPONSIVE LAYOUT BREAKPOINTS FOR MOBILE (GALAXY S21, ETC.) */
+        @media (max-width: 768px) {
+            body {
+                font-size: 15px;
+                padding-bottom: 40px;
+            }
+
+            header {
+                padding: 0.8rem 0;
+            }
+
+            .header-container {
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 0 15px;
+            }
+
+            .logo-text h1 {
+                font-size: 1.25rem;
+            }
+
+            nav {
+                border-top: 1px solid rgba(255,255,255,0.1);
+            }
+
+            .tab-btn {
+                padding: 12px 16px;
+                font-size: 0.88rem;
+            }
+
+            main {
+                margin: 15px auto;
+                padding: 0 12px;
+            }
+
+            .hero {
+                padding: 25px 20px;
+                margin-bottom: 20px;
+            }
+
+            .hero h2 {
+                font-size: 1.4rem;
+            }
+
+            .hero p {
+                font-size: 0.95rem;
+            }
+
+            .grid-2 {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+
+            .card {
+                padding: 18px;
+            }
+
+            .card-title {
+                font-size: 1.1rem;
+            }
+
+            .form-control {
+                padding: 10px;
+                font-size: 0.9rem;
+            }
+
+            .btn {
+                padding: 10px 16px;
+                font-size: 0.9rem;
+            }
+
+            .session-info {
+                padding: 10px 12px;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 6px;
+            }
+
+            .dje-box {
+                padding: 12px;
+            }
+
+            .dje-meta {
+                flex-direction: column;
+                gap: 4px;
+            }
         }
     </style>
 </head>
 <body>
 
+    <!-- PORTAL HEADER -->
     <header>
-        <h1>JurisConsult v10</h1>
-        <p>Homologado com IA Tradutora, DJE Oficial, Calculadora CPC e Governança LGPD Completa</p>
-        <!-- ADICIONADO ABAIXO: -->
-        <div class="header-author">Desenvolvido Intelectualmente por Gabriel Pisaneschi</div>
+        <div class="header-container">
+            <div class="logo-area">
+                <div class="logo-icon">⚖️</div>
+                <div class="logo-text">
+                    <h1>JurisConsult</h1>
+                    <span>Inteligência Jurídica & Transparência</span>
+                </div>
+            </div>
+        </div>
     </header>
 
-    <main>
-        <div class="tabs">
-            <button class="tab-btn active" id="btn-search" onclick="switchTab('search-tab')">🔍 Consulta do Cliente leigo</button>
-            <button class="tab-btn" id="btn-auth" onclick="switchTab('auth-tab')">⚖️ Área do Advogado (Acesso)</button>
-            <button class="tab-btn" id="btn-dash" onclick="switchTab('dash-tab')" disabled>💼 Painel de Controle</button>
+    <!-- HORIZONTAL SCROLLABLE RESPONSIVE NAVIGATION TABS -->
+    <nav>
+        <div class="nav-container">
+            <button class="tab-btn active" onclick="switchTab('cliente-tab')">🔍 Consulta Pública</button>
+            <button class="tab-btn" onclick="switchTab('advogado-tab')">🔐 Área do Advogado</button>
+            <button class="tab-btn" onclick="switchTab('painel-tab')" id="panel-nav-btn" style="display: none;">💼 Painel de Controle</button>
+            <button class="tab-btn" onclick="switchTab('stj-tab')">🏛️ SCON do STJ</button>
+            <button class="tab-btn" onclick="switchTab('cobertura-tab')">📶 Status dos Tribunais</button>
+            <button class="tab-btn" onclick="switchTab('lgpd-tab')">🛡️ Governança LGPD</button>
         </div>
+    </nav>
 
-        <!-- SEÇÃO 1: CONSULTA PÚBLICA -->
-        <div id="search-tab" class="content-section active">
-            <h2>Portal de Acompanhamento do Cliente</h2>
-            <p style="color: var(--text-muted); margin-bottom: 1.5rem; font-size: 0.95rem;">
-                Insira o número do seu processo e seus dados pessoais para consultar o andamento completo em <strong>Linguagem Simplificada Traduzida</strong>.
-            </p>
+    <!-- MAIN BODY CONTENT -->
+    <main>
 
-            <div id="search-alert" class="alert"></div>
-
-            <form id="search-form" onsubmit="handleSearch(event)">
-                <div class="form-grid">
-                    <div class="form-group">
-                        <label for="search-client-name">Nome Completo do Cliente</label>
-                        <input type="text" id="search-client-name" placeholder="Ex: Mariana de Souza" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="search-client-cpf">Seu CPF (Apenas números)</label>
-                        <input type="text" id="search-client-cpf" placeholder="Ex: 12345678901" required>
-                    </div>
-                    <div class="form-group full-width">
-                        <label for="search-process">Número Único do Processo (20 dígitos do CNJ)</label>
-                        <input type="text" id="search-process" placeholder="Ex: 0012345-67.2026.8.26.0001" oninput="aplicarMascaraCNJ(this)" required>
-                    </div>
-                </div>
-                <button type="submit" class="btn-primary">Consultar Linha do Tempo</button>
-            </form>
-
-            <!-- CARD EXCLUSIVO DE REVOGAÇÃO LGPD -->
-            <div style="margin-top: 1.5rem; background: #f8fafc; border: 1px solid var(--border); padding: 1rem; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; gap: 15px;">
-                <div>
-                    <h4 style="font-size: 0.9rem; color: var(--primary-light); margin-bottom: 0.25rem;">🔒 Seus Direitos (Revogação de Consentimento LGPD)</h4>
-                    <p style="font-size: 0.78rem; color: var(--text-muted); line-height: 1.3;">Deseja interromper o monitoramento e apagar de forma definitiva todos os seus dados e processos do JurisConsult?</p>
-                </div>
-                <button class="btn-outline" onclick="abrirModalRevogacao()" style="font-size: 0.8rem; border-color: var(--error); color: var(--error); padding: 0.4rem 0.8rem; white-space: nowrap;">Revogar e Apagar Dados</button>
+        <!-- ==================== VIEW 1: CLIENTE TAB ==================== -->
+        <div id="cliente-tab" class="tab-content active">
+            <div class="hero">
+                <h2>Consulta Cidadã Simplificada</h2>
+                <p>Acompanhe o andamento de seu processo em linguagem clara, humanizada e didática, livre de termos jurídicos inacessíveis.</p>
             </div>
 
-            <!-- STANDALONE WIDGET: CALCULADORA CPC DIAS ÚTEIS -->
-            <div style="margin-top: 1.5rem; background: #f0fdf4; border: 1px solid #bbf7d0; padding: 1.25rem; border-radius: 8px;">
-                <h3 style="font-size: 1rem; color: #16a34a; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 8px;">🧮 Calculadora de Prazos Cíveis (Art. 219 CPC/2015)</h3>
-                <p style="font-size: 0.8rem; color: #15803d; margin-bottom: 1rem;">Calcule datas de publicação e vencimento em dias úteis a partir da data de disponibilização no Diário oficial (DJE).</p>
-                <div style="display: grid; grid-template-columns: 1fr 1fr 100px; gap: 10px; align-items: flex-end;">
-                    <div class="form-group" style="margin-bottom:0;">
-                        <label style="font-size:0.75rem; color: #15803d;">Data de Disponibilização (DJE)</label>
-                        <input type="date" id="calc-date-input" style="padding: 0.5rem; font-size:0.85rem;">
-                    </div>
-                    <div class="form-group" style="margin-bottom:0;">
-                        <label style="font-size:0.75rem; color: #15803d;">Prazo Legal (Dias Úteis)</label>
-                        <select id="calc-days-input" style="padding: 0.5rem; font-size:0.85rem;">
-                            <option value="15" selected>15 dias úteis (Apelação, Agravo, Contestar)</option>
-                            <option value="5">5 dias úteis (Embargos de Declaração)</option>
-                            <option value="10">10 dias úteis (Manifestação Geral)</option>
-                            <option value="30">30 dias úteis (Fazenda Pública)</option>
-                        </select>
-                    </div>
-                    <button class="btn-accent" onclick="calcularPrazoStandAlone()" style="padding: 0.6rem; font-size: 0.85rem; background-color: #16a34a; border-color: #15803d; font-weight:bold;">Calcular</button>
-                </div>
-                <div id="calc-result-box" style="display:none; margin-top:1rem; background:white; padding:1rem; border-radius:6px; border: 1px solid #bbf7d0;">
-                    <table style="width: 100%; border-collapse: collapse; font-size: 0.85rem;">
-                        <tr style="border-bottom: 1px dashed #e2e8f0;"><td style="padding:0.4rem 0; font-weight:bold; color:var(--text-muted);">Disponibilização no DJE:</td><td style="padding:0.4rem 0; text-align:right; font-weight:bold;" id="cpc-res-disp">-</td></tr>
-                        <tr style="border-bottom: 1px dashed #e2e8f0;"><td style="padding:0.4rem 0; font-weight:bold; color:var(--text-muted);">Considerado Publicado:</td><td style="padding:0.4rem 0; text-align:right; font-weight:bold; color: var(--accent);" id="cpc-res-pub">-</td></tr>
-                        <tr style="border-bottom: 1px dashed #e2e8f0;"><td style="padding:0.4rem 0; font-weight:bold; color:var(--text-muted);">Início da Contagem:</td><td style="padding:0.4rem 0; text-align:right; font-weight:bold; color: var(--info);" id="cpc-res-inicio">-</td></tr>
-                        <tr><td style="padding:0.4rem 0; font-weight:bold; color:var(--primary);">Data de Vencimento Final:</td><td style="padding:0.4rem 0; text-align:right; font-weight:bold; color: var(--error); font-size:1rem;" id="cpc-res-venc">-</td></tr>
-                    </table>
-                    <div style="font-size:0.7rem; color:var(--text-muted); margin-top:0.5rem; line-height:1.3;" id="cpc-res-nota"></div>
-                </div>
-            </div>
-
-            <div class="disclaimer-banner" style="margin-top: 1.5rem;">
-                <span>⚠️</span>
-                <p class="disclaimer-text">
-                    <strong>Aviso de Prazos Processuais:</strong> As updates exibidas neste portal têm caráter exclusivamente informativo. Elas não substituem as intimações oficiais publicadas nos Diários de Justiça Eletrônicos (DJE). Consulte sempre seu advogado para o controle de prazos processuais.
-                </p>
-            </div>
-
-            <div id="automation-loader" class="loader-container">
-                <div class="spinner"></div>
-                <h4 id="loader-status" style="color: var(--primary); margin-bottom: 0.5rem;">Iniciando conexão segura...</h4>
-                <p id="loader-subtext" style="color: var(--text-muted); font-size: 0.85rem;">Conectando e quebrando captcha dos tribunais...</p>
-            </div>
-
-            <!-- RESULT CARD -->
-            <div id="result-card" class="result-card">
-                <div class="result-header">
-                    <span id="res-advocate-name">Dr(a). Advogado</span>
-                    <span class="oab-tag" id="res-advocate-oab">OAB: 000000/SP</span>
-                </div>
-                <div class="result-body">
-                    <div class="result-field">
-                        <div class="result-label">Cliente Vinculado</div>
-                        <div class="result-value" id="res-client-name">-</div>
-                    </div>
-                    <div class="result-field">
-                        <div class="result-label">Nº Processo</div>
-                        <div class="result-value" id="res-process-num">-</div>
-                    </div>
-                    <div class="result-field">
-                        <div class="result-label">Tribunal de Acesso</div>
-                        <div class="result-value" id="res-court-name">-</div>
-                    </div>
-                    <div class="result-field">
-                        <div class="result-label">Situação do Processo</div>
-                        <div class="result-value">
-                            <span class="status-badge" id="res-process-status">Ativo</span>
+            <div class="grid-2">
+                <div class="card">
+                    <div class="card-title">🔍 Buscar Processo Judicial</div>
+                    
+                    <div id="client-alert-danger" class="alert alert-danger"></div>
+                    
+                    <form id="client-search-form" onsubmit="consultarProcesso(event)">
+                        <div class="form-group">
+                            <label for="clientNameSearch">Seu Nome Completo:</label>
+                            <input type="text" id="clientNameSearch" class="form-control" placeholder="Ex: Mariana de Souza" required>
                         </div>
-                    </div>
+                        <div class="form-group">
+                            <label for="clientCpfSearch">Seu CPF (Somente Números):</label>
+                            <input type="text" id="clientCpfSearch" class="form-control" placeholder="Ex: 12345678901" maxlength="14" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="processNumSearch">Número do Processo (20 Dígitos CNJ):</label>
+                            <input type="text" id="processNumSearch" class="form-control" placeholder="Ex: 0003483-23.2024.8.26.0026" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary" id="btn-search-client">
+                            🔄 Consultar via Robô Integrado
+                        </button>
+                    </form>
+                </div>
 
-                    <!-- MÓDULO VISÍVEL: PUBLICAÇÕES OFICIAIS DO DJE COM CALCULADORA EMBUTIDA -->
-                    <div class="result-field" id="res-dje-box" style="display: none; border-top: 1px dashed var(--border); margin-top: 1.5rem; padding-top: 1rem;">
-                        <div class="result-label" style="color: var(--accent); font-weight: bold;">📜 Publicações Oficiais - Diário da Justiça Eletrônico (DJE)</div>
-                        <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.5rem;">O bloco abaixo exibe a publicação oficial e formal no Diário Oficial. Esta é a fonte juridicamente aceita para a contagem de prazos em dias úteis.</p>
-                        <div id="dje-list-box" style="background: #fafafa; border: 1px solid var(--border); padding: 1rem; border-radius: 6px;"></div>
-                    </div>
-
-                    <div class="result-field">
-                        <div class="result-label">Histórico de Movimentações (Tradução Didática JurisConsult)</div>
-                        <div class="timeline-container" id="timeline-box"></div>
+                <div class="card" id="client-result-card" style="display: none;">
+                    <div class="card-title">📋 Informações do Processo</div>
+                    
+                    <div class="form-group" style="margin-bottom: 12px;">
+                        <span style="font-size: 0.8rem; font-weight: 700; text-transform: uppercase; color: var(--text-light);">Número Único CNJ:</span>
+                        <p id="res-process-num" style="font-weight: 600; color: var(--primary);"></p>
                     </div>
                     
-                    <div class="result-field" id="res-disclaimer-box" style="display: none; border-top: 1px dashed var(--border); margin-top: 1.5rem; padding-top: 1rem; border-bottom: none;">
-                        <div class="result-label" style="color: var(--error);">Nota Legal Oficial</div>
-                        <div class="result-value" id="res-disclaimer" style="font-size: 0.82rem; color: #991b1b; font-weight: 500; line-height: 1.4;">-</div>
+                    <div class="form-group" style="margin-bottom: 12px;">
+                        <span style="font-size: 0.8rem; font-weight: 700; text-transform: uppercase; color: var(--text-light);">Tribunal de Origem:</span>
+                        <p id="res-process-court" style="font-weight: 500;"></p>
                     </div>
+
+                    <div class="form-group" style="margin-bottom: 12px;">
+                        <span style="font-size: 0.8rem; font-weight: 700; text-transform: uppercase; color: var(--text-light);">Situação do Caso:</span>
+                        <p><span class="badge badge-success" id="res-process-status"></span></p>
+                    </div>
+
+                    <div class="form-group" style="margin-bottom: 12px;">
+                        <span style="font-size: 0.8rem; font-weight: 700; text-transform: uppercase; color: var(--text-light);">Advogado Responsável:</span>
+                        <p id="res-process-adv" style="font-weight: 600;"></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TIMELINE & DJE RESULT (SPANNING FULL WIDTH) -->
+            <div id="client-timeline-section" style="display: none; margin-top: 30px;">
+                <div class="card" style="margin-bottom: 25px;">
+                    <div class="card-title">🕒 Linha do Tempo Didática (Histórico de Andamentos)</div>
+                    <div id="timeline-container" class="timeline"></div>
+                </div>
+
+                <div class="card" style="margin-bottom: 25px;">
+                    <div class="card-title">📰 Publicações Oficiais no Diário (DJE)</div>
+                    <div id="dje-publications-container"></div>
+                </div>
+
+                <div class="card">
+                    <div class="card-title">⚠️ Aviso Legal e Isenção de Responsabilidade</div>
+                    <p id="res-process-disclaimer" style="font-size: 0.85rem; color: var(--text-light); text-align: justify;"></p>
                 </div>
             </div>
         </div>
 
-        <!-- SEÇÃO 2: ÁREA DO ADVOGADO -->
-        <div id="auth-tab" class="content-section">
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
-                <div>
-                    <div id="login-box">
-                        <h2>Entrar no Painel</h2>
-                        <div id="login-alert" class="alert"></div>
-                        
-                        <button class="btn-pjeoffice" onclick="handlePJeOfficeLogin()">
-                            🔑 Acessar com Certificado Digital (PJeOffice)
-                        </button>
-                        
-                        <div style="text-align: center; color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1rem; position: relative;">
-                            <span style="background: white; padding: 0 10px; position: relative; z-index: 2;">ou acesse com senha</span>
-                            <hr style="position: absolute; top: 50%; left: 0; right: 0; border: none; border-top: 1px solid var(--border); z-index: 1;">
+        <!-- ==================== VIEW 2: ADVOGADO TAB (LOGIN/CADASTRO) ==================== -->
+        <div id="advogado-tab" class="tab-content">
+            <div class="hero">
+                <h2>Portal de Acesso Profissional</h2>
+                <p>Cadastre sua conta OAB ou autentique-se de forma segura para monitorar as movimentações dos seus representados e gerenciar notificações.</p>
+            </div>
+
+            <div class="grid-2">
+                <!-- LOGIN CARD -->
+                <div class="card">
+                    <div class="card-title">🔑 Entrar no Painel</div>
+                    
+                    <div id="login-alert-danger" class="alert alert-danger"></div>
+                    <div id="login-alert-success" class="alert alert-success"></div>
+
+                    <form id="adv-login-form" onsubmit="loginAdvogado(event)">
+                        <div class="form-group">
+                            <label for="loginEmail">E-mail Profissional:</label>
+                            <input type="email" id="loginEmail" class="form-control" placeholder="advogado@oabsp.org.br" required>
                         </div>
+                        <div class="form-group">
+                            <label for="loginSenha">Senha de Acesso:</label>
+                            <input type="password" id="loginSenha" class="form-control" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary" style="margin-bottom: 12px;">🚪 Acessar Painel</button>
+                    </form>
 
-                        <form id="login-form" onsubmit="handleLogin(event)">
-                            <div class="form-group">
-                                <label for="login-email">E-mail Profissional</label>
-                                <input type="email" id="login-email" placeholder="nome@advocacia.com" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="login-password">Senha de Acesso</label>
-                                <input type="password" id="login-password" placeholder="Sua senha secreta" required>
-                            </div>
-                            <button type="submit" class="btn-primary">Acessar Painel</button>
-                            <p style="margin-top: 1rem; font-size: 0.85rem; text-align: center;">
-                                <a href="#" onclick="toggleRecoveryForm(true)" style="color: var(--accent); text-decoration: none; font-weight: bold;">Esqueci minha senha</a>
-                            </p>
-                        </form>
-                    </div>
-
-                    <div id="recovery-request-box" style="display: none;">
-                        <h2>Recuperar Acesso</h2>
-                        <div id="recovery-request-alert" class="alert"></div>
-                        <form id="recovery-request-form" onsubmit="handleRecoveryRequest(event)">
-                            <div class="form-group">
-                                <label for="rec-identificador">E-mail ou OAB Cadastrada</label>
-                                <input type="text" id="rec-identificador" placeholder="Ex: seu-email@advocacia.com ou 123456/SP" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="rec-metodo">Deseja receber o código por onde?</label>
-                                <select id="rec-metodo" required>
-                                    <option value="email" selected>E-mail Cadastrado</option>
-                                    <option value="sms">SMS (no Celular Cadastrado)</option>
-                                </select>
-                            </div>
-                            <button type="submit" class="btn-primary" style="margin-bottom: 0.5rem;">Enviar Código de Segurança</button>
-                            <button type="button" class="btn-outline" onclick="toggleRecoveryForm(false)" style="width: 100%;">Voltar para o Login</button>
-                        </form>
-                    </div>
-
-                    <div id="recovery-confirm-box" style="display: none;">
-                        <h2>Cadastrar Nova Senha</h2>
-                        <div id="recovery-confirm-alert" class="alert"></div>
-                        <form id="recovery-confirm-form" onsubmit="handleRecoveryConfirm(event)">
-                            <div class="form-group">
-                                <label for="confirm-token">Código de Redefinição (6 dígitos)</label>
-                                <input type="text" id="confirm-token" placeholder="Ex: 123456" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="confirm-new-password">Sua Nova Senha Secreta</label>
-                                <input type="password" id="confirm-new-password" placeholder="Mínimo 6 caracteres" required>
-                            </div>
-                            <button type="submit" class="btn-primary" style="margin-bottom: 0.5rem;">Atualizar Senha com Segurança</button>
-                            <button type="button" class="btn-outline" onclick="toggleRecoveryForm(false)" style="width: 100%;">Cancelar e Voltar</button>
-                        </form>
+                    <!-- OR PJeOFFICE DISCARDABLE LOGIN -->
+                    <div style="border-top: 1px solid var(--border-color); padding-top: 15px; margin-top: 15px;">
+                        <button class="btn btn-outline" onclick="loginPjeOffice()">
+                            🔑 Entrar com Certificado Digital (PJeOffice)
+                        </button>
                     </div>
                 </div>
 
-                <div style="border-left: 1px solid var(--border); padding-left: 2rem;">
-                    <h2>Criar Conta Profissional</h2>
-                    <div id="register-alert" class="alert"></div>
-                    <form id="register-form" onsubmit="handleRegister(event)">
-                        <div class="form-group">
-                            <label for="reg-name">Nome Completo</label>
-                            <input type="text" id="reg-name" placeholder="Ex: Dr. Carlos Silva" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="reg-email">E-mail de Trabalho</label>
-                            <input type="email" id="reg-email" placeholder="contato@advocacia.com" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="reg-phone">Telefone Celular (para SMS de Recuperação)</label>
-                            <input type="text" id="reg-phone" placeholder="Ex: 11999999999" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="reg-oab">OAB Profissional (com UF)</label>
-                            <input type="text" id="reg-oab" placeholder="Ex: 123456/SP" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="reg-password">Senha para o Portal</label>
-                            <input type="password" id="reg-password" placeholder="Mínimo 6 caracteres" required>
-                        </div>
+                <!-- REGISTER CARD -->
+                <div class="card">
+                    <div class="card-title">✍️ Criar Conta Profissional</div>
+                    
+                    <div id="register-alert-danger" class="alert alert-danger"></div>
+                    <div id="register-alert-success" class="alert alert-success"></div>
 
-                        <!-- CHECKS DE SEGURANÇA E CONFORMIDADE LGPD NATIVA -->
-                        <div class="checkbox-group" style="background: #f8fafc; padding: 0.75rem; border-radius: 6px; border: 1px solid var(--border); margin-bottom: 1rem;">
-                            <input type="checkbox" id="reg-lgpd" required>
-                            <label_aut for="reg-lgpd" style="display:inline; font-weight:normal; font-size: 0.8rem; line-height: 1.4;">
-                                Li e aceito ativamente os <a href="#" onclick="abrirModalLGPD(event)" style="color: var(--accent); text-decoration: none; font-weight: bold;">Termos de Consentimento e Privacidade</a> em conformidade com a <strong>LGPD (Lei 13.709/18)</strong>.
-                            </label_aut>
+                    <form id="adv-register-form" onsubmit="cadastrarAdvogado(event)">
+                        <div class="form-group">
+                            <label for="regNome">Nome Completo:</label>
+                            <input type="text" id="regNome" class="form-control" placeholder="Dr. Carlos Silva" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="regEmail">E-mail Cadastrado na OAB:</label>
+                            <input type="email" id="regEmail" class="form-control" placeholder="carlos@oab.org.br" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="regOab">Inscrição OAB (Número/UF):</label>
+                            <input type="text" id="regOab" class="form-control" placeholder="123456/SP" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="regTelefone">Celular de Alertas (Somente números):</label>
+                            <input type="text" id="regTelefone" class="form-control" placeholder="11999999999">
+                        </div>
+                        <div class="form-group">
+                            <label for="regSenha">Criar Senha Forte:</label>
+                            <input type="password" id="regSenha" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="regTribunal">Tribunal de Atuação Principal:</label>
+                            <select id="regTribunal" class="form-control">
+                                <option value="TJSP (Tribunal de Justiça de SP)">TJSP - Tribunal de Justiça de São Paulo</option>
+                                <option value="TRF4 (Região Sul)">TRF4 - Justiça Federal Região Sul</option>
+                                <option value="TRT2 (São Paulo)">TRT2 - Tribunal Regional do Trabalho (SP)</option>
+                                <option value="STJ (Superior Tribunal de Justiça)">STJ - Superior Tribunal de Justiça (SCON)</option>
+                            </select>
                         </div>
 
                         <div class="checkbox-group">
-                            <input type="checkbox" id="reg-save-creds" checked onchange="toggleCredsForm(this)">
-                            <label for="reg-save-creds" style="display:inline; font-weight:normal;">Desejo salvar minhas credenciais de tribunal no banco (Desmarque para Modo Efêmero PJeOffice)</label>
-                        </div>
-
-                        <div id="tribunal-creds-box">
-                            <div class="section-divider">Automação de Tribunais (Opcional)</div>
-                            <div class="form-group">
-                                <label for="reg-court">Tribunal Principal</label>
-                                <select id="reg-court">
-                                    <option value="" selected>Não configurar agora</option>
-                                    <option value="TJSP (Tribunal de Justiça de SP)">TJSP (Tribunal de Justiça de SP)</option>
-                                    <option value="TJRJ (Tribunal de Justiça do RJ)">TJRJ (Tribunal de Justiça do RJ)</option>
-                                    <option value="PJe Nacional">PJe Nacional (Plataforma Digital CNJ)</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="reg-court-user">Usuário do Tribunal</label>
-                                <input type="text" id="reg-court-user" placeholder="Login no portal do tribunal">
-                            </div>
-                            <div class="form-group">
-                                <label for="reg-court-pass">Senha do Tribunal (Salva Criptografada)</label>
-                                <input type="password" id="reg-court-pass" placeholder="Sua senha de acesso oficial">
-                            </div>
-                        </div>
-
-                        <button type="submit" class="btn-primary">Criar Conta (Inicia Pendente)</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-
-        <!-- SEÇÃO 3: PAINEL DE CONTROLE (ADVOGADO LOGADO) -->
-        <div id="dash-tab" class="content-section">
-            <div class="dashboard-header">
-                <div>
-                    <h2 id="dash-title" style="border: none; padding: 0; margin: 0;">Painel de Controle</h2>
-                    <p style="color: var(--text-muted); font-size: 0.9rem;" id="dash-subtitle">Sessão Segura Ativa</p>
-                </div>
-                <button class="btn-outline" onclick="handleLogout()">🚪 Sair do Portal</button>
-            </div>
-
-            <div id="dash-alert" class="alert"></div>
-
-            <div id="pjeoffice-ephemeral-banner" style="display: none; background: #f0f9ff; border: 1px solid #bae6fd; padding: 1rem; border-radius: 6px; margin-bottom: 1.5rem;">
-                <h4 style="color: #0369a1; margin-bottom: 0.25rem;">🔒 Modo de Consulta Efêmera PJeOffice Ativo</h4>
-                <p style="font-size: 0.85rem; color: #0284c7;">Como você optou por não salvar senhas no banco, utilizaremos o PJeOffice para assinar criptograficamente cada busca de forma descartável.</p>
-            </div>
-
-            <div class="dash-subtabs">
-                <button class="subtab-btn active" id="btn-sub-link" onclick="switchSubTab('sub-link-section')">📝 Vincular Processo</button>
-                <button class="subtab-btn" id="btn-sub-precedents" onclick="switchSubTab('sub-precedents-section')">📚 Pesquisa de Precedentes (STJ)</button>
-                <button class="subtab-btn" id="btn-sub-coverage" onclick="switchSubTab('sub-coverage-section'); carregarStatusCobertura();">🌐 Status de Cobertura & Instabilidades</button>
-            </div>
-
-            <!-- SUB-ABA A: VINCULAR -->
-            <div id="sub-link-section" class="sub-section">
-                <form id="link-form" onsubmit="handleLink(event)">
-                    <div class="form-grid">
-                        <div class="section-divider">Vincular Novo Processo / Adicionar Movimentação</div>
-                        
-                        <div class="form-group">
-                            <label for="link-client-name">Nome Completo do Cliente</label>
-                            <input type="text" id="link-client-name" placeholder="Ex: Mariana de Souza" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="link-client-cpf">CPF do Cliente (Apenas números)</label>
-                            <input type="text" id="link-client-cpf" placeholder="Ex: 12345678901" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="link-client-phone">Celular do Cliente (Para WhatsApp)</label>
-                            <input type="text" id="link-client-phone" placeholder="Ex: 11999999999">
-                        </div>
-                        <div class="form-group">
-                            <label for="link-status">Status do Processo</label>
-                            <select id="link-status" required>
-                                <option value="Em Andamento / Ativo" selected>Em Andamento / Ativo</option>
-                                <option value="Aguardando Julgamento">Aguardando Julgamento</option>
-                                <option value="Concluído / Sentenciado">Concluído / Sentenciado</option>
-                                <option value="Suspenso">Suspenso</option>
-                            </select>
-                        </div>
-                        <div class="form-group full-width">
-                            <label for="link-process-num">Número Único do Processo (Formato CNJ)</label>
-                            <input type="text" id="link-process-num" placeholder="Ex: 0012345-67.2026.8.26.0001" oninput="aplicarMascaraCNJ(this)" required>
-                        </div>
-                        <div class="form-group full-width">
-                            <label for="link-update">Nova Movimentação do Tribunal (Ex: Conclusão ao Juiz, Sentença...)</label>
-                            <textarea id="link-update" rows="3" placeholder="Ex: Conclusão ao Juiz para prolação de despacho urgente..." required></textarea>
-                        </div>
-
-                        <!-- CHECKS DE LGPD PARA VÍNCULO DO CLIENTE -->
-                        <div class="form-group full-width checkbox-group" style="background: #f8fafc; padding: 0.75rem; border-radius: 6px; border: 1px solid var(--border);">
-                            <input type="checkbox" id="link-lgpd" required checked>
-                            <label for="link-lgpd" style="display:inline; font-weight:normal; font-size: 0.8rem; line-height: 1.4;">
-                                Declaro que o titular dos dados (cliente) autorizou ativamente o processamento e monitoramento de suas informações processuais para o recebimento das atualizações de forma inequívoca de acordo com a LGPD.
+                            <input type="checkbox" id="regConsentimentoLgpd" required>
+                            <label for="regConsentimentoLgpd">
+                                Declaro ler, compreender e aceitar ativamente os Termos de Tratamento de Dados Pessoais do JurisConsult sob as diretrizes da LGPD (Lei 13.709/18).
                             </label>
                         </div>
-                    </div>
-                    
-                    <button type="submit" class="btn-accent" style="width: 100%; margin-top: 1rem;" id="btn-submit-link">
-                        Lançar Atualização & Disparar Notificação
-                    </button>
-                </form>
-            </div>
 
-            <!-- SUB-ABA B: PRECEDENTES COM ALERTA DE AMBIGUIDADE -->
-            <div id="sub-precedents-section" class="sub-section" style="display: none;">
-                <h2>Biblioteca de Consulta de Precedentes - STJ</h2>
-                <p style="color: var(--text-muted); font-size: 0.88rem; margin-bottom: 1rem;">
-                    Construa buscas perfeitamente estruturadas para o sistema de Jurisprudência <strong>SCON do Superior Tribunal de Justiça (STJ)</strong>.
-                </p>
-
-                <!-- ALERTA DE RISCO DE AMBIGUIDADE DE FONTES -->
-                <div style="background-color: #fffbeb; border: 1px solid #fef3c7; padding: 0.85rem; border-radius: 6px; display: flex; gap: 10px; align-items: flex-start; margin-bottom: 1.5rem;">
-                    <span style="font-size: 1.2rem;">⚠️</span>
-                    <p style="font-size:0.78rem; color: #b45309; line-height: 1.4;">
-                        <strong>Aviso Crítico de Ambiguidade de Fontes (STJ):</strong> A sigla "STJ" neste sistema refere-se estritamente ao <strong>Superior Tribunal de Justiça do Brasil (guarda do direito federal)</strong>. Não confunda com o <i>Supremo Tribunal de Justiça de Portugal</i> ou o <i>Supremo Tribunal de Justicia do Estado de Jalisco (México)</i>, que operam sob códigos processuais estrangeiros inteiramente distintos!
-                    </p>
-                </div>
-
-                <div style="background: #fafafa; border: 1px solid var(--border); padding: 1.25rem; border-radius: 8px; margin-bottom: 1.5rem;">
-                    <h3 style="font-size: 1rem; color: var(--primary-light); margin-bottom: 0.75rem;">🛠️ Gerador de Consultas SCON (STJ)</h3>
-                    <form id="stj-search-helper-form" onsubmit="gerarPesquisaSTJ(event)">
-                        <div class="form-grid">
-                            <div class="form-group">
-                                <label for="stj-termo-1">Termo Principal de Busca</label>
-                                <input type="text" id="stj-termo-1" placeholder="Ex: furto estacionamento" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="stj-operador">Operador de Ligação (Lógica do STJ)</label>
-                                <select id="stj-operador">
-                                    <option value="E" selected>E (AND) - Ambos os termos na mesma decisão</option>
-                                    <option value="OU">OU (OR) - Um ou outro termo na decisão</option>
-                                    <option value="NAO">NÃO (NOT) - Excluir termo seguinte da busca</option>
-                                    <option value="PROX">PROX (NEAR) - Termos próximos (até 6 palavras)</option>
-                                    <option value="MESMO">MESMO (INSAME) - Termos no mesmo campo do acórdão</option>
-                                    <option value="COM">COM (INPATH) - Termos no mesmo parágrafo</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="stj-termo-2">Termo Secundário de Ligação</label>
-                                <input type="text" id="stj-termo-2" placeholder="Ex: supermercado">
-                            </div>
-                            <div class="form-group">
-                                <label for="stj-truncar">Variação Morfológica</label>
-                                <div class="checkbox-group" style="margin-top: 1rem;">
-                                    <input type="checkbox" id="stj-truncar-check">
-                                    <label for="stj-truncar-check" style="display:inline; font-weight:normal; font-size: 0.85rem;">Aplicar truncamento ($) para variações de radical (ex: mercad$ acha mercado, mercadoria).</label>
-                                </div>
-                            </div>
-                        </div>
-                        <button type="submit" class="btn-primary" style="margin-top: 0.5rem;">Estruturar & Gerar Consulta</button>
+                        <button type="submit" class="btn btn-accent">🚀 Criar Conta e Habilitar Robô</button>
                     </form>
+                </div>
+            </div>
+        </div>
 
-                    <div id="stj-query-result-box" style="display:none; margin-top: 1.5rem; background: #f0fdf4; border: 1px solid #bbf7d0; padding: 1rem; border-radius: 6px;">
-                        <span style="font-size:0.75rem; text-transform:uppercase; color: var(--success); font-weight:bold;">Sintaxe Lextológica/SCON Gerada:</span>
-                        <div id="stj-query-string" style="font-family: monospace; font-size: 1.1rem; color: var(--primary); font-weight: bold; margin: 0.5rem 0; word-break: break-all;">-</div>
-                        <div id="stj-alerta-ambiguidade-dinamico" style="font-size:0.75rem; color:#b45309; font-weight:500; margin-bottom:1rem; border-top: 1px dashed #cbd5e1; padding-top:0.5rem;"></div>
-                        <button class="btn-accent" id="btn-abrir-scon" style="font-size:0.85rem; padding: 0.4rem 1rem; margin-top:0.25rem;">🔍 Pesquisar no SCON STJ</button>
+        <!-- ==================== VIEW 3: PAINEL DE CONTROLE TAB (LOGGED ONLY) ==================== -->
+        <div id="painel-tab" class="tab-content">
+            <!-- Session header -->
+            <div class="session-info">
+                <div>Conectado como: <span class="session-user" id="logged-user-name">Dr. Carlos Eduardo</span></div>
+                <button class="btn btn-outline" style="width: auto; padding: 6px 12px; font-size: 0.8rem;" onclick="fazerLogout()">🚪 Sair do Sistema (Logout)</button>
+            </div>
+
+            <div class="hero">
+                <h2>Painel do Advogado JurisConsult</h2>
+                <p>Cadastre novos processos de representados, ative a varredura automática noturna (Sistema Push) e envie alertas diretamente via WhatsApp.</p>
+            </div>
+
+            <div class="grid-2">
+                <!-- LINK NEW PROCESS FORM -->
+                <div class="card">
+                    <div class="card-title">💼 Vincular Processo ao Cliente</div>
+                    
+                    <div id="panel-alert-danger" class="alert alert-danger"></div>
+                    <div id="panel-alert-success" class="alert alert-success"></div>
+
+                    <form id="link-process-form" onsubmit="vincularProcesso(event)">
+                        <div class="form-group">
+                            <label for="panelClientName">Nome Completo do Cliente:</label>
+                            <input type="text" id="panelClientName" class="form-control" placeholder="Ex: Mariana de Souza" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="panelClientCpf">CPF do Cliente (Somente Números):</label>
+                            <input type="text" id="panelClientCpf" class="form-control" placeholder="Ex: 12345678901" maxlength="11" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="panelClientPhone">Celular do Cliente (Alertas WhatsApp):</label>
+                            <input type="text" id="panelClientPhone" class="form-control" placeholder="Ex: 11999999999">
+                        </div>
+                        <div class="form-group">
+                            <label for="panelProcessNum">Número do Processo (20 Dígitos CNJ):</label>
+                            <input type="text" id="panelProcessNum" class="form-control" placeholder="Ex: 0003483-23.2024.8.26.0026" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="panelProcessStatus">Status Operacional do Processo:</label>
+                            <select id="panelProcessStatus" class="form-control">
+                                <option value="Em Andamento / Ativo">Em Andamento / Ativo</option>
+                                <option value="Aguardando Julgamento">Aguardando Julgamento</option>
+                                <option value="Concluído / Sentenciado">Concluído / Sentenciado</option>
+                                <option value="Suspenso / Sobrestado">Suspenso / Sobrestado</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="panelProcessUpdate">Lançar Andamento Bruto do Tribunal:</label>
+                            <textarea id="panelProcessUpdate" class="form-control" rows="3" placeholder="Digite o andamento judicial do tribunal que a Lente irá traduzir automaticamente..." required></textarea>
+                        </div>
+
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="panelConsentimentoLgpd" required>
+                            <label for="panelConsentimentoLgpd">
+                                Declaro obter consentimento ativamente e por escrito do respectivo representado para gravação de suas informações de processo e CPF na nuvem.
+                            </label>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">⚖️ Lançar atualização & disparar notificação</button>
+                    </form>
+                </div>
+
+                <!-- NIGHT SCANNER SIMULATION PANEL -->
+                <div class="card">
+                    <div class="card-title">🌙 Simulação de Varredura Noturna (Sistema Push)</div>
+                    <p style="font-size: 0.9rem; color: var(--text-light); margin-bottom: 20px; text-align: justify;">
+                        Pressione o botão abaixo para simular o comportamento de madrugada do sistema: o robô executa buscas invisíveis nos tribunais cadastrados, localiza alterações de andamentos e dispara mensagens via WhatsApp com traduções amigáveis aos clientes.
+                    </p>
+                    
+                    <div id="push-alert-success" class="alert alert-success"></div>
+
+                    <button class="btn btn-accent" onclick="executarPush()">
+                        🌙 Simular Varredura Noturna do Robô
+                    </button>
+
+                    <div style="margin-top: 30px; border-top: 1px solid var(--border-color); padding-top: 20px;">
+                        <div class="card-title" style="font-size: 1.05rem;">🔑 Acesso Efêmero via PJeOffice</div>
+                        <p style="font-size: 0.85rem; color: var(--text-light); margin-bottom: 15px; text-align: justify;">
+                            Deseja buscar dados do tribunal em lote utilizando o assinador eletrônico sem salvar senhas persistentes no servidor? Gere um desafio de validação de sessão segura local via PJeOffice.
+                        </p>
+                        <button class="btn btn-outline" onclick="gerarDesafioPjeOffice()">
+                            📝 Gerar Assinatura Efêmera de Busca
+                        </button>
+                        <div id="pje-desafio-box" style="display: none; background-color: var(--bg-body); padding: 12px; border-radius: 6px; margin-top: 12px; font-size: 0.8rem; border: 1px dashed #cbd5e0;">
+                            <strong>Desafio Criptográfico:</strong> <span id="pje-desafio-txt" style="word-break: break-all; font-family: monospace;"></span><br/>
+                            <strong>Validade:</strong> 10 minutos (ICP-Brasil)
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== VIEW 4: STJ TAB ==================== -->
+        <div id="stj-tab" class="tab-content">
+            <div class="hero">
+                <h2>Construtor Avançado de Sintaxe do STJ</h2>
+                <p>Gere buscas de jurisprudência altamente assertivas para o SCON (Supremo/Superior Tribunal de Justiça) utilizando operadores lógicos e conectivos de proximidade estruturados nas fontes do tribunal.</p>
+            </div>
+
+            <div class="grid-2">
+                <div class="card">
+                    <div class="card-title">🏛️ Estruturar Consulta de Jurisprudência</div>
+                    <form id="stj-search-form" onsubmit="buscarSTJ(event)" class="stj-form">
+                        <div class="form-group">
+                            <label for="stjTermoPrincipal">Termo Principal de Busca:</label>
+                            <input type="text" id="stjTermoPrincipal" class="form-control" placeholder="Ex: dano moral" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="stjOperador">Conectivo de Ligação:</label>
+                            <select id="stjOperador" class="form-control">
+                                <option value="E">E (AND) - Ambos os termos no acórdão</option>
+                                <option value="OU">OU (OR) - Qualquer um dos termos</option>
+                                <option value="NAO">NÃO (NOT) - Excluir termo adicional</option>
+                                <option value="PROX">PROX (NEAR) - Próximos até 6 palavras</option>
+                                <option value="MESMO">MESMO (INSAME) - No mesmo campo</option>
+                                <option value="COM">COM (INPATH) - No mesmo parágrafo</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="stjTermoAdicional">Termo Adicional de Busca:</label>
+                            <input type="text" id="stjTermoAdicional" class="form-control" placeholder="Ex: transporte aéreo">
+                        </div>
+                        
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="stjTruncar">
+                            <label for="stjTruncar">Adicionar Truncamento ($) para buscar flexões de palavras (Ex: mercad$ busca mercado, mercadorias)</label>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">🛠️ Gerar Sintaxe de Busca Estruturada</button>
+                    </form>
+                </div>
+
+                <div class="card" id="stj-result-card" style="display: none;">
+                    <div class="card-title">🔍 Sintaxe Gerada & links Oficiais</div>
+                    
+                    <div class="form-group">
+                        <label>Sintaxe Estruturada SCON:</label>
+                        <div style="background-color: var(--bg-body); padding: 12px; border-radius: 6px; font-family: monospace; font-weight: 600; border: 1px solid var(--border-color);" id="stj-query-txt"></div>
+                    </div>
+
+                    <div style="margin-top: 15px; display: flex; flex-direction: column; gap: 10px;">
+                        <a href="#" id="stj-link-scon" target="_blank" class="btn btn-accent">🏛️ Abrir Consulta Avançada no STJ SCON</a>
+                        <a href="#" id="stj-link-pronta" target="_blank" class="btn btn-outline">📰 Ver Pesquisas Prontas do STJ</a>
+                        <a href="#" id="stj-link-sumulas" target="_blank" class="btn btn-outline">📜 Ver Súmulas Anotadas do STJ</a>
+                    </div>
+
+                    <div class="dje-box" style="margin-top: 20px; font-size: 0.8rem;" id="stj-disclaimer"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== VIEW 5: STATUS TRIBUNAIS ==================== -->
+        <div id="cobertura-tab" class="tab-content">
+            <div class="hero">
+                <h2>Painel de Status & Cobertura de Sistemas</h2>
+                <p>Verifique o status de monitoramento e de indisponibilidades físicas dos principais tribunais brasileiros integrado ao nosso ecossistema.</p>
+            </div>
+
+            <div class="grid-2">
+                <div class="card">
+                    <div class="card-title">📶 Cobertura de Sistemas de Tramitação</div>
+                    <div class="system-status" id="cobertura-container"></div>
+                </div>
+
+                <div class="card">
+                    <div class="card-title">📢 Histórico de Indisponibilidades Oficiais</div>
+                    <div class="system-status" id="indisponibilidade-container"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== VIEW 6: GOVERNANÇA LGPD TAB ==================== -->
+        <div id="lgpd-tab" class="tab-content">
+            <div class="hero">
+                <h2>Transparência, Direitos & Governança LGPD</h2>
+                <p>Em total conformidade com a Lei 13.709/18, garantimos que todos os dados de CPF, nomes e processos de clientes sejam tratados sob legítimo consentimento e com fácil revogação.</p>
+            </div>
+
+            <div class="grid-2">
+                <div class="card">
+                    <div class="card-title">📜 Princípios e Política de Privacidade</div>
+                    <div style="display: flex; flex-direction: column; gap: 15px; text-align: justify; font-size: 0.9rem;">
+                        <p><strong>Finalidade Limpa:</strong> Suas credenciais de login e dados de processos são mantidos unicamente para disparar alertas e acompanhamento didático cronológico.</p>
+                        <p><strong>Segurança Forte:</strong> As senhas enviadas pelos advogados no cadastro profissional passam pelo robusto algoritmo de hashing <code>bcrypt</code> e são criptografadas na nuvem Supabase.</p>
+                        <p><strong>Uso Efêmero:</strong> O JurisConsult oferece acesso nativo através do assinador digital <strong>PJeOffice do CNJ</strong>, permitindo consultas sem salvar senhas de tribunais em nosso servidor.</p>
                     </div>
                 </div>
 
-                <h3 style="font-size: 0.95rem; color: var(--primary-light); text-transform: uppercase; margin-bottom: 0.5rem;">📂 Portais e Compilados Oficiais do STJ</h3>
-                <div class="stj-quick-links">
-                    <a href="https://scon.stj.jus.br/SCON/pesquisa_pronta/" target="_blank" class="stj-link-card">
-                        <span>📚</span> Pesquisa Pronta
-                    </a>
-                    <a href="https://scon.stj.jus.br/SCON/sumstj/toc.jsp?tipo=sumula+ou+su" target="_blank" class="stj-link-card">
-                        <span>⚖️</span> Súmulas Anotadas
-                    </a>
-                    <a href="https://scon.stj.jus.br/SCON/jt/" target="_blank" class="stj-link-card">
-                        <span>📖</span> Jurisprudência em Teses
-                    </a>
-                    <a href="https://ww2.stj.jus.br/jurisprudencia/externo/informativo/" target="_blank" class="stj-link-card">
-                        <span>📰</span> Informativo Semanal
-                    </a>
-                    <a href="https://scon.stj.jus.br/SCON/repetitivos/listaRR.jsp" target="_blank" class="stj-link-card">
-                        <span>🟥</span> Recursos Repetitivos
-                    </a>
-                </div>
-            </div>
-
-            <!-- SUB-ABA C: COBERTURA E INSTABILIDADES -->
-            <div id="sub-coverage-section" class="sub-section" style="display: none;">
-                <h2>Status de Monitoramento de Sistemas e Tribunais</h2>
-                <p style="color: var(--text-muted); font-size: 0.88rem; margin-bottom: 1.5rem;">
-                    Consulte em tempo real a cobertura e estabilidade de conexão dos sistemas eletrônicos dos tribunais integrados à nossa API.
-                </p>
-                <div id="coverage-loader" style="text-align: center; padding: 2rem;">Carregando status dos servidores...</div>
-                
-                <table class="table-coverage" id="table-coverage-id" style="display:none; margin-bottom: 2rem;">
-                    <thead>
-                        <tr>
-                            <th>Sistema / Tribunal</th>
-                            <th>Abrangência Cadastrada</th>
-                            <th>Status de Conexão</th>
-                        </tr>
-                    </thead>
-                    <tbody id="table-coverage-body">
-                    </tbody>
-                </table>
-
-                <div style="border-top: 1px solid var(--border); padding-top: 2rem;">
-                    <h2>Logs de Registro de Indisponibilidade dos Tribunais</h2>
-                    <p style="color: var(--text-muted); font-size: 0.88rem; margin-bottom: 1rem;">
-                        Certidões de instabilidade emitidas diretamente pelas cores. Em dias de indisponibilidade oficial, os prazos processuais são suspensos.
+                <div class="card">
+                    <div class="card-title">❌ Revogar Consentimento & Excluir Dados</div>
+                    <p style="font-size: 0.88rem; color: var(--text-light); margin-bottom: 20px; text-align: justify;">
+                        Direito assegurado pelo Artigo 18 da LGPD. Ao confirmar os dados de identificação do processo, o sistema realizará a exclusão física imediata e em cascata de todos os seus dados do banco de dados do Supabase de forma permanente.
                     </p>
-                    <table class="table-coverage" id="table-ind-id" style="display:none;">
-                        <thead>
-                            <tr>
-                                <th>Órgão / Tribunal</th>
-                                <th>Período do Registro</th>
-                                <th>Detalhe / Motivo Técnico</th>
-                                <th>Documento de Amparo</th>
-                                <th>Status</th>
-                            </tr>
-                        </thead>
-                        <tbody id="table-ind-body">
-                        </tbody>
-                    </table>
+
+                    <div id="lgpd-alert-danger" class="alert alert-danger"></div>
+                    <div id="lgpd-alert-success" class="alert alert-success"></div>
+
+                    <form id="lgpd-revoke-form" onsubmit="revogarConsentimentoLgpd(event)">
+                        <div class="form-group">
+                            <label for="lgpdClientName">Nome Completo:</label>
+                            <input type="text" id="lgpdClientName" class="form-control" placeholder="Ex: Mariana de Souza" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="lgpdClientCpf">Seu CPF (Somente números):</label>
+                            <input type="text" id="lgpdClientCpf" class="form-control" placeholder="Ex: 12345678901" maxlength="11" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="lgpdProcessNum">Número Único do Processo:</label>
+                            <input type="text" id="lgpdProcessNum" class="form-control" placeholder="Ex: 0003483-23.2024.8.26.0026" required>
+                        </div>
+                        <button type="submit" class="btn btn-danger">🗑️ Revogar Consentimento e Apagar Meus Dados</button>
+                    </form>
                 </div>
             </div>
-
-            <div class="disclaimer-banner" style="margin-top: 2rem; background-color: #fff1f2; border: 1px solid #fecaca;">
-                <span>⚠️</span>
-                <p class="disclaimer-text">
-                    <strong>Controle Crítico de Prazos (CPC):</strong> Dr(a)., este portal opera como serviço de Push informativo complementar. Lembramos que falhas no envio de notificações automáticas não justificam a perda de prazos cíveis, que contam-se em dias úteis estritamente após publicação no DJE oficial.
-                </p>
-            </div>
         </div>
 
-        <!-- ⚙️ COFRE DE TESTES ADMINISTRATIVOS -->
-        <div class="simulador-container">
-            <div class="simulador-title">
-                <span>⚙️ PAINEL DE TESTES DA ADMINISTRAÇÃO (Fila de Moderação OAB & Sistema Push)</span>
-            </div>
-            <p style="font-size: 0.85rem; color: #78350f; margin-bottom: 1rem;">
-                Use os botões de simulação abaixo para testar as travas de segurança administrativas.
-            </p>
-            <div style="display: flex; gap: 10px; margin-bottom: 1rem;">
-                <button class="btn-outline" onclick="buscarPendentes()" style="border-color: #f59e0b; color: #b45309; flex:1;">🔄 Verificar Fila de OABs</button>
-                <button class="btn-outline" onclick="simularVarreduraPush()" style="border-color: #10b981; color: #047857; flex:1; font-weight: bold;">🌙 Simular Varredura Push (Madrugada)</button>
-            </div>
-            
-            <div class="pendentes-lista" id="fila-oab-box">
-                <p style="padding: 1rem; color: var(--text-muted); text-align: center; font-size: 0.9rem;">Clique no botão de OABs para carregar a fila de moderação.</p>
-            </div>
-        </div>
     </main>
 
-    <!-- MODAL DE PRIVACIDADE E TERMOS LGPD -->
-    <div id="lgpd-modal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 id="lgpd-modal-title" style="color: var(--primary); border: none; padding:0; margin:0;">Políticas de Privacidade e Proteção de Dados (LGPD)</h3>
-                <button class="modal-close" onclick="fecharModalLGPD()">&times;</button>
-            </div>
-            <div id="lgpd-modal-body" style="font-size: 0.9rem; max-height: 400px; overflow-y: auto;">
-                <p>Carregando termos oficiais de segurança...</p>
-            </div>
-            <button class="btn-primary" onclick="fecharModalLGPD()" style="margin-top: 1.5rem; padding: 0.5rem 1rem;">Ciente e De acordo</button>
-        </div>
+    <!-- FOOTER ACCENT -->
+    <div style="background-color: var(--primary); text-align: center; color: #a0aec0; padding: 20px; font-size: 0.8rem; border-top: 1px solid var(--primary-light);">
+        <p>© 2026 JurisConsult - Sistema em conformidade com o CNJ Módulo 97, Art. 219 CPC e LGPD.</p>
     </div>
 
-    <!-- MODAL DE REVOGAÇÃO DE CONSENTIMENTO LGPD -->
-    <div id="revogacao-modal" class="modal">
-        <div class="modal-content" style="max-width: 500px;">
-            <div class="modal-header">
-                <h3 style="color: var(--error); border: none; padding:0; margin:0;">Excluir Meus Dados Permanentes (LGPD)</h3>
-                <button class="modal-close" onclick="fecharModalRevogacao()">&times;</button>
-            </div>
-            <div style="font-size: 0.9rem; margin-bottom: 1rem;">
-                <p style="margin-bottom: 1rem;">Para exercer seu direito legal sob o <strong>Art. 18, VI da LGPD</strong>, insira os dados do processo cadastrado para confirmar sua identidade e eliminar todos os registros do nosso banco.</p>
-                <div id="revogacao-alert" class="alert"></div>
-                <div class="form-group">
-                    <label>Seu Nome Completo</label>
-                    <input type="text" id="rev-client-name" required>
-                </div>
-                <div class="form-group">
-                    <label>Seu CPF (Apenas números)</label>
-                    <input type="text" id="rev-client-cpf" required>
-                </div>
-                <div class="form-group">
-                    <label>Número do Processo (Formato CNJ)</label>
-                    <input type="text" id="rev-process-num" oninput="aplicarMascaraCNJ(this)" required>
-                </div>
-            </div>
-            <div style="display: flex; gap: 10px;">
-                <button class="btn-primary" onclick="confirmarExclusaoLGPD()" style="background-color: var(--error); flex:1;">Sim, Apagar Meus Dados</button>
-                <button class="btn-outline" onclick="fecharModalRevogacao()" style="flex:1;">Cancelar</button>
-            </div>
-        </div>
-    </div>
-
-    <footer>
-        <p>&copy; 2026 JurisConsult S.A. IA Tradutora, DJE Oficial, Calculadora CPC e Transparência LGPD.</p>
-    </footer>
-
+    <!-- JAVASCRIPT LOGIC CONTROLLER FOR API CONNECTION -->
     <script>
-        const API_URL = "https://jurisconsult-api.onrender.com/api";
-        let advogadoLogado = null;
+        // Mapeie aqui a URL real do seu back-end hospedado no Render
+        const API_URL = "http://localhost:5000"; // Substitua pelo link do Render, ex: https://seu-site-backend.onrender.com
 
-        function aplicarMascaraCNJ(input) {
-            let value = input.value.replace(/\D/g, "");
-            if (value.length > 20) value = value.substring(0, 20);
-            
-            let formatted = "";
-            if (value.length > 0) formatted += value.substring(0, 7);
-            if (value.length > 7) formatted += "-" + value.substring(7, 9);
-            if (value.length > 9) formatted += "." + value.substring(9, 13);
-            if (value.length > 13) formatted += "." + value.substring(13, 14);
-            if (value.length > 14) formatted += "." + value.substring(14, 16);
-            if (value.length > 16) formatted += "." + value.substring(16, 20);
-            
-            input.value = formatted;
-        }
-
-        function toggleCredsForm(checkbox) {
-            const box = document.getElementById('tribunal-creds-box');
-            box.style.display = checkbox.checked ? 'block' : 'none';
-        }
-
+        // Tab Switching Engine
         function switchTab(tabId) {
-            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-            document.querySelectorAll('.content-section').forEach(section => section.classList.remove('active'));
-
-            const activeBtn = document.getElementById(`btn-${tabId.split('-')}`);
-            if (activeBtn) activeBtn.classList.add('active');
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
             
             document.getElementById(tabId).classList.add('active');
-
-            document.getElementById('search-alert').style.display = 'none';
-            document.getElementById('login-alert').style.display = 'none';
-            document.getElementById('register-alert').style.display = 'none';
-            document.getElementById('dash-alert').style.display = 'none';
-            document.getElementById('result-card').style.display = 'none';
-            document.getElementById('automation-loader').style.display = 'none';
-            toggleRecoveryForm(false);
-        }
-
-        function switchSubTab(subTabId) {
-            document.querySelectorAll('.sub-section').forEach(section => section.style.display = 'none');
-            document.querySelectorAll('.subtab-btn').forEach(btn => btn.classList.remove('active'));
             
-            document.getElementById(subTabId).style.display = 'block';
-            
-            let idBotao = 'btn-sub-' + subTabId.replace('-section', '').replace('sub-', '');
-            const botaoAtivo = document.getElementById(idBotao);
-            if (botaoAtivo) botaoAtivo.classList.add('active');
-        }
+            // Highlight current button
+            const btn = Array.from(document.querySelectorAll('.tab-btn')).find(b => b.getAttribute('onclick').includes(tabId));
+            if (btn) btn.classList.add('active');
 
-        async function calcularPrazoStandAlone() {
-            const dateVal = document.getElementById('calc-date-input').value;
-            const daysVal = document.getElementById('calc-days-input').value;
-            const resBox = document.getElementById('calc-result-box');
-            
-            if(!dateVal) {
-                alert("Por favor, selecione uma data de disponibilização.");
-                return;
+            // Load statuses when opening coverage tab
+            if (tabId === 'cobertura-tab') {
+                carregarStatusTribunais();
             }
+        }
 
-            try {
-                const res = await fetch(`${API_URL}/cpc/calcular`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ data_disponibilizacao: dateVal, dias_prazo: daysVal })
+        // Auto-Format CPF input
+        const cpfInputs = ['clientCpfSearch', 'panelClientCpf', 'lgpdClientCpf'];
+        cpfInputs.forEach(id => {
+            const input = document.getElementById(id);
+            if (input) {
+                input.addEventListener('input', (e) => {
+                    let value = e.target.value.replace(/\D/g, "");
+                    e.target.value = value;
                 });
-                if(res.ok) {
-                    const data = await res.json();
-                    document.getElementById('cpc-res-disp').innerText = data.data_disponibilizacao;
-                    document.getElementById('cpc-res-pub').innerText = data.data_publicacao;
-                    document.getElementById('cpc-res-inicio').innerText = data.data_inicio_contagem;
-                    document.getElementById('cpc-res-venc').innerText = data.data_vencimento;
-                    document.getElementById('cpc-res-nota').innerHTML = `<strong>Nota Explicativa:</strong> ${data.nota_legal}`;
-                    resBox.style.display = 'block';
-                }
-            } catch(e) {
-                let parts = dateVal.split('-');
-                let disp = new Date(parts, parts[1]-1, parts[2]);
-                
-                function somarDiasUteis(start, days) {
-                    let d = new Date(start);
-                    let count = 0;
-                    while(count < days) {
-                        d.setDate(d.getDate() + 1);
-                        let w = d.getDay();
-                        if(w !== 0 && w !== 6) {
-                            count++;
-                        }
-                    }
-                    return d;
-                }
-                
-                function obterProximoDiaUtil(start) {
-                    let d = new Date(start);
-                    d.setDate(d.getDate() + 1);
-                    while(d.getDay() === 0 || d.getDay() === 6) {
-                        d.setDate(d.getDate() + 1);
-                    }
-                    return d;
-                }
-
-                let pub = obterProximoDiaUtil(disp);
-                let ini = obterProximoDiaUtil(pub);
-                let venc = somarDiasUteis(ini, daysVal - 1);
-
-                function format(d) {
-                    return `${String(d.getDate()).padStart(2, '0')}/${String(d.getMonth()+1).padStart(2, '0')}/${d.getFullYear()}`;
-                }
-
-                document.getElementById('cpc-res-disp').innerText = format(disp);
-                document.getElementById('cpc-res-pub').innerText = format(pub);
-                document.getElementById('cpc-res-inicio').innerText = format(ini);
-                document.getElementById('cpc-res-venc').innerText = format(venc);
-                document.getElementById('cpc-res-nota').innerHTML = "<strong>Nota Explicativa:</strong> Cálculo simulado via regras básicas do CPC (Art. 219). Feriados não estão inclusos.";
-                resBox.style.display = 'block';
             }
-        }
+        });
 
-        function preencherCalculadoraPeloDJE(dateStr) {
-            let parts = dateStr.split('/');
-            if(parts.length === 3) {
-                let formatted = `${parts[2]}-${parts[1]}-${parts}`;
-                document.getElementById('calc-date-input').value = formatted;
-                document.getElementById('calc-days-input').value = "15";
-                calcularPrazoStandAlone();
-                document.getElementById('calc-date-input').scrollIntoView({ behavior: 'smooth' });
-            }
-        }
-
-        function abrirModalRevogacao() {
-            document.getElementById('revogacao-modal').style.display = 'flex';
-            document.getElementById('revogacao-alert').style.display = 'none';
-        }
-
-        function fecharModalRevogacao() {
-            document.getElementById('revogacao-modal').style.display = 'none';
-        }
-
-        async function confirmarExclusaoLGPD() {
-            const alertBox = document.getElementById('revogacao-alert');
-            alertBox.style.display = 'none';
-
-            const payload = {
-                clientName: document.getElementById('rev-client-name').value.trim(),
-                clientCpf: document.getElementById('rev-client-cpf').value,
-                processNum: document.getElementById('rev-process-num').value
-            };
-
-            if(!payload.clientName || !payload.clientCpf || !payload.processNum) {
-                showAlert(alertBox, 'error', "Todos os campos de validação são obrigatórios.");
-                return;
-            }
-
-            try {
-                const res = await fetch(`${API_URL}/lgpd/revogar`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
-                });
-                const data = await res.json();
-                if(res.ok) {
-                    showAlert(alertBox, 'success', data.message);
-                    setTimeout(() => {
-                        fecharModalRevogacao();
-                        document.getElementById('search-form').reset();
-                        document.getElementById('result-card').style.display = 'none';
-                    }, 4000);
-                } else {
-                    showAlert(alertBox, 'error', data.error);
-                }
-            } catch(e) {
-                showAlert(alertBox, 'error', "Erro ao conectar com o servidor. A exclusão real exige o servidor ativo.");
-            }
-        }
-
-        async function abrirModalLGPD(event) {
-            if (event) event.preventDefault();
-            const modal = document.getElementById('lgpd-modal');
-            const body = document.getElementById('lgpd-modal-body');
-            modal.style.display = 'flex';
+        // VIEW 1: API SEARCH FOR LEIGO CLIENTS
+        function consultarProcesso(event) {
+            event.preventDefault();
+            const btn = document.getElementById('btn-search-client');
+            const alertDanger = document.getElementById('client-alert-danger');
             
-            try {
-                const res = await fetch(`${API_URL}/lgpd/termos`);
-                if (res.ok) {
-                    const data = await res.json();
-                    document.getElementById('lgpd-modal-title').innerText = data.titulo;
-                    
-                    let html = `<p style="margin-bottom:1rem; font-weight:bold; color: var(--accent);">${data.versao}</p>`;
-                    html += `<ul>`;
-                    data.principios.forEach(p => {
-                        html += `<li style="margin-bottom: 0.75rem; list-style-type: square; margin-left: 1.5rem;">${p}</li>`;
-                    });
-                    html += `</ul>`;
-                    html += `<p style="margin-top: 1rem; border-top: 1px dashed var(--border); padding-top: 0.75rem;"><strong>Política de Cookies:</strong> ${data.politica_cookies}</p>`;
-                    body.innerHTML = html;
-                } else {
-                    throw new Error();
+            alertDanger.style.display = 'none';
+            btn.innerHTML = "📡 Buscando informações na base nacional...";
+            btn.disabled = true;
+
+            const clientName = document.getElementById('clientNameSearch').value.trim();
+            const clientCpf = document.getElementById('clientCpfSearch').value.trim();
+            const processNum = document.getElementById('processNumSearch').value.trim();
+
+            fetch(`${API_URL}/api/consultar`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ clientName, clientCpf, processNum })
+            })
+            .then(res => {
+                if (!res.ok) {
+                    return res.json().then(err => { throw new Error(err.error || "Falha na conexão."); });
                 }
-            } catch (e) {
-                body.innerHTML = `
-                    <p style="margin-bottom:1rem;"><strong>JurisConsult Termos e Políticas LGPD (Modo Fallback Offline):</strong></p>
-                    <ul>
-                        <li style="margin-bottom: 0.5rem; list-style-type: square; margin-left: 1.5rem;"><strong>Finalidade:</strong> Tratamento de CPF, nome e andamentos processuais estritamente para acompanhamento civil do cidadão.</li>
-                        <li style="margin-bottom: 0.5rem; list-style-type: square; margin-left: 1.5rem;"><strong>Segurança dos Dados:</strong> Criptografia Fernet (AES-256 bits) de senhas dos tribunais salvos.</li>
-                        <li style="margin-bottom: 0.5rem; list-style-type: square; margin-left: 1.5rem;"><strong>Modo Efêmero:</strong> Uso local do PJeOffice do CNJ dispensando armazenamento em banco.</li>
-                        <li style="margin-bottom: 0.5rem; list-style-type: square; margin-left: 1.5rem;"><strong>Direito de Exclusão Permanente:</strong> Exercício imediato via painel público, eliminando registros de forma definitiva e rastreável.</li>
+                return res.json();
+            })
+            .then(data => {
+                // Populate process metadata card
+                document.getElementById('res-process-num').innerText = data.processNum;
+                document.getElementById('res-process-court').innerText = data.court;
+                document.getElementById('res-process-status').innerText = data.status;
+                document.getElementById('res-process-adv').innerText = `${data.advName} (OAB: ${data.advOab})`;
+                document.getElementById('res-process-disclaimer').innerText = data.disclaimer;
+
+                // Load didactical timeline
+                const timelineContainer = document.getElementById('timeline-container');
+                timelineContainer.innerHTML = '';
+                data.timeline.forEach((item, index) => {
+                    const itemDiv = document.createElement('div');
+                    itemDiv.className = `timeline-item ${index === 0 ? 'latest' : ''}`;
+                    itemDiv.innerHTML = `
+                        <div class="timeline-marker"></div>
+                        <div class="timeline-time">${item.timestamp}</div>
+                        <div class="timeline-text">${item.descricao}</div>
+                    `;
+                    timelineContainer.appendChild(itemDiv);
+                });
+
+                // Load DJE publications
+                const djeContainer = document.getElementById('dje-publications-container');
+                djeContainer.innerHTML = '';
+                data.publicacoes_dje.forEach(pub => {
+                    const djeBox = document.createElement('div');
+                    djeBox.className = "dje-box";
+                    djeBox.innerHTML = `
+                        <div class="dje-meta">
+                            <span>Disponibilizado no DJE: ${pub.data_disponibilizacao}</span>
+                            <span>Publicado Oficialmente: ${pub.data_publicacao}</span>
+                        </div>
+                        <div class="dje-content">${pub.texto_publicacao}</div>
+                        <button class="btn btn-outline" style="width: auto; padding: 6px 12px; font-size: 0.75rem; margin-top: 10px;" onclick="calcularPrazo('${pub.data_disponibilizacao}')">
+                            📅 Calcular Prazo Civil (Art. 219 CPC)
+                        </button>
+                        <div id="cpc-calc-result-${pub.data_disponibilizacao.replace(/\//g, '-')}" style="display: none; margin-top: 10px; padding: 10px; background-color: white; border-radius: 4px; border: 1px dashed var(--accent);"></div>
+                    `;
+                    djeContainer.appendChild(djeBox);
+                });
+
+                document.getElementById('client-result-card').style.display = 'block';
+                document.getElementById('client-timeline-section').style.display = 'block';
+                
+                // Scroll page dynamically on Galaxy S21 to show results
+                document.getElementById('client-result-card').scrollIntoView({ behavior: 'smooth' });
+            })
+            .catch(err => {
+                alertDanger.innerText = err.message;
+                alertDanger.style.display = 'block';
+            })
+            .finally(() => {
+                btn.innerHTML = "🔄 Consultar via Robô Integrado";
+                btn.disabled = false;
+            });
+        }
+
+        // VIEW 1: CALCULATE PROCESS TERM VIA SERVER
+        function calcularPrazo(dataDisp) {
+            const targetId = `cpc-calc-result-${dataDisp.replace(/\//g, '-')}`;
+            const targetDiv = document.getElementById(targetId);
+            
+            targetDiv.style.display = 'block';
+            targetDiv.innerHTML = "⏳ Calculando dias úteis conforme Art. 219 CPC...";
+
+            fetch(`${API_URL}/api/cpc/calcular`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ data_disponibilizacao: dataDisp, dias_prazo: 15 })
+            })
+            .then(res => res.json())
+            .then(data => {
+                targetDiv.innerHTML = `
+                    <p style="font-weight: 600; color: var(--primary); margin-bottom: 6px;">📅 Vencimento Limite: ${data.data_vencimento}</p>
+                    <p style="font-size: 0.78rem; color: var(--text-light); text-align: justify; margin-bottom: 8px;">${data.nota_legal}</p>
+                    <ul style="font-size: 0.75rem; padding-left: 15px; display: flex; flex-direction: column; gap: 4px;">
+                        <li><strong>DJE Disponibilizado:</strong> ${data.data_disponibilizacao}</li>
+                        <li><strong>DJE Publicado:</strong> ${data.data_publicacao}</li>
+                        <li><strong>Prazo Iniciado:</strong> ${data.data_inicio_contagem} (1º dia útil subsequente)</li>
                     </ul>
                 `;
-            }
+            })
+            .catch(err => {
+                targetDiv.innerHTML = `<span style="color: var(--danger)">⚠️ Falha no cálculo.</span>`;
+            });
         }
 
-        function fecharModalLGPD() {
-            document.getElementById('lgpd-modal').style.display = 'none';
-        }
-
-        async function carregarStatusCobertura() {
-            const loader = document.getElementById('coverage-loader');
-            const tabela = document.getElementById('table-coverage-id');
-            const body = document.getElementById('table-coverage-body');
-            
-            const indTable = document.getElementById('table-ind-id');
-            const indBody = document.getElementById('table-ind-body');
-            
-            loader.style.display = 'block';
-            tabela.style.display = 'none';
-            indTable.style.display = 'none';
-            
-            try {
-                const res = await fetch(`${API_URL}/tribunais/cobertura`);
-                if (res.ok) {
-                    const data = await res.json();
-                    body.innerHTML = "";
-                    data.sistemas.forEach(sys => {
-                        const row = document.createElement('tr');
-                        row.innerHTML = `
-                            <td>
-                                <strong>${sys.nome}</strong><br>
-                                <small style="color: var(--text-muted);">${sys.detalhes}</small>
-                            </td>
-                            <td>${sys.cobertura}</td>
-                            <td><span class="badge-status active">${sys.status}</span></td>
-                        `;
-                        body.appendChild(row);
-                    });
-                }
-            } catch (e) {
-                const fallbackData = [
-                    { nome: "PJe (Justiça do Trabalho e Federal)", cobertura: "Nacional (Todos os TRTs e TRFs)", status: "Operacional", detalhes: "Assinador PJeOffice integrado de forma nativa e segura." },
-                    { nome: "e-SAJ (Tribunais Estaduais)", cobertura: "TJSP (São Paulo), TJSC (Santa Catarina)", status: "Operacional", detalhes: "Sincronização com quebra automática de Captchas ativa." },
-                    { nome: "e-Proc (Justiça Federal/Estadual)", cobertura: "TRF4 (Região Sul), TRF2, TJRS", status: "Operacional", detalhes: "Conexão direta e rápida que dispensa chaves." },
-                    { nome: "STJ SCON (Superior Tribunal de Justiça)", cobertura: "Superior Tribunal de Justiça (Federal)", status: "Operacional", detalhes: "Painel de Precedentes e Gerador de Sintaxe integrado." }
-                ];
-                body.innerHTML = "";
-                fallbackData.forEach(sys => {
-                    const row = document.createElement('tr');
-                    row.innerHTML = `
-                        <td>
-                            <strong>${sys.nome}</strong><br>
-                            <small style="color: var(--text-muted);">${sys.detalhes}</small>
-                        </td>
-                        <td>${sys.cobertura}</td>
-                        <td><span class="badge-status active" style="background:#dbeafe; color:#1e40af;">Simulação</span></td>
-                    `;
-                    body.appendChild(row);
-                });
-            }
-
-            try {
-                const resInd = await fetch(`${API_URL}/tribunais/indisponibilidade`);
-                if (resInd.ok) {
-                    const dataInd = await resInd.json();
-                    indBody.innerHTML = "";
-                    dataInd.indisponibilidades.forEach(log => {
-                        const row = document.createElement('tr');
-                        row.innerHTML = `
-                            <td><strong>${log.tribunal}</strong></td>
-                            <td><small>${log.periodo}</small></td>
-                            <td><p style="font-size: 0.85rem; margin:0;">${log.motivo}</p></td>
-                            <td><small style="color: var(--text-muted);">${log.documento_oficial}</small></td>
-                            <td><span class="badge-status active" style="background: #e0f2fe; color: #0369a1;">${log.status}</span></td>
-                        `;
-                        indBody.appendChild(row);
-                    });
-                }
-            } catch (e) {
-                const fallbackInd = [
-                    { tribunal: "TJSP (e-SAJ)", periodo: "14/08/2026 23:00 às 15/08/2026 05:00", motivo: "Manutenção preventiva programada na infraestrutura de banco de dados do sistema eletrônico e-SAJ.", documento_oficial: "Comunicado Conjunto Presidência Nº 182/2026-TJSP", status: "Restabelecido" },
-                    { tribunal: "STJ (SCON/PJe/Assinador)", periodo: "15/08/2026 14:00 às 15/08/2026 16:30", motivo: "Interrupção parcial de link de comunicação local com o assinador digital PJeOffice do CNJ.", documento_oficial: "Certidão de Indisponibilidade de Sistema nº 402/2026-STJ", status: "Restabelecido" },
-                    { tribunal: "TRF4 (e-Proc)", periodo: "15/08/2026 18:00 às 18:15", motivo: "Oscilação física momentânea nos servidores de consulta de peças eletrônicas.", documento_oficial: "Portaria Geral TRF4 nº 91/2026", status: "Operacional" }
-                ];
-                indBody.innerHTML = "";
-                fallbackInd.forEach(log => {
-                    const row = document.createElement('tr');
-                    row.innerHTML = `
-                        <td><strong>${log.tribunal}</strong></td>
-                        <td><small>${log.periodo}</small></td>
-                        <td><p style="font-size: 0.85rem; margin:0;">${log.motivo}</p></td>
-                        <td><small style="color: var(--text-muted);">${log.documento_oficial}</small></td>
-                        <td><span class="badge-status active" style="background:#dbeafe; color:#1e40af;">Simulação</span></td>
-                    `;
-                    indBody.appendChild(row);
-                });
-            }
-
-            loader.style.display = 'none';
-            tabela.style.display = 'table';
-            indTable.style.display = 'table';
-        }
-
-        async function gerarPesquisaSTJ(event) {
+        // VIEW 2: REGISTER ADVOCADO
+        function cadastrarAdvogado(event) {
             event.preventDefault();
-            const resultBox = document.getElementById('stj-query-result-box');
-            const queryString = document.getElementById('stj-query-string');
-            const alertAmbiguidade = document.getElementById('stj-alerta-ambiguidade-dinamico');
-            const btnAbrir = document.getElementById('btn-abrir-scon');
+            const dangerAlert = document.getElementById('register-alert-danger');
+            const successAlert = document.getElementById('register-alert-success');
+            
+            dangerAlert.style.display = 'none';
+            successAlert.style.display = 'none';
 
             const payload = {
-                termos: document.getElementById('stj-termo-1').value.trim(),
-                operador: document.getElementById('stj-operador').value,
-                termo_adicional: document.getElementById('stj-termo-2').value.trim(),
-                truncar: document.getElementById('stj-truncar-check').checked
+                nome: document.getElementById('regNome').value,
+                email: document.getElementById('regEmail').value,
+                oab: document.getElementById('regOab').value,
+                telefone: document.getElementById('regTelefone').value,
+                senha: document.getElementById('regSenha').value,
+                tribunal: document.getElementById('regTribunal').value,
+                consentimento_lgpd: document.getElementById('regConsentimentoLgpd').checked
             };
 
-            try {
-                const res = await fetch(`${API_URL}/jurisprudencia/stj-helper`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
-                });
-                const data = await res.json();
-                if (res.ok) {
-                    queryString.innerText = data.query_gerada;
-                    if(data.alerta_ambiguidade) {
-                        alertAmbiguidade.innerHTML = `<strong>⚠️ Alerta LGPD/SCON:</strong> ${data.alerta_ambiguidade}`;
-                    } else {
-                        alertAmbiguidade.innerText = "";
-                    }
-                    btnAbrir.onclick = () => window.open(data.scon_pesquisa_url, '_blank');
-                    resultBox.style.display = 'block';
-                } else {
-                    alert(data.error);
+            fetch(`${API_URL}/api/advogado/cadastro`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(payload)
+            })
+            .then(res => {
+                if (!res.ok) {
+                    return res.json().then(err => { throw new Error(err.error); });
                 }
-            } catch (e) {
-                let t1 = payload.termos;
-                if (payload.truncar) t1 += "$";
-                let query = t1;
+                return res.json();
+            })
+            .then(data => {
+                successAlert.innerText = data.message;
+                successAlert.style.display = 'block';
+                document.getElementById('adv-register-form').reset();
+            })
+            .catch(err => {
+                dangerAlert.innerText = err.message;
+                dangerAlert.style.display = 'block';
+            });
+        }
+
+        // VIEW 2: LOGIN ADVOCADO
+        function loginAdvogado(event) {
+            event.preventDefault();
+            const dangerAlert = document.getElementById('login-alert-danger');
+            const successAlert = document.getElementById('login-alert-success');
+            
+            dangerAlert.style.display = 'none';
+            successAlert.style.display = 'none';
+
+            const email = document.getElementById('loginEmail').value;
+            const senha = document.getElementById('loginSenha').value;
+
+            fetch(`${API_URL}/api/advogado/login`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ email, senha })
+            })
+            .then(res => {
+                if (!res.ok) {
+                    return res.json().then(err => { throw new Error(err.error); });
+                }
+                return res.json();
+            })
+            .then(data => {
+                successAlert.innerText = data.message;
+                successAlert.style.display = 'block';
                 
-                if (payload.termo_adicional) {
-                    let t2 = payload.termo_adicional;
-                    if (payload.truncar) t2 += "$";
-                    
-                    if (payload.operador === 'OU') query = `${t1} OU ${t2}`;
-                    else if (payload.operador === 'NAO') query = `${t1} NÃO ${t2}`;
-                    else if (payload.operador === 'PROX') query = `${t1} PROX6 ${t2}`;
-                    else if (payload.operador === 'MESMO') query = `${t1} MESMO ${t2}`;
-                    else if (payload.operador === 'COM') query = `${t1} COM ${t2}`;
-                    else query = `${t1} E ${t2}`;
-                }
+                // Show professional dashboard tab
+                document.getElementById('panel-nav-btn').style.display = 'flex';
+                document.getElementById('logged-user-name').innerText = `Dr(a). ${data.advogado.nome}`;
                 
-                queryString.innerText = query;
-                alertAmbiguidade.innerHTML = "<strong>⚠️ Alerta de Ambiguidade:</strong> Certifique-se de usar SCON apenas para o Superior Tribunal de Justiça do Brasil, diferenciando-o de Portugal e Jalisco.";
-                const encoded = encodeURIComponent(query);
-                btnAbrir.onclick = () => window.open(`https://scon.stj.jus.br/SCON/pesquisar.jsp?b=ACOR&livre={encoded}`, '_blank');
-                resultBox.style.display = 'block';
-            }
-        }
-
-        async function simularVarreduraPush() {
-            try {
-                const res = await fetch(`${API_URL}/admin/simular-push`, { method: 'POST' });
-                const data = await res.json();
-                if (res.ok) {
-                    alert(data.message + "\\n\\nOlhe o console/terminal do Python para ver o log de simulação das notificações enviadas!");
-                } else {
-                    alert("Erro ao simular varredura: " + data.error);
-                }
-            } catch (e) {
-                alert("Verifique se o backend está ligado em localhost:5000");
-            }
-        }
-
-        async function handlePJeOfficeLogin() {
-            const alertBox = document.getElementById('login-alert');
-            alertBox.style.display = 'block';
-            alertBox.className = 'alert info';
-            alertBox.innerText = "PJeOffice CNJ: Detectando certificado digital físico ICP-Brasil na porta local...";
-
-            setTimeout(async () => {
-                const payload = {
-                    certificado_assinatura: "X509_SHA256_HASH_VALIDADO_ICP_BRASIL_982173dfbade",
-                    oab_usuario: "123456/SP",
-                    nome_certificado: "Dr. Carlos Eduardo da Silva (Certificado Digital)",
-                    email_certificado: "carlos.silva.adv@oabsp.org.br"
-                };
-
-                try {
-                    const res = await fetch(`${API_URL}/advogado/login-pjeoffice`, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(payload)
-                    });
-                    const data = await res.json();
-                    if (res.ok) {
-                        alertBox.className = 'alert success';
-                        alertBox.innerText = data.message;
-                        advogadoLogado = data.advogado;
-                        
-                        document.getElementById('btn-dash').disabled = false;
-                        document.getElementById('dash-title').innerText = `Portal - ${data.advogado.nome}`;
-                        document.getElementById('dash-subtitle').innerText = `Autenticação ICP-Brasil (PJeOffice): ${data.advogado.oab}`;
-                        
-                        document.getElementById('pjeoffice-ephemeral-banner').style.display = 'block';
-                        
-                        setTimeout(() => {
-                            switchTab('dash-tab');
-                        }, 1500);
-                    } else {
-                        alertBox.className = 'alert error';
-                        alertBox.innerText = data.error;
-                    }
-                } catch (err) {
-                    alertBox.className = 'alert error';
-                    alertBox.innerText = 'Falha de comunicação. O servidor v12 está ligado?';
-                }
-            }, 2000);
-        }
-
-        function toggleRecoveryForm(show) {
-            const loginBox = document.getElementById('login-box');
-            const recoveryRequestBox = document.getElementById('recovery-request-box');
-            const recoveryConfirmBox = document.getElementById('recovery-confirm-box');
-
-            if (show) {
-                loginBox.style.display = 'none';
-                recoveryRequestBox.style.display = 'block';
-                recoveryConfirmBox.style.display = 'none';
-            } else {
-                loginBox.style.display = 'block';
-                recoveryRequestBox.style.display = 'none';
-                recoveryConfirmBox.style.display = 'none';
-            }
-        }
-
-        async function handleRecoveryRequest(event) {
-            event.preventDefault();
-            const alertBox = document.getElementById('recovery-request-alert');
-            alertBox.style.display = 'none';
-
-            const payload = {
-                identificador: document.getElementById('rec-identificador').value.trim(),
-                metodo: document.getElementById('rec-metodo').value
-            };
-
-            try {
-                const res = await fetch(`${API_URL}/advogado/recuperar-solicitar`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
-                });
-                const data = await res.json();
-                if (res.ok) {
-                    showAlert(alertBox, 'success', data.message + " (Código impresso no terminal Python!)");
-                    setTimeout(() => {
-                        document.getElementById('recovery-request-box').style.display = 'none';
-                        document.getElementById('recovery-confirm-box').style.display = 'block';
-                    }, 2500);
-                } else {
-                    showAlert(alertBox, 'error', data.error);
-                }
-            } catch (err) {
-                showAlert(alertBox, 'error', 'Erro de conexão.');
-            }
-        }
-
-        async function handleRecoveryConfirm(event) {
-            event.preventDefault();
-            const alertBox = document.getElementById('recovery-confirm-alert');
-            alertBox.style.display = 'none';
-
-            const payload = {
-                identificador: document.getElementById('rec-identificador').value.trim(),
-                token: document.getElementById('confirm-token').value.trim(),
-                nova_senha: document.getElementById('confirm-new-password').value
-            };
-
-            try {
-                const res = await fetch(`${API_URL}/advogado/recuperar-confirmar`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
-                });
-                const data = await res.json();
-                if (res.ok) {
-                    showAlert(alertBox, 'success', data.message);
-                    document.getElementById('recovery-confirm-form').reset();
-                    setTimeout(() => { toggleRecoveryForm(false); }, 2000);
-                } else {
-                    showAlert(alertBox, 'error', data.error);
-                }
-            } catch (err) {
-                showAlert(alertBox, 'error', 'Erro de conexão.');
-            }
-        }
-
-        async function handleRegister(event) {
-            event.preventDefault();
-            const alertBox = document.getElementById('register-alert');
-            alertBox.style.display = 'none';
-
-            const payload = {
-                nome: document.getElementById('reg-name').value.trim(),
-                email: document.getElementById('reg-email').value.trim(),
-                telefone: document.getElementById('reg-phone').value.trim(),
-                oab: document.getElementById('reg-oab').value.trim(),
-                senha: document.getElementById('reg-password').value,
-                salvar_credenciais: document.getElementById('reg-save-creds').checked,
-                consentimento_lgpd: document.getElementById('reg-lgpd').checked,
-                tribunal: document.getElementById('reg-court').value,
-                tribunal_usuario: document.getElementById('reg-court-user').value.trim(),
-                tribunal_senha: document.getElementById('reg-court-pass').value
-            };
-
-            try {
-                const res = await fetch(`${API_URL}/advogado/cadastro`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
-                });
-                const data = await res.json();
-                if (res.ok) {
-                    showAlert(alertBox, 'success', data.message);
-                    document.getElementById('register-form').reset();
-                    buscarPendentes();
-                } else {
-                    showAlert(alertBox, 'error', data.error);
-                }
-            } catch (err) {
-                showAlert(alertBox, 'error', 'Erro de conexão.');
-            }
-        }
-
-        async function handleLogin(event) {
-            event.preventDefault();
-            const alertBox = document.getElementById('login-alert');
-            alertBox.style.display = 'none';
-
-            const payload = {
-                email: document.getElementById('login-email').value.trim(),
-                senha: document.getElementById('login-password').value
-            };
-
-            try {
-                const res = await fetch(`${API_URL}/advogado/login`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
-                });
-                const data = await res.json();
-                if (res.ok) {
-                    advogadoLogado = data.advogado;
-                    document.getElementById('btn-dash').disabled = false;
-                    document.getElementById('dash-title').innerText = `Portal de Gestão - ${data.advogado.nome}`;
-                    document.getElementById('dash-subtitle').innerText = `OAB Ativa: ${data.advogado.oab}`;
-                    
-                    document.getElementById('pjeoffice-ephemeral-banner').style.display = data.advogado.salvar_credenciais ? 'none' : 'block';
-                    
-                    switchTab('dash-tab');
-                    document.getElementById('login-form').reset();
-                } else {
-                    showAlert(alertBox, 'error', data.error);
-                }
-            } catch (err) {
-                showAlert(alertBox, 'error', 'Erro de conexão.');
-            }
-        }
-
-        async function handleLink(event) {
-            event.preventDefault();
-            const alertBox = document.getElementById('dash-alert');
-            alertBox.style.display = 'none';
-
-            const processNum = document.getElementById('link-process-num').value;
-
-            if (advogadoLogado && !advogadoLogado.salvar_credenciais) {
-                alertBox.className = 'alert info';
-                alertBox.style.display = 'block';
-                alertBox.innerText = "PJeOffice CNJ: Solicitando assinatura de transação efêmera com o seu Certificado ICP-Brasil para consultar o tribunal...";
-                await new Promise(r => setTimeout(r, 2000));
-            }
-
-            const payload = {
-                clientName: document.getElementById('link-client-name').value.trim(),
-                clientCpf: document.getElementById('link-client-cpf').value,
-                clientPhone: document.getElementById('link-client-phone').value.trim(),
-                processNum: processNum,
-                processStatus: document.getElementById('link-status').value,
-                processUpdate: document.getElementById('link-update').value.trim(),
-                consentimento_lgpd: document.getElementById('link-lgpd').checked
-            };
-
-            try {
-                const res = await fetch(`${API_URL}/advogado/vincular`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
-                });
-                const data = await res.json();
-                if (res.ok) {
-                    showAlert(alertBox, 'success', data.message);
-                    document.getElementById('link-form').reset();
-                } else {
-                    showAlert(alertBox, 'error', data.error);
-                }
-            } catch (err) {
-                showAlert(alertBox, 'error', 'Erro ao enviar dados. O processo possui 20 números CNJ válidos?');
-            }
-        }
-
-        async function handleLogout() {
-            try {
-                await fetch(`${API_URL}/advogado/logout`, { method: 'POST' });
-                document.getElementById('btn-dash').disabled = true;
-                advogadoLogado = null;
-                switchTab('auth-tab');
-            } catch (err) {
-                alert('Erro ao encerrar sessão.');
-            }
-        }
-
-        function convidarAdvogado() {
-            const msg = encodeURIComponent(
-                "Olá, Dr(a).! Estou tentando acompanhar o andamento simplificado do meu processo no portal JurisConsult, mas vi que seu perfil profissional ainda não está cadastrado lá. É super rápido, gratuito e tem suporte nativo para PJeOffice! Cadastre-se em: http://localhost:5000/api"
-            );
-            window.open(`https://api.whatsapp.com/send?text=${msg}`, '_blank');
-        }
-
-        async function handleSearch(event) {
-            event.preventDefault();
-            const alertBox = document.getElementById('search-alert');
-            const resultCard = document.getElementById('result-card');
-            const loader = document.getElementById('automation-loader');
-
-            resultCard.style.display = 'none';
-            alertBox.style.display = 'none';
-
-            const payload = {
-                clientName: document.getElementById('search-client-name').value.trim(),
-                clientCpf: document.getElementById('search-client-cpf').value,
-                processNum: document.getElementById('search-process').value
-            };
-
-            loader.style.display = 'block';
-            document.getElementById('search-form').style.display = 'none';
-
-            setTimeout(() => {
-                document.getElementById('loader-status').innerText = "Quebrando Captcha do Tribunal...";
-                document.getElementById('loader-subtext').innerText = "Autenticando sessão com o Certificado Digital do seu Advogado...";
-            }, 1200);
-
-            setTimeout(() => {
-                document.getElementById('loader-status').innerText = "Processando Publicações do DJE...";
-                document.getElementById('loader-subtext').innerText = "Mapeando andamento do processo no diário eletrônico oficial do tribunal...";
-            }, 2600);
-
-            try {
-                const res = await fetch(`${API_URL}/consultar`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
-                });
-                const data = await res.json();
-
                 setTimeout(() => {
-                    loader.style.display = 'none';
-                    document.getElementById('search-form').style.display = 'block';
-
-                    if (res.ok) {
-                        document.getElementById('res-advocate-name').innerText = data.advName;
-                        document.getElementById('res-advocate-oab').innerText = `OAB: ${data.advOab}`;
-                        document.getElementById('res-client-name').innerText = data.clientName;
-                        document.getElementById('res-process-num').innerText = data.processNum;
-                        document.getElementById('res-court-name').innerText = data.court;
-                        document.getElementById('res-process-status').innerText = data.status;
-                        
-                        const timelineBox = document.getElementById('timeline-box');
-                        timelineBox.innerHTML = "";
-                        
-                        data.timeline.forEach(item => {
-                            const timeItem = document.createElement('div');
-                            timeItem.className = 'timeline-item';
-                            timeItem.innerHTML = `
-                                <div class="timeline-date">${item.timestamp}</div>
-                                <div class="timeline-desc">${item.descricao}</div>
-                            `;
-                            timelineBox.appendChild(timeItem);
-                        });
-
-                        const djeBox = document.getElementById('res-dje-box');
-                        const djeList = document.getElementById('dje-list-box');
-                        djeList.innerHTML = "";
-                        
-                        if (data.publicacoes_dje && data.publicacoes_dje.length > 0) {
-                            data.publicacoes_dje.forEach(pub => {
-                                const pubDiv = document.createElement('div');
-                                pubDiv.style.borderBottom = "1px solid #cbd5e1";
-                                pubDiv.style.paddingBottom = "0.75rem";
-                                pubDiv.style.marginBottom = "0.75rem";
-                                pubDiv.innerHTML = `
-                                    <div style="font-size: 0.8rem; color: var(--text-muted); font-weight: bold; display: flex; justify-content: space-between; margin-bottom: 0.25rem;">
-                                        <span>📅 Disp: ${pub.data_disponibilizacao}</span>
-                                        <span>📰 Pub: ${pub.data_publicacao}</span>
-                                    </div>
-                                    <p style="font-size: 0.88rem; color: var(--primary-light); line-height: 1.5; font-style: italic; background: #fff; padding: 0.5rem; border-radius: 4px; border-left: 2px solid var(--accent); margin-bottom:0.5rem;">
-                                        "${pub.texto_publicacao}"
-                                    </p>
-                                    <button class="btn-outline" onclick="preencherCalculadoraPeloDJE('${pub.data_disponibilizacao}')" style="font-size: 0.72rem; padding: 0.25rem 0.5rem; border-color: #16a34a; color: #16a34a; font-weight: bold;">
-                                        🧮 Simular Prazos deste Diário
-                                    </button>
-                                `;
-                                djeList.appendChild(pubDiv);
-                            });
-                            if (djeList.lastChild) djeList.lastChild.style.borderBottom = "none";
-                            djeBox.style.display = 'block';
-                        } else {
-                            djeBox.style.display = 'none';
-                        }
-
-                        if (data.disclaimer) {
-                            document.getElementById('res-disclaimer').innerText = data.disclaimer;
-                            document.getElementById('res-disclaimer-box').style.display = 'block';
-                        } else {
-                            document.getElementById('res-disclaimer-box').style.display = 'none';
-                        }
-
-                        resultCard.style.display = 'block';
-                        showAlert(alertBox, 'success', 'Sincronização processual e tradução efetuadas!');
-                    } else {
-                        if (res.status === 403) {
-                            alertBox.className = 'alert error';
-                            alertBox.innerHTML = `
-                                <div style="display: flex; flex-direction: column; gap: 10px;">
-                                    <span>🚫 <strong>Acesso Impedido: Advogado Não Cadastrado</strong></span>
-                                    <p style="font-size: 0.9rem; font-weight: normal; margin: 0; line-height: 1.4;">${data.error}</p>
-                                    <button onclick="convidarAdvogado()" style="background-color: var(--accent); color: white; border: none; padding: 0.5rem 1rem; border-radius: 4px; font-weight: bold; cursor: pointer; align-self: flex-start; margin-top: 5px; font-size: 0.85rem;">
-                                        ✉️ Compartilhar Convite via WhatsApp
-                                    </button>
-                                </div>
-                            `;
-                            alertBox.style.display = 'block';
-                        } else {
-                            showAlert(alertBox, 'error', data.error);
-                        }
-                    }
-                }, 4000);
-
-            } catch (err) {
-                loader.style.display = 'none';
-                document.getElementById('search-form').style.display = 'block';
-                showAlert(alertBox, 'error', 'Falha ao conectar. Seu número de processo possui o formato CNJ válido?');
-            }
+                    switchTab('painel-tab');
+                }, 1000);
+            })
+            .catch(err => {
+                dangerAlert.innerText = err.message;
+                dangerAlert.style.display = 'block';
+            });
         }
 
-        async function buscarPendentes() {
-            const box = document.getElementById('fila-oab-box');
-            try {
-                const res = await fetch(`${API_URL}/admin/advogados/pendentes`);
-                const data = await res.json();
-                
-                if (data.length === 0) {
-                    box.innerHTML = `<p style="padding: 1rem; color: var(--text-muted); text-align: center; font-size: 0.9rem;">Não há nenhuma OAB aguardando aprovação no momento.</p>`;
-                    return;
-                }
+        // VIEW 2: SIMULATE Certificado login
+        function loginPjeOffice() {
+            const dangerAlert = document.getElementById('login-alert-danger');
+            dangerAlert.style.display = 'none';
 
-                box.innerHTML = "";
-                data.forEach(adv => {
+            fetch(`${API_URL}/api/advogado/login-pjeoffice`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    certificado_assinatura: "ICP-Brasil-MOCK-TOKEN-A3",
+                    oab_usuario: "123456/SP",
+                    nome_certificado: "Dr. Carlos Eduardo da Silva",
+                    email_certificado: "carlos.silva.adv@oabsp.org.br"
+                })
+            })
+            .then(res => res.json())
+            .then(data => {
+                document.getElementById('panel-nav-btn').style.display = 'flex';
+                document.getElementById('logged-user-name').innerText = `Dr(a). ${data.advogado.nome}`;
+                switchTab('painel-tab');
+            })
+            .catch(err => {
+                dangerAlert.innerText = "Comunicação local falhou. Verifique se o PJeOffice está ativo.";
+                dangerAlert.style.display = 'block';
+            });
+        }
+
+        // VIEW 3: LINK PROCESS FOR RECIPIENT AND SAVE TO DATABASE (UUID AUTOMATIC)
+        function vincularProcesso(event) {
+            event.preventDefault();
+            const dangerAlert = document.getElementById('panel-alert-danger');
+            const successAlert = document.getElementById('panel-alert-success');
+            
+            dangerAlert.style.display = 'none';
+            successAlert.style.display = 'none';
+
+            const payload = {
+                clientName: document.getElementById('panelClientName').value,
+                clientCpf: document.getElementById('panelClientCpf').value,
+                clientPhone: document.getElementById('panelClientPhone').value,
+                processNum: document.getElementById('panelProcessNum').value,
+                processStatus: document.getElementById('panelProcessStatus').value,
+                processUpdate: document.getElementById('panelProcessUpdate').value,
+                consentimento_lgpd: document.getElementById('panelConsentimentoLgpd').checked
+            };
+
+            fetch(`${API_URL}/api/advogado/vincular`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(payload)
+            })
+            .then(res => {
+                if (!res.ok) {
+                    return res.json().then(err => { throw new Error(err.error); });
+                }
+                return res.json();
+            })
+            .then(data => {
+                successAlert.innerText = data.message;
+                successAlert.style.display = 'block';
+                document.getElementById('link-process-form').reset();
+            })
+            .catch(err => {
+                dangerAlert.innerText = err.message;
+                dangerAlert.style.display = 'block';
+            });
+        }
+
+        // VIEW 3: SYSTEM PUSH AUTOMATION SCAN
+        function executarPush() {
+            const btn = document.querySelector('[onclick="executarPush()"]');
+            const alertSuccess = document.getElementById('push-alert-success');
+            
+            alertSuccess.style.display = 'none';
+            btn.innerHTML = "🌙 Executando Varredura Automática Noturna...";
+            btn.disabled = true;
+
+            fetch(`${API_URL}/api/admin/simular-push`, {
+                method: "POST"
+            })
+            .then(res => res.json())
+            .then(data => {
+                alertSuccess.innerText = `${data.message} ${data.notificacoes.length} notificações via WhatsApp simuladas no terminal do Render!`;
+                alertSuccess.style.display = 'block';
+            })
+            .catch(err => {
+                alertSuccess.innerHTML = `<span style="color: var(--danger)">⚠️ Falha física de conexão com os tribunais.</span>`;
+                alertSuccess.style.display = 'block';
+            })
+            .finally(() => {
+                btn.innerHTML = "🌙 Simular Varredura Noturna do Robô";
+                btn.disabled = false;
+            });
+        }
+
+        // VIEW 3: GENERATE PJE CHALLENGE (ICP-BRASIL)
+        function gerarDesafioPjeOffice() {
+            const box = document.getElementById('pje-desafio-box');
+            const txt = document.getElementById('pje-desafio-txt');
+            
+            fetch(`${API_URL}/api/advogado/pjeoffice-assinar-requisicao`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ processNum: "0003483-23.2024.8.26.0026" })
+            })
+            .then(res => res.json())
+            .then(data => {
+                txt.innerText = data.desafio_cripto;
+                box.style.display = 'block';
+            });
+        }
+
+        // VIEW 4: BUILD ADVANCED STJ QUERY (SCON FORMAT)
+        function buscarSTJ(event) {
+            event.preventDefault();
+            const mainTerm = document.getElementById('stjTermoPrincipal').value;
+            const op = document.getElementById('stjOperador').value;
+            const secondTerm = document.getElementById('stjTermoAdicional').value;
+            const truncate = document.getElementById('stjTruncar').checked;
+
+            fetch(`${API_URL}/api/jurisprudencia/stj-helper`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    termos: mainTerm,
+                    operador: op,
+                    termo_adicional: secondTerm,
+                    truncar: truncate
+                })
+            })
+            .then(res => res.json())
+            .then(data => {
+                document.getElementById('stj-query-txt').innerText = data.query_gerada;
+                document.getElementById('stj-link-scon').href = data.scon_pesquisa_url;
+                document.getElementById('stj-link-pronta').href = data.links_utilidades.pesquisa_pronta;
+                document.getElementById('stj-link-sumulas').href = data.links_utilidades.sumulas_anotadas;
+                document.getElementById('stj-disclaimer').innerText = data.alerta_ambiguidade;
+                
+                document.getElementById('stj-result-card').style.display = 'block';
+                document.getElementById('stj-result-card').scrollIntoView({ behavior: 'smooth' });
+            });
+        }
+
+        // VIEW 5: CARREGAR STATUS E INDISPONIBILIDADES
+        function carregarStatusTribunais() {
+            // Load Statuses
+            fetch(`${API_URL}/api/tribunais/cobertura`)
+            .then(res => res.json())
+            .then(data => {
+                const container = document.getElementById('cobertura-container');
+                container.innerHTML = '';
+                data.sistemas.forEach(sys => {
                     const item = document.createElement('div');
-                    item.className = 'pendente-item';
+                    item.className = "system-status-item";
                     item.innerHTML = `
                         <div>
-                            <strong>${adv.nome}</strong> (OAB: ${adv.oab})<br>
-                            <small style="color: var(--text-muted)">E-mail: ${adv.email}</small>
+                            <div class="system-info-title">${sys.nome}</div>
+                            <div class="system-info-desc">${sys.cobertura}</div>
                         </div>
-                        <div>
-                            <button onclick="aprovarOAB(${adv.id})" style="background-color: var(--success); color: white; border: none; padding: 0.35rem 0.75rem; border-radius: 4px; font-weight: bold; cursor: pointer; margin-right: 5px;">Aprovar OAB</button>
-                            <button onclick="bloquearOAB(${adv.id})" style="background-color: var(--error); color: white; border: none; padding: 0.35rem 0.75rem; border-radius: 4px; font-weight: bold; cursor: pointer;">Recusar</button>
-                        </div>
+                        <span class="badge badge-success">${sys.status}</span>
                     `;
-                    box.appendChild(item);
+                    container.appendChild(item);
                 });
-            } catch (err) {
-                box.innerHTML = `<p style="padding: 1rem; color: var(--error); text-align: center; font-size: 0.9rem;">Ligue o servidor backend no terminal para carregar os cadastros.</p>`;
-            }
+            });
+
+            // Load Historical logs
+            fetch(`${API_URL}/api/tribunais/indisponibilidade`)
+            .then(res => res.json())
+            .then(data => {
+                const container = document.getElementById('indisponibilidade-container');
+                container.innerHTML = '';
+                data.indisponibilidades.forEach(log => {
+                    const item = document.createElement('div');
+                    item.className = "system-status-item";
+                    item.innerHTML = `
+                        <div>
+                            <div class="system-info-title">${log.tribunal}</div>
+                            <div class="system-info-desc"><strong>Período:</strong> ${log.periodo} | ${log.motivo}</div>
+                        </div>
+                        <span class="badge badge-success" style="background-color: #cbd5e0; color: #4a5568;">${log.status}</span>
+                    `;
+                    container.appendChild(item);
+                });
+            });
         }
 
-        async function aprovarOAB(id) {
-            try {
-                const res = await fetch(`${API_URL}/admin/advogado/aprovar/${id}`, { method: 'POST' });
-                const data = await res.json();
-                alert(data.message);
-                buscarPendentes();
-            } catch (err) {
-                alert('Erro ao enviar sinal de aprovação.');
-            }
+        // VIEW 6: LGPD REVOLKE EXCLUSÃO EM CASCATA DEFINTIVA
+        function revogarConsentimentoLgpd(event) {
+            event.preventDefault();
+            const dangerAlert = document.getElementById('lgpd-alert-danger');
+            const successAlert = document.getElementById('lgpd-alert-success');
+            
+            dangerAlert.style.display = 'none';
+            successAlert.style.display = 'none';
+
+            const payload = {
+                clientName: document.getElementById('lgpdClientName').value,
+                clientCpf: document.getElementById('lgpdClientCpf').value,
+                processNum: document.getElementById('lgpdProcessNum').value
+            };
+
+            fetch(`${API_URL}/api/lgpd/revogar`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(payload)
+            })
+            .then(res => {
+                if (!res.ok) {
+                    return res.json().then(err => { throw new Error(err.error); });
+                }
+                return res.json();
+            })
+            .then(data => {
+                successAlert.innerText = data.message;
+                successAlert.style.display = 'block';
+                document.getElementById('lgpd-revoke-form').reset();
+            })
+            .catch(err => {
+                dangerAlert.innerText = err.message;
+                dangerAlert.style.display = 'block';
+            });
         }
 
-        async function bloquearOAB(id) {
-            try {
-                const res = await fetch(`${API_URL}/admin/advogado/bloquear/${id}`, { method: 'POST' });
-                const data = await res.json();
-                alert(data.message);
-                buscarPendentes();
-            } catch (err) {
-                alert('Erro ao enviar sinal de bloqueio.');
-            }
+        // USER LOGOUT
+        function fazerLogout() {
+            document.getElementById('panel-nav-btn').style.display = 'none';
+            switchTab('advogado-tab');
         }
-
-        function showAlert(element, type, message) {
-            element.className = `alert ${type}`;
-            element.innerText = message;
-            element.style.display = 'block';
-        }
-
-        window.onload = buscarPendentes;
     </script>
 </body>
-</html>},TargetFile:/workspace/scratch/index-comercial-v10.html}
+</html>
