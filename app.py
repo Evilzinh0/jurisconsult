@@ -1,5 +1,6 @@
 import os
 import base64
+import uuid
 import random
 from datetime import datetime, timedelta
 from flask import Flask, request, jsonify, session
@@ -22,7 +23,7 @@ if db_url:
         db_url = db_url.replace("postgres://", "postgresql://", 1)
     app.config['SQLALCHEMY_DATABASE_URI'] = db_url
 else:
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///juris_consult_comercial_v16.db'
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///juris_consult_comercial_v17.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
@@ -266,7 +267,7 @@ def disparar_recuperacao_sms(adv_nome, adv_telefone, token):
 # -----------------------------------------------------------------------------
 class Advogado(db.Model):
     __tablename__ = 'advogados'
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.String(36), primary_key=True, default=lambda: str(uuid.uuid4()))
     nome = db.Column(db.String(100), nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
     telefone = db.Column(db.String(20), default='')
@@ -294,7 +295,7 @@ class Advogado(db.Model):
 
 class Cliente(db.Model):
     __tablename__ = 'clientes'
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.String(36), primary_key=True, default=lambda: str(uuid.uuid4()))
     nome = db.Column(db.String(100), nullable=False)
     cpf = db.Column(db.String(14), nullable=False)
     telefone = db.Column(db.String(20), default='')
@@ -302,17 +303,17 @@ class Cliente(db.Model):
     # Parâmetros de conformidade com a LGPD [126, 147]
     consentimento_lgpd = db.Column(db.Boolean, default=True, nullable=False)
     
-    advogado_id = db.Column(db.Integer, db.ForeignKey('advogados.id'), nullable=False)
+    advogado_id = db.Column(db.String(36), db.ForeignKey('advogados.id'), nullable=False)
     processos = db.relationship('Processo', backref='cliente', lazy=True)
 
 class Processo(db.Model):
     __tablename__ = 'processos'
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.String(36), primary_key=True, default=lambda: str(uuid.uuid4()))
     numero = db.Column(db.String(25), unique=True, nullable=False)
     situacao = db.Column(db.String(50), default="Em Andamento / Ativo")
     
-    advogado_id = db.Column(db.Integer, db.ForeignKey('advogados.id'), nullable=False)
-    cliente_id = db.Column(db.Integer, db.ForeignKey('clientes.id'), nullable=False)
+    advogado_id = db.Column(db.String(36), db.ForeignKey('advogados.id'), nullable=False)
+    cliente_id = db.Column(db.String(36), db.ForeignKey('clientes.id'), nullable=False)
     
     movimentacoes = db.relationship('Movimentacao', backref='processo', lazy=True, cascade="all, delete-orphan")
     publicacoes_dje = db.relationship('PublicacaoDJE', backref='processo', lazy=True, cascade="all, delete-orphan")
@@ -323,14 +324,14 @@ class PublicacaoDJE(db.Model):
     texto_publicacao = db.Column(db.Text, nullable=False)
     data_publicacao = db.Column(db.String(30), nullable=False)
     data_disponibilizacao = db.Column(db.String(30), nullable=False)
-    processo_id = db.Column(db.Integer, db.ForeignKey('processos.id'), nullable=False)
+    processo_id = db.Column(db.String(36), db.ForeignKey('processos.id'), nullable=False)
 
 class Movimentacao(db.Model):
     __tablename__ = 'movimentacoes'
     id = db.Column(db.Integer, primary_key=True)
     descricao = db.Column(db.Text, nullable=False)
     timestamp = db.Column(db.String(30), nullable=False)
-    processo_id = db.Column(db.Integer, db.ForeignKey('processos.id'), nullable=False)
+    processo_id = db.Column(db.String(36), db.ForeignKey('processos.id'), nullable=False)
 
 # -----------------------------------------------------------------------------
 # ROTAS DA API - AUTENTICAÇÃO E PJeOFFICE
@@ -721,7 +722,7 @@ def listar_advogados_pendentes():
     lista = [{"id": a.id, "nome": a.nome, "oab": a.oab, "email": a.email} for a in pendentes]
     return jsonify(lista), 200
 
-@app.route('/api/admin/advogado/aprovar/<int:adv_id>', methods=['POST'])
+@app.route('/api/admin/advogado/aprovar/<string:adv_id>', methods=['POST'])
 def aprovar_advogado(adv_id):
     adv = Advogado.query.get(adv_id)
     if not adv:
@@ -731,7 +732,7 @@ def aprovar_advogado(adv_id):
     db.session.commit()
     return jsonify({"message": f"OAB {adv.oab} do Dr(a). {adv.nome} validada e aprovada no sistema!"}), 200
 
-@app.route('/api/admin/advogado/bloquear/<int:adv_id>', methods=['POST'])
+@app.route('/api/admin/advogado/bloquear/<string:adv_id>', methods=['POST'])
 def bloquear_advogado(adv_id):
     adv = Advogado.query.get(adv_id)
     if not adv:
@@ -1199,7 +1200,7 @@ def revogar_consentimento_lgpd():
         return jsonify({"error": f"Ocorreu um erro interno de banco de dados ao excluir seus dados: {str(e)}"}), 500
 
 # -----------------------------------------------------------------------------
-# INICIALIZAÇÃO E AUTO-SEEDING DE DEMONSTRAÇÃO (v15)
+# INICIALIZAÇÃO E AUTO-SEEDING DE DEMONSTRAÇÃO (v17)
 # -----------------------------------------------------------------------------
 with app.app_context():
     db.create_all()
@@ -1358,5 +1359,5 @@ with app.app_context():
         db.session.rollback()
 
 if __name__ == '__main__':
-    print("🚀 Servidor JurisConsult v15 ativo com Auto-Seeding de Demonstração, Dicionário de Traduções e Validador CNJ.")
+    print("🚀 Servidor JurisConsult v17 ativo com Auto-Seeding de Demonstração, Dicionário de Traduções e Validador CNJ.")
     app.run(debug=True, port=5000)
