@@ -91,6 +91,23 @@
             font-weight: 600;
         }
 
+        .author-signature {
+            color: var(--accent);
+            font-size: 0.82rem;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            opacity: 0.95;
+            text-align: right;
+            border-left: 2px solid var(--accent);
+            padding-left: 12px;
+            line-height: 1.4;
+        }
+
+        .author-signature strong {
+            color: white;
+            font-weight: 600;
+        }
+
         /* MOBILE RESPONSIVE TABS & NAVIGATION */
         nav {
             display: flex;
@@ -542,6 +559,15 @@
                 flex-direction: column;
                 align-items: flex-start;
                 padding: 0 15px;
+                gap: 8px;
+            }
+
+            .author-signature {
+                text-align: left;
+                border-left: 2px solid var(--accent);
+                padding-left: 8px;
+                font-size: 0.72rem;
+                opacity: 0.9;
             }
 
             .logo-text h1 {
@@ -627,6 +653,9 @@
                     <h1>JurisConsult</h1>
                     <span>Inteligência Jurídica & Transparência</span>
                 </div>
+            </div>
+            <div class="author-signature">
+                Desenvolvido Intelectualmente por <strong>Gabriel Pisaneschi</strong>
             </div>
         </div>
     </header>
@@ -1035,7 +1064,7 @@
     <!-- JAVASCRIPT LOGIC CONTROLLER FOR API CONNECTION -->
     <script>
         // Mapeie aqui a URL real do seu back-end hospedado no Render
-        const API_URL = "https://jurisconsult-api.onrender.com"; // Substitua pelo link do Render, ex: https://seu-site-backend.onrender.com
+        const API_URL = "http://localhost:5000"; // Substitua pelo link do Render, ex: https://seu-site-backend.onrender.com
 
         // Tab Switching Engine
         function switchTab(tabId) {
