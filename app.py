@@ -14,7 +14,15 @@ CORS(app, supports_credentials=True)
 
 # Configurações de Segurança e Banco de Dados (v7 com todas as 4 melhorias consolidadas)
 app.config['SECRET_KEY'] = os.environ.get('FLASK_SECRET_KEY', 'chave_secreta_super_protegida_v9')
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///juris_consult_comercial_v11.db'
+# Configuração dinâmica para suportar o banco PostgreSQL do Supabase ou SQLite local como fallback
+db_url = os.environ.get('DATABASE_URL')
+if db_url:
+    # Correção exigida pelo SQLAlchemy 1.4+: 'postgres://' deve ser substituído por 'postgresql://'
+    if db_url.startswith("postgres://"):
+        db_url = db_url.replace("postgres://", "postgresql://", 1)
+    app.config['SQLALCHEMY_DATABASE_URI'] = db_url
+else:
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///juris_consult_comercial_v16.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
@@ -1191,7 +1199,7 @@ def revogar_consentimento_lgpd():
         return jsonify({"error": f"Ocorreu um erro interno de banco de dados ao excluir seus dados: {str(e)}"}), 500
 
 # -----------------------------------------------------------------------------
-# INICIALIZAÇÃO E AUTO-SEEDING DE DEMONSTRAÇÃO (v13)
+# INICIALIZAÇÃO E AUTO-SEEDING DE DEMONSTRAÇÃO (v15)
 # -----------------------------------------------------------------------------
 with app.app_context():
     db.create_all()
@@ -1236,58 +1244,113 @@ with app.app_context():
             db.session.add(cliente)
             db.session.commit()
 
-        # Verifica se o processo de teste CNJ está cadastrado
-        processo = Processo.query.filter_by(numero='00123456720268260001').first()
-        if not processo:
-            print("🌱 [AUTO-SEEDING] Cadastrando processo 0012345-67.2026.8.26.0001...")
-            processo = Processo(
-                numero='00123456720268260001',
-                situacao="Em Andamento / Ativo",
-                advogado_id=adv.id,
-                cliente_id=cliente.id
-            )
-            db.session.add(processo)
-            db.session.commit()
-            
-            # Adiciona as movimentações didáticas na linha do tempo
-            hoje = datetime.now()
-            ontem = hoje - timedelta(days=2)
-            semana_passada = hoje - timedelta(days=7)
-            
-            m1 = Movimentacao(
-                descricao="Conclusão ao Juiz para decisão sobre os pedidos liminares.",
-                timestamp=hoje.strftime("%d/%m/%Y às %H:%M"),
-                processo_id=processo.id
-            )
-            m2 = Movimentacao(
-                descricao="Petição de Manifestação Juntada aos Autos pelo Advogado de Defesa habilitado.",
-                timestamp=ontem.strftime("%d/%m/%Y às 14:30"),
-                processo_id=processo.id
-            )
-            m3 = Movimentacao(
-                descricao="Despacho Proferido concedendo prazo legal para réplica à contestação.",
-                timestamp=semana_passada.strftime("%d/%m/%Y às 09:15"),
-                processo_id=processo.id
-            )
-            db.session.add_all([m1, m2, m3])
-            
-            # Adiciona a publicação oficial do DJE para testes da calculadora
-            pub_data = (hoje - timedelta(days=1)).strftime("%d/%m/%Y")
-            disp_data = (hoje - timedelta(days=2)).strftime("%d/%m/%Y")
-            pub = PublicacaoDJE(
-                texto_publicacao=(
-                    "Ficam as partes devidamente intimadas do teor da decisão proferida pelo Exmo. Magistrado. "
-                    "Nos termos do artigo 219 do CPC, fica aberto o prazo improrrogável de 15 (quinze) dias úteis "
-                    "para que a parte autora apresente réplica à contestação e manifeste-se sobre os documentos. "
-                    "A contagem do prazo processual iniciar-se-á no primeiro dia útil subsequente a esta publicação oficial no DJE."
-                ),
-                data_publicacao=pub_data,
-                data_disponibilizacao=disp_data,
-                processo_id=processo.id
-            )
-            db.session.add(pub)
-            db.session.commit()
-            print("🌱 [AUTO-SEEDING] Processo, linha do tempo e publicações DJE de teste prontos!")
+        # Semeando os 4 Processos Reais da Atualidade para a Apresentação Comercial
+        processos_reais = [
+            {
+                "numero": "00040164120248260071",
+                "numero_formatado": "0004016-41.2024.8.26.0071",
+                "comarca": "TJSP (Comarca de Bauru/SP)",
+                "situacao": "Em Andamento / Ativo",
+                "timeline": [
+                    {"descricao": "Conclusão ao Juiz para prolação de despacho saneador.", "at": 0},
+                    {"descricao": "Petição de Manifestação Juntada pleiteando indenização por queima de eletrodomésticos devido a oscilações de energia.", "at": 2},
+                    {"descricao": "Despacho Proferido designando audiência de conciliação por videoconferência.", "at": 7}
+                ],
+                "dje": {
+                    "texto": "Vistos. Ficam as partes devidamente intimadas do despacho que designou a audiência de conciliação por videoconferência para o dia 10 de outubro de 2026, às 14:00h, cujo link de acesso será disponibilizado nos autos. Nos termos do art. 219 do CPC, fica aberto o prazo comum de 15 (quinze) dias úteis para que as partes se manifestem.",
+                    "disp_offset": 2,
+                    "pub_offset": 1
+                }
+            },
+            {
+                "numero": "00034832320248260026",
+                "numero_formatado": "0003483-23.2024.8.26.0026",
+                "comarca": "TJSP (Comarca de Ourinhos/SP)",
+                "situacao": "Aguardando Julgamento",
+                "timeline": [
+                    {"descricao": "Conclusão ao Juiz para saneamento de processo de execução cível.", "at": 0},
+                    {"descricao": "Juntada de Petição de Manifestação do réu apresentando contestação e impugnação a documentos.", "at": 2},
+                    {"descricao": "Despacho Proferido determinando perícia técnica de grafotecnia sobre a assinatura do título.", "at": 7}
+                ],
+                "dje": {
+                    "texto": "Vistos. Defiro a produção de prova pericial grafotécnica pleiteada nos autos de cobrança. Nomeio o perito técnico cadastrado, fixando o prazo improrrogável de 15 (quinze) dias úteis para que as partes apresentem seus quesitos e indiquem assistentes técnicos, conforme previsto no Art. 219 do CPC.",
+                    "disp_offset": 2,
+                    "pub_offset": 1
+                }
+            },
+            {
+                "numero": "00007069420268260026",
+                "numero_formatado": "0000706-94.2026.8.26.0026",
+                "comarca": "TJSP (Comarca de Ourinhos/SP)",
+                "situacao": "Concluído / Sentenciado",
+                "timeline": [
+                    {"descricao": "Sentença Proferida homologando acordo de alimentos amigável.", "at": 0},
+                    {"descricao": "Petição de Manifestação Juntada requerendo fixação provisória sob consentimento expresso de alimentos.", "at": 1},
+                    {"descricao": "Conclusão ao Juiz para prolação de sentença homologatória de pensão.", "at": 3}
+                ],
+                "dje": {
+                    "texto": "Sentença Homologatória: Nos termos do artigo 487, inciso III, do Código de Processo Civil (CPC), homologo por sentença o acordo de pensão alimentícia firmado amigavelmente pelas partes para que surta seus regulares efeitos jurídicos. Intimem-se as partes, correndo o prazo de recurso de 15 dias úteis a partir desta publicação.",
+                    "disp_offset": 2,
+                    "pub_offset": 1
+                }
+            },
+            {
+                "numero": "00067449320248260026",
+                "numero_formatado": "0006744-93.2024.8.26.0026",
+                "comarca": "TJSP (Comarca de Ourinhos/SP)",
+                "situacao": "Em Andamento / Ativo",
+                "timeline": [
+                    {"descricao": "Petição de Manifestação Juntada requerendo penhora de ativos financeiros online (Sisbajud).", "at": 0},
+                    {"descricao": "Conclusão ao Juiz para análise de penhorabilidade de bens e contas correntes.", "at": 2},
+                    {"descricao": "Expedido Alvará judicial eletrônico de levantamento de valores incontroversos.", "at": 7}
+                ],
+                "dje": {
+                    "texto": "Ficam os exequentes intimados do deferimento da ordem de bloqueio de valores via Sisbajud e expedição do respectivo alvará judicial eletrônico de levantamento em favor do patrono habilitado. Fica aberto o prazo legal de 15 (quinze) dias úteis para oferecimento de impugnação, contados nos termos do Art. 219 do CPC.",
+                    "disp_offset": 2,
+                    "pub_offset": 1
+                }
+            }
+        ]
+
+        hoje = datetime.now()
+
+        for proc_data in processos_reais:
+            processo = Processo.query.filter_by(numero=proc_data["numero"]).first()
+            if not processo:
+                print(f"🌱 [AUTO-SEEDING] Cadastrando processo real {proc_data['numero_formatado']}...")
+                processo = Processo(
+                    numero=proc_data["numero"],
+                    situacao=proc_data["situacao"],
+                    advogado_id=adv.id,
+                    cliente_id=cliente.id
+                )
+                db.session.add(processo)
+                db.session.commit()
+
+                # Adiciona as movimentações didáticas na linha do tempo
+                for mov in proc_data["timeline"]:
+                    m_time = hoje - timedelta(days=mov["at"])
+                    # Se 'at' for 0, usa horário atual, senão coloca um horário fixo
+                    timestamp_str = m_time.strftime("%d/%m/%Y às %H:%M") if mov["at"] == 0 else m_time.strftime("%d/%m/%Y às 14:30")
+                    m = Movimentacao(
+                        descricao=mov["descricao"],
+                        timestamp=timestamp_str,
+                        processo_id=processo.id
+                    )
+                    db.session.add(m)
+
+                # Adiciona a publicação oficial do DJE para testes da calculadora
+                pub_data = (hoje - timedelta(days=proc_data["dje"]["pub_offset"])).strftime("%d/%m/%Y")
+                disp_data = (hoje - timedelta(days=proc_data["dje"]["disp_offset"])).strftime("%d/%m/%Y")
+                pub = PublicacaoDJE(
+                    texto_publicacao=proc_data["dje"]["texto"],
+                    data_publicacao=pub_data,
+                    data_disponibilizacao=disp_data,
+                    processo_id=processo.id
+                )
+                db.session.add(pub)
+                db.session.commit()
+                print(f"🌱 [AUTO-SEEDING] Processo {proc_data['numero_formatado']}, linha do tempo e DJE prontos!")
             
         print("✅ [AUTO-SEEDING] Banco de dados totalmente carregado para apresentações comerciais!")
     except Exception as e:
@@ -1295,5 +1358,5 @@ with app.app_context():
         db.session.rollback()
 
 if __name__ == '__main__':
-    print("🚀 Servidor JurisConsult v13 ativo com Auto-Seeding de Demonstração, Dicionário de Traduções e Validador CNJ.")
+    print("🚀 Servidor JurisConsult v15 ativo com Auto-Seeding de Demonstração, Dicionário de Traduções e Validador CNJ.")
     app.run(debug=True, port=5000)
