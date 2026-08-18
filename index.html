@@ -727,7 +727,7 @@
                     <form id="client-search-form" onsubmit="consultarProcesso(event)">
                         <div class="form-group">
                             <label for="clientNameSearch">Seu Nome Completo:</label>
-                            <input type="text" id="clientNameSearch" class="form-control" placeholder="Ex: Mariana de Souza" required>
+                            <input type="text" id="clientNameSearch" class="form-control" placeholder="Ex: Gabriel Pisaneschi" required>
                         </div>
                         <div class="form-group">
                             <label for="clientCpfSearch">Seu CPF (Somente Números):</label>
@@ -832,11 +832,11 @@
                     <form id="adv-register-form" onsubmit="cadastrarAdvogado(event)">
                         <div class="form-group">
                             <label for="regNome">Nome Completo:</label>
-                            <input type="text" id="regNome" class="form-control" placeholder="Dr. Carlos Silva" required>
+                            <input type="text" id="regNome" class="form-control" placeholder="Drª. Mariana Estela" required>
                         </div>
                         <div class="form-group">
                             <label for="regEmail">E-mail Cadastrado na OAB:</label>
-                            <input type="email" id="regEmail" class="form-control" placeholder="carlos@oab.org.br" required>
+                            <input type="email" id="regEmail" class="form-control" placeholder="mariana@oab.org.br" required>
                         </div>
                         <div class="form-group">
                             <label for="regOab">Inscrição OAB (Número/UF):</label>
@@ -884,7 +884,7 @@
                         Sessão Ativa
                     </span>
                     <span style="font-weight: 500; color: #2d3748;">
-                        Conectado como: <span class="session-user" id="logged-user-name" style="color: var(--primary); font-weight: 700;">Dr. Carlos Eduardo</span>
+                        Conectado como: <span class="session-user" id="logged-user-name" style="color: var(--primary); font-weight: 700;">Drª. Mariana Estela</span>
                     </span>
                 </div>
                 <button class="btn btn-outline" style="width: auto; padding: 6px 12px; font-size: 0.8rem; border-color: #e53e3e; color: #e53e3e; transition: all 0.2s;" onmouseover="this.style.backgroundColor='#fff5f5'" onmouseout="this.style.backgroundColor='transparent'" onclick="fazerLogout()">🚪 Sair do Sistema (Logout)</button>
@@ -906,7 +906,7 @@
                     <form id="link-process-form" onsubmit="vincularProcesso(event)">
                         <div class="form-group">
                             <label for="panelClientName">Nome Completo do Cliente:</label>
-                            <input type="text" id="panelClientName" class="form-control" placeholder="Ex: Mariana de Souza" required>
+                            <input type="text" id="panelClientName" class="form-control" placeholder="Ex: Gabriel Pisaneschi" required>
                         </div>
                         <div class="form-group">
                             <label for="panelClientCpf">CPF do Cliente (Somente Números):</label>
@@ -1083,7 +1083,7 @@
                     <form id="lgpd-revoke-form" onsubmit="revogarConsentimentoLgpd(event)">
                         <div class="form-group">
                             <label for="lgpdClientName">Nome Completo:</label>
-                            <input type="text" id="lgpdClientName" class="form-control" placeholder="Ex: Mariana de Souza" required>
+                            <input type="text" id="lgpdClientName" class="form-control" placeholder="Ex: Gabriel Pisaneschi" required>
                         </div>
                         <div class="form-group">
                             <label for="lgpdClientCpf">Seu CPF (Somente números):</label>
@@ -1309,7 +1309,8 @@
             fetch(`${API_URL}/api/advogado/login`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ email, senha })
+                body: JSON.stringify({ email, senha }),
+                credentials: "include"
             })
             .then(res => {
                 if (!res.ok) {
@@ -1355,9 +1356,10 @@
                 body: JSON.stringify({
                     certificado_assinatura: "ICP-Brasil-MOCK-TOKEN-A3",
                     oab_usuario: "123456/SP",
-                    nome_certificado: "Dr. Carlos Eduardo da Silva",
-                    email_certificado: "carlos.silva.adv@oabsp.org.br"
-                })
+                    nome_certificado: "Drª. Mariana Estela da Silva",
+                    email_certificado: "mariana.estela.adv@oabsp.org.br"
+                }),
+                credentials: "include"
             })
             .then(res => {
                 if (!res.ok) {
@@ -1411,7 +1413,8 @@
             fetch(`${API_URL}/api/advogado/vincular`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(payload)
+                body: JSON.stringify(payload),
+                credentials: "include"
             })
             .then(res => {
                 if (!res.ok) {
@@ -1465,7 +1468,8 @@
             fetch(`${API_URL}/api/advogado/pjeoffice-assinar-requisicao`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ processNum: "0003483-23.2024.8.26.0026" })
+                body: JSON.stringify({ processNum: "0003483-23.2024.8.26.0026" }),
+                credentials: "include"
             })
             .then(res => res.json())
             .then(data => {
@@ -1591,5 +1595,5 @@
             switchTab('advogado-tab');
         }
     </script>
-    </body>
+</body>
 </html>
