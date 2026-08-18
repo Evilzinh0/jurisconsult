@@ -489,19 +489,55 @@
         .badge-pending { background-color: #feebc8; color: #744210; }
         .badge-danger { background-color: #fed7d7; color: #742a2a; }
 
-        /* USER SESSION HEADER */
+        /* USER SESSION HEADER - ESTILIZAÇÃO PREMIUM DE CONEXÃO BEM-SUCEDIDA */
         .session-info {
-            background-color: #edf2f7;
-            padding: 10px 20px;
+            background: linear-gradient(135deg, #f0fff4 0%, #e6fffa 100%);
+            padding: 12px 20px;
             border-radius: var(--radius);
             margin-bottom: 25px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
-            gap: 10px;
+            gap: 12px;
             font-size: 0.9rem;
-            border: 1px solid var(--border-color);
+            border: 1px solid #c6f6d5;
+            box-shadow: var(--shadow-sm), 0 0 12px rgba(56, 161, 105, 0.08);
+            transition: all 0.3s ease;
+        }
+        
+        .session-info:hover {
+            box-shadow: var(--shadow-md), 0 0 18px rgba(56, 161, 105, 0.15);
+            border-color: #38a169;
+        }
+
+        .session-badge {
+            background-color: #38a169; 
+            color: white; 
+            padding: 4px 10px; 
+            border-radius: 20px; 
+            font-weight: 700; 
+            font-size: 0.72rem; 
+            letter-spacing: 0.5px; 
+            text-transform: uppercase; 
+            display: inline-flex; 
+            align-items: center; 
+            gap: 6px; 
+            box-shadow: 0 2px 4px rgba(56, 161, 105, 0.2);
+        }
+
+        .session-pulse-dot {
+            display: inline-block; 
+            width: 7px; 
+            height: 7px; 
+            background-color: #fff; 
+            border-radius: 50%; 
+            animation: sessionBlink 1s infinite alternate;
+        }
+
+        @keyframes sessionBlink {
+            0% { opacity: 0.3; transform: scale(0.9); }
+            100% { opacity: 1; transform: scale(1.1); }
         }
 
         .session-user {
@@ -840,9 +876,18 @@
         <!-- ==================== VIEW 3: PAINEL DE CONTROLE TAB (LOGGED ONLY) ==================== -->
         <div id="painel-tab" class="tab-content">
             <!-- Session header -->
+            <!-- Session header - Indicador Premium e Evidente de Login Bem-Sucedido -->
             <div class="session-info">
-                <div>Conectado como: <span class="session-user" id="logged-user-name">Dr. Carlos Eduardo</span></div>
-                <button class="btn btn-outline" style="width: auto; padding: 6px 12px; font-size: 0.8rem;" onclick="fazerLogout()">🚪 Sair do Sistema (Logout)</button>
+                <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+                    <span class="session-badge">
+                        <span class="session-pulse-dot"></span>
+                        Sessão Ativa
+                    </span>
+                    <span style="font-weight: 500; color: #2d3748;">
+                        Conectado como: <span class="session-user" id="logged-user-name" style="color: var(--primary); font-weight: 700;">Dr. Carlos Eduardo</span>
+                    </span>
+                </div>
+                <button class="btn btn-outline" style="width: auto; padding: 6px 12px; font-size: 0.8rem; border-color: #e53e3e; color: #e53e3e; transition: all 0.2s;" onmouseover="this.style.backgroundColor='#fff5f5'" onmouseout="this.style.backgroundColor='transparent'" onclick="fazerLogout()">🚪 Sair do Sistema (Logout)</button>
             </div>
 
             <div class="hero">
@@ -1273,19 +1318,26 @@
                 return res.json();
             })
             .then(data => {
-                successAlert.innerText = data.message;
+                successAlert.innerHTML = `<strong>✅ ACESSO LIBERADO!</strong><br>${data.message}`;
                 successAlert.style.display = 'block';
                 
                 // Show professional dashboard tab
                 document.getElementById('panel-nav-btn').style.display = 'flex';
-                document.getElementById('logged-user-name').innerText = `Dr(a). ${data.advogado.nome}`;
+                
+                // Evita duplicidade de Dr(a). se o nome já contiver Dr.
+                let name = data.advogado.nome;
+                if (name.startsWith("Dr.") || name.startsWith("Dr(a).")) {
+                    document.getElementById('logged-user-name').innerText = name;
+                } else {
+                    document.getElementById('logged-user-name').innerText = `Dr(a). ${name}`;
+                }
                 
                 setTimeout(() => {
                     switchTab('painel-tab');
                 }, 1000);
             })
             .catch(err => {
-                dangerAlert.innerText = err.message;
+                dangerAlert.innerHTML = `<strong>❌ FALHA DE LOGIN:</strong><br>${err.message}`;
                 dangerAlert.style.display = 'block';
             });
         }
@@ -1293,7 +1345,9 @@
         // VIEW 2: SIMULATE Certificado login
         function loginPjeOffice() {
             const dangerAlert = document.getElementById('login-alert-danger');
+            const successAlert = document.getElementById('login-alert-success');
             dangerAlert.style.display = 'none';
+            successAlert.style.display = 'none';
 
             fetch(`${API_URL}/api/advogado/login-pjeoffice`, {
                 method: "POST",
@@ -1305,14 +1359,32 @@
                     email_certificado: "carlos.silva.adv@oabsp.org.br"
                 })
             })
-            .then(res => res.json())
+            .then(res => {
+                if (!res.ok) {
+                    return res.json().then(err => { throw new Error(err.error); });
+                }
+                return res.json();
+            })
             .then(data => {
+                successAlert.innerHTML = `<strong>✅ CERTIFICADO VÁLIDO!</strong><br>${data.message}`;
+                successAlert.style.display = 'block';
+                
                 document.getElementById('panel-nav-btn').style.display = 'flex';
-                document.getElementById('logged-user-name').innerText = `Dr(a). ${data.advogado.nome}`;
-                switchTab('painel-tab');
+                
+                // Evita duplicidade de Dr(a). se o nome já contiver Dr.
+                let name = data.advogado.nome;
+                if (name.startsWith("Dr.") || name.startsWith("Dr(a).")) {
+                    document.getElementById('logged-user-name').innerText = name;
+                } else {
+                    document.getElementById('logged-user-name').innerText = `Dr(a). ${name}`;
+                }
+                
+                setTimeout(() => {
+                    switchTab('painel-tab');
+                }, 1000);
             })
             .catch(err => {
-                dangerAlert.innerText = "Comunicação local falhou. Verifique se o PJeOffice está ativo.";
+                dangerAlert.innerHTML = `<strong>❌ FALHA NO CERTIFICADO DIGITAL:</strong><br>${err.message || "Comunicação local falhou. Verifique se o PJeOffice está ativo."}`;
                 dangerAlert.style.display = 'block';
             });
         }
@@ -1519,5 +1591,5 @@
             switchTab('advogado-tab');
         }
     </script>
-</body>
+    </body>
 </html>
