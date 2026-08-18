@@ -415,6 +415,7 @@ def login_advogado():
         return jsonify({
             "message": f"Acesso liberado! Bem-vindo(a), Dr(a). {adv.nome}!",
             "advogado": {
+                "id": adv.id,
                 "nome": adv.nome,
                 "oab": adv.oab,
                 "email": adv.email,
@@ -464,6 +465,7 @@ def login_pjeoffice():
     return jsonify({
         "message": "Autenticação criptográfica realizada com sucesso via PJeOffice (ICP-Brasil)!",
         "advogado": {
+            "id": adv.id,
             "nome": adv.nome,
             "oab": adv.oab,
             "email": adv.email
@@ -567,7 +569,9 @@ def confirmar_recuperacao():
 # -----------------------------------------------------------------------------
 @app.route('/api/advogado/vincular', methods=['POST'])
 def vincular_processo():
-    adv_id = session.get('advogado_id')
+    data = request.json or {}
+    # Solução para bloqueio de cookies de terceiros: busca ID explicitamente do payload JSON antes de cair na sessão
+    adv_id = data.get('advogado_id') or request.headers.get('X-Advogado-ID') or session.get('advogado_id')
     if not adv_id:
         return jsonify({"error": "Sessão expirada ou inválida. Por favor, faça login novamente no portal."}), 401
     adv = Advogado.query.get(adv_id)
