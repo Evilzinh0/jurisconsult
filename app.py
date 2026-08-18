@@ -15,6 +15,9 @@ CORS(app, supports_credentials=True)
 
 # Configurações de Segurança e Banco de Dados (v7 com todas as 4 melhorias consolidadas)
 app.config['SECRET_KEY'] = os.environ.get('FLASK_SECRET_KEY', 'chave_secreta_super_protegida_v9')
+# Configurações para persistência de sessão cross-origin (CORS) em ambiente de produção (Render)
+app.config['SESSION_COOKIE_SAMESITE'] = 'None'
+app.config['SESSION_COOKIE_SECURE'] = True
 # Configuração dinâmica para suportar o banco PostgreSQL do Supabase ou SQLite local como fallback
 db_url = os.environ.get('DATABASE_URL')
 if db_url:
@@ -564,7 +567,9 @@ def confirmar_recuperacao():
 # -----------------------------------------------------------------------------
 @app.route('/api/advogado/vincular', methods=['POST'])
 def vincular_processo():
-    adv_id = session.get('advogado_id', 1)
+    adv_id = session.get('advogado_id')
+    if not adv_id:
+        return jsonify({"error": "Sessão expirada ou inválida. Por favor, faça login novamente no portal."}), 401
     adv = Advogado.query.get(adv_id)
     if not adv:
         return jsonify({"error": "Sessão expirada. Faça login novamente."}), 401
@@ -753,13 +758,13 @@ def obter_advogado_do_processo_externo(processo_num):
     """
     Simula a obtenção do advogado responsável pelo processo direto do tribunal/API do Escavador.
     Isso serve para a verificação informativa caso o processo não esteja cadastrado na base local.
-    Se o número do processo terminar com '9' ou '123456', simulamos um advogado cadastrado (Carlos Silva).
+    Se o número do processo terminar com '9' ou '123456', simulamos um advogado cadastrado (Mariana Estela).
     Caso contrário, simulamos um advogado inexistente no nosso banco de dados.
     """
     processo_limpo = ''.join(filter(str.isdigit, processo_num))
     if processo_limpo.endswith('9') or processo_limpo.endswith('123456'):
         return {
-            "nome": "Dr. Carlos Eduardo da Silva",
+            "nome": "Drª. Mariana Estela",
             "oab": "123456/SP"
         }
     else:
@@ -1206,37 +1211,37 @@ with app.app_context():
     db.create_all()
     
     try:
-        # Verifica se o Dr. Carlos (OAB 123456/SP) já está cadastrado
+        # Verifica se a Drª. Mariana Estela (OAB 123456/SP) já está cadastrada
         adv = Advogado.query.filter_by(oab='123456/SP').first()
         if not adv:
-            print("🌱 [AUTO-SEEDING] Semeando banco de dados com credenciais do Dr. Carlos Eduardo da Silva...")
+            print("🌱 [AUTO-SEEDING] Semeando banco de dados com credenciais do Drª. Mariana Estela...")
             password_bytes = 'senha123'.encode('utf-8')
             salt = bcrypt.gensalt()
             password_hash = bcrypt.hashpw(password_bytes, salt).decode('utf-8')
             
             adv = Advogado(
-                nome="Dr. Carlos Eduardo da Silva",
-                email="carlos.silva.adv@oabsp.org.br",
+                nome="Drª. Mariana Estela",
+                email="mariana.estela.adv@oabsp.org.br",
                 telefone="11999999999",
                 oab="123456/SP",
                 password_hash=password_hash,
                 status_aprovacao='Aprovado',
                 salvar_credenciais=True,
                 tribunal_principal="TJSP (Tribunal de Justiça de SP)",
-                tribunal_usuario="carlossilva",
+                tribunal_usuario="marianaestela",
                 tribunal_senha_cripto=encrypt_data("senha_tribunal_123"),
                 consentimento_lgpd=True
             )
             db.session.add(adv)
             db.session.commit()
-            print("🌱 [AUTO-SEEDING] Dr. Carlos cadastrado e aprovado automaticamente.")
+            print("🌱 [AUTO-SEEDING] Drª. Mariana Estela cadastrada e aprovada automaticamente.")
 
-        # Verifica se a cliente Mariana de Souza (CPF 12345678901) está vinculada a ele
+        # Verifica se a cliente Gabriel Pisaneschi (CPF 12345678901) está vinculada a ele
         cliente = Cliente.query.filter_by(cpf='12345678901', advogado_id=adv.id).first()
         if not cliente:
-            print("🌱 [AUTO-SEEDING] Cadastrando cliente Mariana de Souza sob a LGPD...")
+            print("🌱 [AUTO-SEEDING] Cadastrando cliente Gabriel Pisaneschi sob a LGPD...")
             cliente = Cliente(
-                nome="Mariana de Souza",
+                nome="Gabriel Pisaneschi",
                 cpf="12345678901",
                 telefone="11999999999",
                 advogado_id=adv.id,
