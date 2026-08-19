@@ -1322,6 +1322,9 @@
                 successAlert.innerHTML = `<strong>✅ ACESSO LIBERADO!</strong><br>${data.message}`;
                 successAlert.style.display = 'block';
                 
+                // Salva o ID explicitamente para contornar bloqueio de cookies de terceiros em navegadores modernos
+                localStorage.setItem('advogado_id', data.advogado.id);
+                
                 // Show professional dashboard tab
                 document.getElementById('panel-nav-btn').style.display = 'flex';
                 
@@ -1371,6 +1374,9 @@
                 successAlert.innerHTML = `<strong>✅ CERTIFICADO VÁLIDO!</strong><br>${data.message}`;
                 successAlert.style.display = 'block';
                 
+                // Salva o ID do advogado logado via certificado
+                localStorage.setItem('advogado_id', data.advogado.id);
+                
                 document.getElementById('panel-nav-btn').style.display = 'flex';
                 
                 // Evita duplicidade de Dr(a). se o nome já contiver Dr.
@@ -1400,7 +1406,10 @@
             dangerAlert.style.display = 'none';
             successAlert.style.display = 'none';
 
+            const advId = localStorage.getItem('advogado_id');
+
             const payload = {
+                advogado_id: advId, // Passagem explícita para evitar bloqueio de cookies SameSite em chamadas de domínios diferentes (Cross-Origin)
                 clientName: document.getElementById('panelClientName').value,
                 clientCpf: document.getElementById('panelClientCpf').value,
                 clientPhone: document.getElementById('panelClientPhone').value,
@@ -1591,6 +1600,7 @@
 
         // USER LOGOUT
         function fazerLogout() {
+            localStorage.removeItem('advogado_id');
             document.getElementById('panel-nav-btn').style.display = 'none';
             switchTab('advogado-tab');
         }
