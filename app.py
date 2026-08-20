@@ -26,7 +26,7 @@ if db_url:
         db_url = db_url.replace("postgres://", "postgresql://", 1)
     app.config['SQLALCHEMY_DATABASE_URI'] = db_url
 else:
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///juris_consult_comercial_v17.db'
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///juris_consult_comercial_v21.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
@@ -44,6 +44,86 @@ else:
         f.write(ENCRYPTION_KEY)
 
 fernet = Fernet(ENCRYPTION_KEY)
+
+# -----------------------------------------------------------------------------
+# AUXILIAR DE MAPEAMENTO DE ALIASES DA API DO DATAJUD
+# -----------------------------------------------------------------------------
+def obter_alias_datajud(processo_limpo):
+    """
+    Analisa os 20 dígitos limpos do processo CNJ e retorna o alias oficial
+    do tribunal cadastrado na API do Datajud.
+    """
+    if len(processo_limpo) != 20:
+        return "api_publica_tjsp"  # Fallback padrão
+        
+    j = processo_limpo[12]       # Ramo do Poder Judiciário (ex: 8 = Estadual, 4 = Federal)
+    tr = processo_limpo[14:16]   # Código do Tribunal (ex: 26 = TJSP, 01 = TRF1)
+    
+    # 1. Justiça Federal (J = 4)
+    if j == '4':
+        return f"api_publica_trf{int(tr)}"
+        
+    # 2. Justiça do Trabalho (J = 5)
+    elif j == '5':
+        return f"api_publica_trt{int(tr)}"
+        
+    # 3. Justiça Estadual (J = 8)
+    elif j == '8':
+        if tr == '26':
+            return "api_publica_tjsp"  # São Paulo
+        elif tr == '07':
+            return "api_publica_tjdft" # Distrito Federal
+        elif tr == '19':
+            return "api_publica_tjrj"  # Rio de Janeiro
+        elif tr == '09':
+            return "api_publica_tjpr"  # Paraná
+        elif tr == '13':
+            return "api_publica_tjmg"  # Minas Gerais
+        elif tr == '21':
+            return "api_publica_tjrs"  # Rio Grande do Sul
+        elif tr == '17':
+            return "api_publica_tjpe"  # Pernambuco
+        elif tr == '05':
+            return "api_publica_tjba"  # Bahia
+        elif tr == '06':
+            return "api_publica_tjce"  # Ceará
+        elif tr == '24':
+            return "api_publica_tjsc"  # Santa Catarina
+        elif tr == '08':
+            return "api_publica_tjes"  # Espírito Santo
+        elif tr == '10':
+            return "api_publica_tjma"  # Maranhão
+        elif tr == '11':
+            return "api_publica_tjmt"  # Mato Grosso
+        elif tr == '14':
+            return "api_publica_tjms"  # Mato Grosso do Sul
+        elif tr == '15':
+            return "api_publica_tjpb"  # Paraíba
+        elif tr == '18':
+            return "api_publica_tjpi"  # Piauí
+        elif tr == '20':
+            return "api_publica_tjrn"  # Rio Grande do Norte
+        elif tr == '22':
+            return "api_publica_tjro"  # Rondônia
+        elif tr == '23':
+            return "api_publica_tjrr"  # Roraima
+        elif tr == '25':
+            return "api_publica_tjse"  # Sergipe
+        elif tr == '27':
+            return "api_publica_tjtg"  # Tocantins
+        elif tr == '02':
+            return "api_publica_tjal"  # Alagoas
+        elif tr == '03':
+            return "api_publica_tjam"  # Amazonas
+        elif tr == '04':
+            return "api_publica_tjap"  # Amapá
+            
+    # 4. Tribunais Superiores (J = 1)
+    elif j == '1' and tr == '03':
+        return "api_publica_stj"
+        
+    return "api_publica_tjsp"
+
 
 def encrypt_data(data: str) -> str:
     if not data:
@@ -117,16 +197,93 @@ def validar_processo_cnj(numero_processo: str) -> bool:
         return False
 
 # -----------------------------------------------------------------------------
-# INTEGRAÇÃO REAL DA API DE BUSCA JURÍDICA (ESCAVADOR)
+# INTEGRAÇÃO REAL DA API DE BUSCA JURÍDICA (DATAJUD & ESCAVADOR)
 # -----------------------------------------------------------------------------
 def consultar_dados_processo_api_ou_simulador(processo_num, tribunal_sugerido=None):
     """
-    Consulta a API real do Escavador se ESCAVADOR_API_KEY estiver configurada.
-    Caso contrário, retorna dados simulados didáticos de fallback automaticamente.
+    Consulta primariamente a API oficial e gratuita do Datajud (CNJ).
+    Caso o processo não seja localizado ou ocorra falha de rede, tenta utilizar a API do Escavador.
+    Como último recurso, retorna dados simulados didáticos de fallback automaticamente.
     """
-    api_key = os.environ.get('ESCAVADOR_API_KEY')
     processo_limpo = ''.join(filter(str.isdigit, processo_num))
     
+    # 1. TENTATIVA COM DATAJUD (API PÚBLICA E GRATUITA DO CNJ)
+    alias = obter_alias_datajud(processo_limpo)
+    url_dj = f"https://api-publica.datajud.cnj.jus.br/{alias}/_search"
+    headers_dj = {
+        "Authorization": "APIKey cDZHYzlZa0JadVREZDJCendQbXY6SkJlTzNjLV9TRENyQk1RdnFKZGRQdw==",
+        "Content-Type": "application/json"
+    }
+    payload_dj = {
+        "query": {
+            "match": {
+                "numeroProcesso": processo_limpo
+            }
+        }
+    }
+    
+    try:
+        print(f"📡 [DATAJUD REAL] Buscando processo {processo_limpo} no alias '{alias}'...")
+        response = requests.post(url_dj, headers=headers_dj, json=payload_dj, timeout=12)
+        if response.status_code == 200:
+            data_dj = response.json()
+            hits = data_dj.get("hits", {}).get("hits", [])
+            if hits:
+                print("✅ [DATAJUD REAL] Processo localizado com sucesso no Datajud!")
+                source = hits[0]["_source"]
+                
+                tribunal_nome = source.get("tribunal", tribunal_sugerido or alias.replace("api_publica_", "").upper())
+                orgao = source.get("orgaoJulgador", {}).get("nome", "Não informado")
+                classe = source.get("classe", {}).get("nome", "Não classificado")
+                
+                movs_reais = []
+                movimentos_brutos = source.get("movimentos", [])
+                
+                # Ordena os movimentos do Datajud por dataHora de forma decrescente (mais recente primeiro)
+                movimentos_brutos.sort(key=lambda x: x.get("dataHora", ""), reverse=True)
+                
+                for m in movimentos_brutos:
+                    dt_iso = m.get("dataHora", "")
+                    desc = m.get("nome", "Andamento processual")
+                    
+                    if dt_iso:
+                        try:
+                            # Formata ISO 8601: "2018-10-30T14:06:24.000Z" -> "30/10/2018 às 14:06"
+                            dt = datetime.strptime(dt_iso[:19], "%Y-%m-%dT%H:%M:%S")
+                            timestamp_formatado = dt.strftime("%d/%m/%Y às %H:%M")
+                        except Exception:
+                            timestamp_formatado = dt_iso
+                    else:
+                        timestamp_formatado = datetime.now().strftime("%d/%m/%Y às %H:%M")
+                        
+                    movs_reais.append({
+                        "descricao": desc,
+                        "timestamp": timestamp_formatado
+                    })
+                
+                if not movs_reais:
+                    movs_reais.append({
+                        "descricao": f"Processo localizado na base nacional do CNJ. Órgão julgador: {orgao}. Classe: {classe}.",
+                        "timestamp": datetime.now().strftime("%d/%m/%Y às %H:%M")
+                    })
+                    
+                return {
+                    "sucesso": True,
+                    "processo_num": processo_limpo,
+                    "tribunal": f"{tribunal_nome} ({orgao})",
+                    "status": "Em Andamento / Ativo",
+                    "timeline": movs_reais,
+                    "fonte_api": "Datajud CNJ (Real)"
+                }
+            else:
+                print("⚠️ [DATAJUD REAL] Processo não localizado na base pública do Datajud (0 hits).")
+        else:
+            print(f"❌ [DATAJUD REAL] Datajud retornou erro HTTP {response.status_code}")
+    except Exception as e:
+        print(f"⚠️ [DATAJUD REAL] Erro físico de conexão com o Datajud: {str(e)}")
+
+    # 2. SEGUNDA TENTATIVA: ESCAVADOR (API PRIVADA SE CONFIGURADA)
+    api_key = os.environ.get('ESCAVADOR_API_KEY')
     if api_key:
         url = f"https://api.escavador.com/v1/processos/numero/{processo_limpo}"
         headers = {
@@ -135,11 +292,11 @@ def consultar_dados_processo_api_ou_simulador(processo_num, tribunal_sugerido=No
             "User-Agent": "JurisConsult-App/1.0"
         }
         try:
-            print(f"📡 [API REAL] Buscando processo {processo_limpo} na API do Escavador...")
+            print(f"📡 [ESCAVADOR REAL] Buscando processo {processo_limpo} na API do Escavador...")
             response = requests.get(url, headers=headers, timeout=12)
             if response.status_code == 200:
                 data = response.json()
-                print("✅ [API REAL] Dados retornados com sucesso pelo Escavador!")
+                print("✅ [ESCAVADOR REAL] Dados retornados com sucesso pelo Escavador!")
                 
                 tribunal_nome = tribunal_sugerido or "Portal de Justiça Federal"
                 if "tribunal" in data and isinstance(data["tribunal"], dict):
@@ -181,11 +338,11 @@ def consultar_dados_processo_api_ou_simulador(processo_num, tribunal_sugerido=No
                     "fonte_api": "Escavador API (Real)"
                 }
             else:
-                print(f"❌ [API REAL] API do Escavador retornou código de erro {response.status_code}")
+                print(f"❌ [ESCAVADOR REAL] API do Escavador retornou código de erro {response.status_code}")
         except Exception as e:
-            print(f"⚠️ [API REAL] Falha física de conexão com o Escavador: {str(e)}")
+            print(f"⚠️ [ESCAVADOR REAL] Falha física de conexão com o Escavador: {str(e)}")
             
-    # FALLBACK / SIMULADOR INTELIGENTE
+    # 3. FALLBACK: SIMULADOR INTELIGENTE
     print("🤖 [SIMULAÇÃO] Usando simulador local de dados processuais.")
     hoje = datetime.now()
     ontem = hoje - timedelta(days=2)
@@ -1209,7 +1366,7 @@ def revogar_consentimento_lgpd():
         return jsonify({"error": f"Ocorreu um erro interno de banco de dados ao excluir seus dados: {str(e)}"}), 500
 
 # -----------------------------------------------------------------------------
-# INICIALIZAÇÃO E AUTO-SEEDING DE DEMONSTRAÇÃO (v17)
+# INICIALIZAÇÃO E AUTO-SEEDING DE DEMONSTRAÇÃO (v21)
 # -----------------------------------------------------------------------------
 with app.app_context():
     db.create_all()
@@ -1368,5 +1525,5 @@ with app.app_context():
         db.session.rollback()
 
 if __name__ == '__main__':
-    print("🚀 Servidor JurisConsult v17 ativo com Auto-Seeding de Demonstração, Dicionário de Traduções e Validador CNJ.")
+    print("🚀 Servidor JurisConsult v21 ativo com Auto-Seeding de Demonstração, Dicionário de Traduções e Validador CNJ.")
     app.run(debug=True, port=5000)
